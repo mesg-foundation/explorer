@@ -1,16 +1,25 @@
 <template>
   <section class="topbar">
     <div class="content">
-      <div class="logo" title="MESG Foundation" alt="MESG Fountation"></div>
-      <el-input class="search" @input="updateSearch" placeholder="Search services"></el-input>
+      <nuxt-link to="/">
+        <div class="logo" title="MESG Foundation" alt="MESG Fountation"></div>
+      </nuxt-link>
+      <el-input class="search" :value="search" @input="updateSearch" placeholder="Search services"></el-input>
     </div>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+  computed: mapState([
+    'search'
+  ]),
+
   methods: {
     updateSearch(query) {
+      this.$router.push('/')
       this.$store.commit('updateSearch', query.trim());
     }
   }
@@ -22,15 +31,13 @@ $logo-size: 50px;
 
 .topbar {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   background-color: #510f91;
   padding: 7px 40px;
 
   .content {
     width: 100%;
     display: flex;
+    align-items: center;
   }
 
   .logo {
@@ -38,12 +45,13 @@ $logo-size: 50px;
     background-size: $logo-size;
     width: $logo-size;
     height: $logo-size;
+    vertical-align: center;
   }
 
   .search {
     width: 300px;
     margin-left: auto;
-    margin-top: 4px;
+    margin-top: -2px;
     height: 40px;
   }
 }

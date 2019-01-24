@@ -1,16 +1,18 @@
 <template>
-  <section class="service-list">
-    <div class="info">
-      Listing <strong>{{ servicesCount }}</strong> services
-    </div>
-    <div class="services">
-      <ServiceItem
-        v-for="service in services"
-        :key="service.sid"
-        :name="service.name"
-        :sid="service.sid"
-        :description="service.description"
-        :logo="service.logo" />
+  <section class="container">
+    <div class="service-list">
+      <div class="info">
+        Listing <strong>{{ servicesCount }}</strong> services
+      </div>
+      <div class="services">
+        <ServiceItem
+          v-for="service in services"
+          :key="service.sid"
+          :name="service.name"
+          :sid="service.sid"
+          :description="service.description"
+          :logo="service.logo" />
+      </div>
     </div>
   </section>
 </template>
@@ -24,6 +26,10 @@ import ServiceItem from '~/components/ServiceItem.vue'
 export default {
   components: {
     ServiceItem
+  },
+
+  destroyed() {
+    this.$store.commit('updateSearch');
   },
 
   computed: {
@@ -62,6 +68,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 20px auto 0 auto;
+}
+
 .service-list {
   .info {
     color: #666;

@@ -6,4 +6,9 @@ $--color-primary: #510e90;
 $--font-path: '../node_modules/element-ui/lib/theme-chalk/fonts';
 
 @import '~element-ui/packages/theme-chalk/src/index';
+@import '~github-markdown-css/github-markdown';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+
+#__nuxt, #__layout {
+  height: 100%;
+}

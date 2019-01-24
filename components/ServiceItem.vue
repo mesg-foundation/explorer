@@ -1,18 +1,24 @@
 <template>
-  <section class="service-item">
-    <div v-if="logo" class="logo">
-      <img :src="logo" />
-    </div>
-    <div class="prime">
-      <div class="name">{{ name }}</div>
-      <div class="sid">{{ sid }}</div>
-      <div class="description">{{ description }}</div>
-    </div>
-  </section>
+  <nuxt-link :to="'services/' + sid">
+    <section class="service-item">
+      <ServiceLogo :url="logo" />
+      <div class="prime">
+        <div class="name">{{ name }}</div>
+        <div class="sid">{{ sid }}</div>
+        <div class="description">{{ description }}</div>
+      </div>
+    </section>
+  </nuxt-link>
 </template>
 
 <script>
+import ServiceLogo from '~/components/ServiceLogo.vue'
+
 export default {
+  components: {
+    ServiceLogo
+  },
+
   props: ['name', 'sid', 'description', 'logo']
 }
 </script>
@@ -32,21 +38,7 @@ export default {
     box-shadow: 2px 6px 2px #dadada;
   }
 
-  .logo {
-    width: 60px;
-    display: flex;
-    justify-content: center;
-    margin-right: 20px;
-
-    img {
-      width: auto;
-      height: 60px;
-      border-radius: 6px;
-    }
-  }
-
   .prime {
-
     .name {
       font-size: 15px;
       color: #333;

@@ -16,10 +16,10 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  color: #bbb;
+  color: #222;
   font-size: 13px;
   border-top: 1px solid #eee;
-  margin-top: 35px;
-  padding-top: 15px;
+  padding: 15px 40px;
+  background-color: #ffa744;
 }
 </style>

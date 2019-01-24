@@ -1,7 +1,7 @@
 const pkg = require('./package')
 
 module.exports = {
-  mode: 'universal',
+  // mode: 'universal',
 
   /*
   ** Headers of the page
@@ -20,6 +20,13 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
+
+  sitemap: {
+    hostname: 'https://marketplace.mesg.com',
+    cacheTime: 1000 * 60 * 15,
+    gzip: true,
+    generate: true // Enable me when using nuxt generate
+  },
 
   /*
   ** Global CSS
@@ -45,14 +52,14 @@ module.exports = {
     */
     extend(config, ctx) {
       // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
-        // config.module.rules.push({
-        //   enforce: 'pre',
-        //   test: /\.(js|vue)$/,
-        //   loader: 'eslint-loader',
-        //   exclude: /(node_modules)/
-        // })
-      }
+      // if (ctx.isDev && ctx.isClient) {
+      //   config.module.rules.push({
+      //     enforce: 'pre',
+      //     test: /\.(js|vue)$/,
+      //     loader: 'eslint-loader',
+      //     exclude: /(node_modules)/
+      //   })
+      // }
     }
   }
 }
