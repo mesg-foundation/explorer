@@ -14,10 +14,11 @@
     "test": "ava"
   },
   "dependencies": {
+    "@nuxtjs/pwa": "^2.6.0",
     "cross-env": "^5.2.0",
-    "nuxt": "^2.3.4",
     "element-ui": "^2.4.11",
-    "@nuxtjs/pwa": "^2.6.0"
+    "fuse.js": "^3.3.0",
+    "nuxt": "^2.3.4"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",

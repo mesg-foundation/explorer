@@ -1,72 +1,45 @@
 <template>
   <section class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        marketplace.mesg.com
-      </h1>
-      <h2 class="subtitle">
-        A simplified MESG Marketplace index for the website
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+    <TopBar />
+    <div class="page-content">
+      <ServiceList />
+      <Footer />
     </div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import TopBar from '~/components/TopBar.vue'
+import ServiceList from '~/components/ServiceList.vue'
+import Footer from '~/components/Footer.vue'
 
 export default {
   components: {
-    Logo
+    TopBar,
+    ServiceList,
+    Footer
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: #f5f5f5;
+  font-family: 'Open Sans';
+}
+
 .container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  width: 100%;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.page-content {
+  padding: 20px;
+  max-width: 900px;
+  margin: 20px auto 0 auto;
 }
 </style>
