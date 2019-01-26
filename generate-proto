@@ -1,0 +1,22 @@
+#!/bin/sh
+
+DEF_REPO="mesg-foundation/core"
+DEF_BRANCH="master"
+DIR="./"
+
+rm -rf assets/proto/*
+mkdir -p assets/proto
+
+cd assets/proto
+
+apis="core"
+for api in $apis; do
+    curl -o api-$api.proto "https://raw.githubusercontent.com/$DEF_REPO/$DEF_BRANCH/protobuf/${api}api/api.proto"
+
+    protoc \
+      --js_out=import_style=commonjs:$DIR \
+      --grpc-web_out=import_style=commonjs,mode=grpcwebtext:$DIR \
+      api-$api.proto
+
+    rm api-$api.proto
+done

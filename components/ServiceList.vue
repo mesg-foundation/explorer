@@ -7,11 +7,12 @@
       <div class="services">
         <ServiceItem
           v-for="service in services"
-          :key="service.sid"
+          :key="service.usid"
           :name="service.name"
           :sid="service.sid"
           :description="service.description"
-          :logo="service.logo" />
+          :logo="service.logo"
+        />
       </div>
     </div>
   </section>
@@ -38,7 +39,7 @@ export default {
     },
 
     services() {
-      var services = this.$store.state.services;
+      var services = this.$store.state.services
       if (this.search) {
         return new Fuse(this.$store.state.services ,{
           shouldSort: true,
@@ -51,10 +52,11 @@ export default {
           maxPatternLength: 32,
           minMatchCharLength: 0,
           keys: [
-            "name",
-            "sid",
-            "description"
-        ]
+            'name',
+            'sid',
+            'services',
+            'readme'
+          ]
         }).search(this.search)
       }
       return services

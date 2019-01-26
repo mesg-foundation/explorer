@@ -1,33 +1,72 @@
+import * as uuidv4 from 'uuid/v4'
+import * as pkg from '~/package'
+import { CoreClient } from '~/assets/proto/api-core_grpc_web_pb.js'
+import { ListenResultRequest, ExecuteTaskRequest } from '~/assets/proto/api-core_pb.js'
+
+const client = new CoreClient(pkg.endpoint);
+
 export const state = () => ({
   search: '',
-  services: [
-    {
-      name: 'Ethereum',
-      sid: 'ethereum-erc20:v1',
-      description: 'MESG Service to interact with an Ethereum ERC20 token',
-      logo: 'https://ih0.redbubble.net/image.395362213.7630/flat,550x550,075,f.jpg'
-    },
-    {
-      name: 'Webhook',
-      sid: 'webhook:v2',
-      description: 'Receive HTTP connections and emit events with the data'
-    },
-    {
-      name: 'Mongodb',
-      sid: 'mongodb',
-      logo: 'https://img.icons8.com/color/1600/mongodb.png',
-      description: 'The best MongoDB experience. Access data directly from your frontend code, intelligently distribute data for global apps, trigger serverless functions in response to data changes, and much more.'
-    },
-    {
-      name: 'Discord',
-      sid: 'discord:v2',
-      logo: 'https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/discord-512.png'
-    }
-  ]
+  services: []
 })
 
 export const mutations = {
   updateSearch (state, query) {
     state.search = query
+  },
+
+  updateServices (state, services) {
+    state.services = services
+  }
+}
+
+// export default {
+//   async fetch ({ store, params }) {
+//     await store.dispatch('fetchServices');
+//   }
+// }
+
+export const actions = {
+  fetchServices ({ commit }) {
+    return new Promise((resolve, reject)=>{
+      var executeInterval;
+      const id = uuidv4()
+
+      const resultReq = new ListenResultRequest()
+      resultReq.setServiceid('marketplace')
+      resultReq.setTaskfilter('listServices')
+      resultReq.setTagfiltersList([id])
+      
+      const stream = client.listenResult(resultReq)
+      stream.on('error', (err) => { console.log(err) })
+      stream.on('status', (status) => { console.log(status) })
+      stream.on('data', (data) => {
+        const extendedServices = JSON.parse(data.getOutputdata()).services
+        const services = extendedServices.map((service) => {
+          const s = service.versions[0].metadata.service
+          return {
+            usid: service.sid,
+            sid: s.definition.sid,
+            name: s.definition.name,
+            description: s.definition.description,
+            logo: s.definition.logo,
+            readme: s.readme
+          }
+        })
+        stream.cancel()
+        clearInterval(executeInterval)
+        commit('updateServices', services)
+        resolve()
+      })
+
+      executeInterval = setInterval(() => {
+        const execReq = new ExecuteTaskRequest()
+        execReq.setServiceid("marketplace")
+        execReq.setTaskkey("listServices")
+        execReq.setInputdata("{}")
+        execReq.setExecutiontagsList([id])
+        client.executeTask(execReq, {}, function(){})
+      }, 250)
+    })
   }
 }

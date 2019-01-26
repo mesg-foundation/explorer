@@ -29,7 +29,6 @@
 import * as Remarkable from 'remarkable'
 import ServiceLogo from '~/components/ServiceLogo.vue'
 import Label from '~/components/Label.vue'
-import doc from 'raw-loader!~/static/delete-1.md'
 import json from '~/static/delete-2.json'
 
 export default {
@@ -45,7 +44,7 @@ export default {
         breaks: true,
         linkify: true,
         typographer: true
-      })).render(doc);
+      })).render(this.readme);
     },
 
     yaml(){
@@ -59,7 +58,7 @@ export default {
     }
   },
 
-  props: ['name', 'sid', 'description', 'logo']
+  props: ['name', 'sid', 'description', 'logo', 'readme']
 }
 </script>
 
@@ -89,6 +88,7 @@ export default {
         font-weight: 300;
         font-size: 15px;
         margin-top: 20px;
+        line-height: 23px;
       }
     }
   }

@@ -1,9 +1,10 @@
 <template>
-  <ServiceDetails
+  <ServiceDetails v-if="service"
     :name="service.name"
     :sid="service.sid"
     :description="service.description"
     :logo="service.logo"
+    :readme="service.readme"
   />
 </template>
 
