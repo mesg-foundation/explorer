@@ -6,14 +6,17 @@
     :logo="service.logo"
     :readme="service.readme"
   />
+  <ServiceDetailsSkeleton v-else />
 </template>
 
 <script>
 import ServiceDetails from '~/components/ServiceDetails.vue'
+import ServiceDetailsSkeleton from '~/components/ServiceDetailsSkeleton.vue'
 
 export default {
   components: {
-    ServiceDetails
+    ServiceDetails,
+    ServiceDetailsSkeleton
   },
 
   computed: {

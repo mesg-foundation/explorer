@@ -5,14 +5,20 @@
         Listing <strong>{{ servicesCount }}</strong> services
       </div>
       <div class="services">
-        <ServiceItem
-          v-for="service in services"
-          :key="service.usid"
-          :name="service.name"
-          :sid="service.sid"
-          :description="service.description"
-          :logo="service.logo"
-        />
+        <div v-if="loading">
+          <ServiceItemSkeleton/>
+          <ServiceItemSkeleton/>
+        </div>
+        <div v-else>
+          <ServiceItem
+            v-for="service in services"
+            :key="service.usid"
+            :name="service.name"
+            :sid="service.sid"
+            :description="service.description"
+            :logo="service.logo"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -23,19 +29,21 @@ import { mapState } from 'vuex'
 import Fuse from 'fuse.js'
 
 import ServiceItem from '~/components/ServiceItem.vue'
+import ServiceItemSkeleton from '~/components/ServiceItemSkeleton.vue'
 
 export default {
   components: {
-    ServiceItem
+    ServiceItem,
+    ServiceItemSkeleton
   },
-
+  
   destroyed() {
     this.$store.commit('updateSearch');
   },
 
   computed: {
     servicesCount() {
-      return this.services.length;
+      return this.services.length
     },
 
     services() {
@@ -63,7 +71,8 @@ export default {
     },
 
     ...mapState([
-      'search'
+      'search',
+      'loading'
     ]),
   }
 }

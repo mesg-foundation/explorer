@@ -7,6 +7,7 @@ const client = new CoreClient(pkg.endpoint);
 
 export const state = () => ({
   search: '',
+  loading: true,
   services: []
 })
 
@@ -17,6 +18,10 @@ export const mutations = {
 
   updateServices (state, services) {
     state.services = services
+  },
+
+  updateLoading (state, status) {
+    state.loading = status
   }
 }
 
@@ -56,6 +61,7 @@ export const actions = {
         stream.cancel()
         clearInterval(executeInterval)
         commit('updateServices', services)
+        commit('updateLoading', false)
         resolve()
       })
 
