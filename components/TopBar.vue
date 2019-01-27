@@ -46,6 +46,7 @@ $logo-size: 50px;
     width: $logo-size;
     height: $logo-size;
     vertical-align: center;
+    margin-right: 15px;
   }
 
   .search {
@@ -53,6 +54,12 @@ $logo-size: 50px;
     margin-left: auto;
     margin-top: -2px;
     height: 40px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .topbar {
+    padding: 7px 15px;
   }
 }
 </style>

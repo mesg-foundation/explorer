@@ -215,6 +215,10 @@ export default {
         }
       }
     }
+
+    .content {
+      margin: 15px 20px;
+    }
   }
 }
 </style>

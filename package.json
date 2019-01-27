@@ -4,7 +4,7 @@
   "description": "A simplified MESG Marketplace index for the website",
   "author": "MESG Foundation Developers",
   "private": true,
-  "endpoint": "http://192.168.1.21:50053",
+  "endpoint": "http://127.0.0.1:50053",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
