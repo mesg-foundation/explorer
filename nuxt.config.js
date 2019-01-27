@@ -21,6 +21,11 @@ module.exports = {
   */
   loading: { color: '#fff' },
 
+  server: {
+    port: 3000,
+    host: '0.0.0.0'
+  },
+
   sitemap: {
     hostname: 'https://marketplace.mesg.com',
     cacheTime: 1000 * 60 * 15,
@@ -36,7 +41,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/element-ui'],
+  plugins: ['@/plugins/element-ui', '@plugins/font-awesome'],
 
   /*
   ** Nuxt.js modules

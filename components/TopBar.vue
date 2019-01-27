@@ -63,7 +63,9 @@ $logo-size: 50px;
     border: 0;
     background-color: #3d0065;
     color: #fff;
+    border-radius: 25px;
     transition: all 0.2s ease;
+
     
     &:focus {
       background-color: #fbf5ff;

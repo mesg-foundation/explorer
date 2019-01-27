@@ -8,6 +8,15 @@
           <div class="sid"><Label name="sid" uppercase/>{{ sid }}</div>
           <div class="description">{{ description }}</div>
         </div>
+        <div class="actions">
+          <div class="deploy">
+            <div class="title">deploy with command</div>
+            <el-tooltip class="item" effect="light" content="copied!" placement="top-end" :manual="true" :value="copied">
+            <div class="command" v-on:click="copyDeploy">mesg-core service deploy <strong>{{ sid }}</strong>
+              <font-awesome-icon class="icon" icon="copy" size="lg" /></div>
+            </el-tooltip>
+          </div>
+        </div>
       </div>
       <div class="content">
         <no-ssr>
@@ -27,6 +36,7 @@
 
 <script>
 import * as Remarkable from 'remarkable'
+import * as copy from 'copy-text-to-clipboard'
 import ServiceLogo from '~/components/ServiceLogo.vue'
 import Label from '~/components/Label.vue'
 import json from '~/static/delete-2.json'
@@ -35,6 +45,13 @@ export default {
   components: {
     ServiceLogo,
     Label
+  },
+
+  data() {
+    return {
+      activeDescription: 'doc',
+      copied: false
+    }
   },
 
   computed: {
@@ -52,9 +69,13 @@ export default {
     }
   },
 
-  data() {
-    return {
-      activeDescription: 'doc'
+  methods: {
+    copyDeploy() {
+      copy(`mesg-core service deploy ${this.sid}`)
+      this.copied = true
+      setTimeout(() => {
+        this.copied = false
+      }, 600)
     }
   },
 
@@ -91,6 +112,64 @@ export default {
         line-height: 23px;
       }
     }
+
+    .actions {
+      margin-left: auto;
+      margin-top: auto;
+      padding-left: 20px;
+      border-left: 1px solid #eee;
+
+      .deploy {
+        .title {
+          font-size: 12px;
+          color: #666;
+          font-weight: 300;
+          text-transform: uppercase;
+        }
+
+        .command {
+          background: #1f1f1f;
+          font-weight: 400;
+          font-size: 13px;
+          padding: 13px 20px;
+          margin-top: 10px;
+          transition: all 0.2s ease;
+          color: #efefef;
+          cursor: pointer;
+          user-select: none;
+          border-radius: 25px;
+          display: inline-block;
+          line-height: 25px;
+          white-space: nowrap;
+
+          &::before {
+            content: "$";
+            font-size: 14px;
+            margin-right: 6px;
+          }
+
+          &:hover {
+            background-color: #000;
+            color: #fff;
+
+            .icon {
+              opacity: 1;
+            }
+          }
+
+          strong {
+            font-weight: 600;
+          }
+
+          .icon {
+            vertical-align: middle;
+            margin-left: 15px;
+            opacity: .9;
+            transition: all 0.2s ease;
+          }
+        }
+      }
+    }
   }
 
   .content {
@@ -104,6 +183,37 @@ export default {
       font-weight: 300;
       border-radius: 10px;
       padding: 40px;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .info {
+      display: block;
+      padding: 30px;
+
+      .prime {
+        margin-top: 0;
+      }
+
+      .actions {
+        margin-top: 20px;
+        border-left: 0;
+        padding-left: 0;
+
+        .deploy {
+          .title {
+            display: none;
+          }
+          
+          .command {
+            white-space: normal;
+
+            .icon {
+              margin-left: 3px;
+            }
+          }
+        }
+      }
     }
   }
 }

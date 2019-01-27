@@ -4,7 +4,7 @@
   "description": "A simplified MESG Marketplace index for the website",
   "author": "MESG Foundation Developers",
   "private": true,
-  "endpoint": "http://127.0.0.1:50053",
+  "endpoint": "http://192.168.1.21:50053",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -15,7 +15,11 @@
     "test": "ava"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.12",
+    "@fortawesome/free-solid-svg-icons": "^5.6.3",
+    "@fortawesome/vue-fontawesome": "^0.1.5",
     "@nuxtjs/pwa": "^2.6.0",
+    "copy-text-to-clipboard": "^1.0.4",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
     "fuse.js": "^3.3.0",
@@ -23,6 +27,7 @@
     "google-protobuf": "^3.6.1",
     "grpc-web": "^1.0.3",
     "json-to-pretty-yaml": "^1.2.2",
+    "npm": "^6.7.0",
     "nuxt": "^2.3.4",
     "remarkable": "^1.7.1",
     "vue-nl2br": "^0.1.1",
