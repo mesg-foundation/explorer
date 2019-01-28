@@ -3,10 +3,37 @@
 # run core
 bash <(curl -fsSL https://mesg.com/install)
 
-# run envoy
+# create an attachable network
+docker network create --driver overlay --attachable envoy
+
+# run nginx proxy for ssl in envoy's network
+docker run --detach \
+  --network envoy  \
+  --name nginx-proxy \
+  --publish 80:80 \
+  --publish 443:443 \
+  --volume /etc/nginx/certs \
+  --volume /etc/nginx/vhost.d \
+  --volume /usr/share/nginx/html \
+  --volume /var/run/docker.sock:/tmp/docker.sock:ro \
+  jwilder/nginx-proxy
+
+# configure letsencrypt to auto create certs for nginx proxy
+docker run --detach \
+  --name nginx-proxy-letsencrypt \
+  --volumes-from nginx-proxy \
+  --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+  jrcs/letsencrypt-nginx-proxy-companion
+
+# run envoy in envoy's network
 # only ExecuteTask and ListenResult APIs exposed
 docker build -t envoy:core -f Dockerfile.envoy .
-docker service create --name core-envoy --network core -p 50053:50053 envoy:core
+docker service create --name core-envoy --network envoy \
+  --env "VIRTUAL_HOST=core.marketplace.mesg.com" \
+  --env "VIRTUAL_PORT=50053" \
+  --env "LETSENCRYPT_HOST=core.marketplace.mesg.com" \
+  --env "LETSENCRYPT_EMAIL=info@mesg.com" \
+  envoy:core
 
 # run marketplace service
 cd /tmp
