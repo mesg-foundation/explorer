@@ -20,6 +20,6 @@ export default {
   font-size: 13px;
   border-top: 1px solid #eee;
   padding: 15px 40px;
-  background-color: #ffa744;
+  background-color: #dedede;
 }
 </style>

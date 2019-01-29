@@ -29,13 +29,13 @@ export default {
   padding: 25px 30px;
   background-color: #fff;
   margin: 20px 0;
-  box-shadow: 1px 2px #eee;
+  box-shadow: 1px 2px 3px #eee;
   border-radius: 10px;
   display: flex;
   transition: all 0.2s ease;
 
   &:hover {
-    box-shadow: 2px 6px 2px #dadada;
+    box-shadow: 2px 6px 2px #e4e4e4;
   }
 
   .prime {

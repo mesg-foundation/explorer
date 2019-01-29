@@ -19,16 +19,32 @@
         </div>
       </div>
       <div class="content">
-        <no-ssr>
-          <el-tabs v-model="activeDescription">
-            <el-tab-pane label="DOC" name="doc">
-              <div class="doc markdown-body" v-html="doc"></div>
-            </el-tab-pane>
-            <el-tab-pane label="DEFINITON" name="defnition">
-              todo
-            </el-tab-pane>
-          </el-tabs>
-        </no-ssr>
+        <el-row :gutter="40">
+          <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17">
+            <el-tabs v-model="activeDescription">
+              <el-tab-pane label="DOC" name="doc">
+                <div class="doc markdown-body" v-html="doc"></div>
+              </el-tab-pane>
+              <el-tab-pane label="API" name="api">
+                todo
+              </el-tab-pane>
+              <el-tab-pane label="VARIABLES" name="variables">
+                todo
+              </el-tab-pane>
+              <el-tab-pane label="HASHES" name="hashes">
+                todo
+              </el-tab-pane>
+            </el-tabs>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="7" :lg="7" :xl="7">
+            <div class="box">
+              <div class="item"><Label class="label" name="author" uppercase/>ilgooz</div>
+              <div class="item"><Label class="label" name="sid" uppercase/>{{ sid }}</div>
+              <div class="item"><Label class="label" name="mesg token price" background="#ff9b2b" color="#fff" uppercase /><span class="dotted">0.04</span> per execution</div>
+              <div class="item"><Label class="label" name="latest hash" uppercase/>e83ed33</div>
+            </div>
+          </el-col>
+        </el-row>
       </div>
     </div>
   </section>
@@ -89,7 +105,7 @@ export default {
     display: flex;
     padding: 60px;
     background-color: #fff;
-    box-shadow: 1px 2px #eee;
+    box-shadow: 1px 2px 3px #eee;
 
     .prime {
       .name {
@@ -102,6 +118,10 @@ export default {
         font-size: 15px;
         color: #555;
         margin-top: 12px;
+
+        span {
+          margin-right: 10px;
+        }
       }
 
       .description {
@@ -116,7 +136,7 @@ export default {
     .actions {
       margin-left: auto;
       margin-top: auto;
-      padding-left: 20px;
+      padding-left: 40px;
       border-left: 1px solid #eee;
 
       .deploy {
@@ -183,6 +203,29 @@ export default {
       font-weight: 300;
       border-radius: 10px;
       padding: 40px;
+      box-shadow: 1px 2px 3px #eee;
+    }
+
+    .box {
+      background-color: #fff;
+      font-size: 14px;
+      font-weight: 300;
+      border-radius: 10px;
+      padding: 15px 25px;
+      box-shadow: 1px 2px 3px #eee;
+
+      .item {
+        margin: 15px 0;
+
+        .label {
+          font-weight: 400;
+          margin-right: 10px;
+        }
+
+        span.dotted {
+          border-bottom: 1px dashed #555;
+        }
+      }
     }
   }
 
@@ -218,7 +261,21 @@ export default {
 
     .content {
       margin: 15px 20px;
+
+      .box {
+        margin-top: 20px;
+      }
     }
   }
+}
+</style>
+
+<style lang="scss">
+.markdown-body a {
+  color: #5a0097;
+}
+
+.el-tabs__item {
+  font-weight: 600;
 }
 </style>

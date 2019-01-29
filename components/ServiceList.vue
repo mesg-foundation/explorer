@@ -16,7 +16,7 @@
             :name="service.name"
             :sid="service.sid"
             :description="service.description"
-            :logo="service.logo"
+            logo="https://www.ikwebtasarim.com/public/images/1535613948.png"
           />
         </div>
       </div>

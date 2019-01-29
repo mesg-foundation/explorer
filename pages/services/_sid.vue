@@ -3,10 +3,10 @@
     :name="service.name"
     :sid="service.sid"
     :description="service.description"
-    :logo="service.logo"
+    logo="https://www.ikwebtasarim.com/public/images/1535613948.png"
     :readme="service.readme"
   />
-  <ServiceDetailsSkeleton v-else />
+  <div v-loading="true" v-else></div>
 </template>
 
 <script>
