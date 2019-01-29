@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'services/' + sid">
+  <nuxt-link :to="'services/' + usid">
     <section class="service-item">
       <ServiceLogo :url="logo" />
       <div class="prime">
@@ -19,7 +19,7 @@ export default {
     ServiceLogo
   },
 
-  props: ['name', 'sid', 'description', 'logo']
+  props: ['name', 'sid', 'usid', 'description', 'logo']
 }
 </script>
 

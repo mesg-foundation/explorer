@@ -49,13 +49,20 @@ export const actions = {
         const extendedServices = JSON.parse(data.getOutputdata()).services
         const services = extendedServices.map((service) => {
           const s = service.versions[0].metadata.service
+          const versions = service.versions.map((version) => {
+            return {
+              number: version.metadata.version,
+              hash: version.hash
+            }
+          })
           return {
             usid: service.sid,
             sid: s.definition.sid,
             name: s.definition.name,
             description: s.definition.description,
             logo: s.definition.logo,
-            readme: s.readme
+            readme: s.readme,
+            versions: versions
           }
         })
         stream.cancel()

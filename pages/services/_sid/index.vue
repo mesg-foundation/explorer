@@ -2,9 +2,11 @@
   <ServiceDetails v-if="service"
     :name="service.name"
     :sid="service.sid"
+    :usid="service.usid"
     :description="service.description"
     logo="https://www.ikwebtasarim.com/public/images/1535613948.png"
     :readme="service.readme"
+    :versions="service.versions"
   />
   <div v-loading="true" v-else></div>
 </template>
@@ -22,7 +24,7 @@ export default {
   computed: {
     service() {
       const sid = this.$route.params.sid
-      return this.$store.state.services.find(service => service.sid === sid)
+      return this.$store.state.services.find(service => service.usid === sid)
     }
   }
 }

@@ -15,6 +15,7 @@
             :key="service.usid"
             :name="service.name"
             :sid="service.sid"
+            :usid="service.usid"
             :description="service.description"
             logo="https://www.ikwebtasarim.com/public/images/1535613948.png"
           />

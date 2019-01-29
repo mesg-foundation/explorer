@@ -2,7 +2,7 @@
   <section class="topbar">
     <div class="content">
       <nuxt-link to="/">
-        <div class="logo" title="MESG Foundation" alt="MESG Fountation"></div>
+        <div @click="clearSearch" class="logo" title="MESG Foundation" alt="MESG Fountation"></div>
       </nuxt-link>
       <el-input class="search" :value="search" @input="updateSearch" placeholder="Search services"></el-input>
     </div>
@@ -21,6 +21,10 @@ export default {
     updateSearch(query) {
       this.$router.push('/')
       this.$store.commit('updateSearch', query.trim());
+    },
+
+    clearSearch() {
+      this.$store.commit('updateSearch');
     }
   }
 }
