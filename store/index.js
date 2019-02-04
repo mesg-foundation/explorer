@@ -55,6 +55,27 @@ export const actions = {
               hash: version.hash
             }
           })
+          const variables = {}
+          if (s.definition.configuration && s.definition.configuration.env) {
+            const vars = s.definition.configuration.env.map((variable) => {
+              const parsedVar = variable.split('=')
+              const name = parsedVar[0]
+              const value = parsedVar.length == 2 ? parsedVar[1] : ''
+              return { name, value }
+            })
+            variables['service'] = vars
+          }
+          if (s.definition.dependencies) {
+            Object.keys(s.definition.dependencies).forEach((dependency) => {
+              const vars = s.definition.dependencies[dependency].env.map((variable) => {
+                const parsedVar = variable.split('=')
+                const name = parsedVar[0]
+                const value = parsedVar.length == 2 ? parsedVar[1] : ''
+                return { name, value }
+              })
+              variables[dependency] = vars
+            })
+          }
           return {
             usid: service.sid,
             sid: s.definition.sid,
@@ -62,7 +83,10 @@ export const actions = {
             description: s.definition.description,
             logo: s.definition.logo,
             readme: s.readme,
-            versions: versions
+            versions: versions,
+            variables: variables,
+            events: s.definition.events,
+            tasks: s.definition.tasks
           }
         })
         stream.cancel()

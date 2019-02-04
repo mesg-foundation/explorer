@@ -4,7 +4,7 @@
       <nuxt-link to="/">
         <div @click="clearSearch" class="logo" title="MESG Foundation" alt="MESG Fountation"></div>
       </nuxt-link>
-      <el-input class="search" :value="search" @input="updateSearch" placeholder="Search services"></el-input>
+      <el-input class="search" :value="search" @input="updateSearch" placeholder="search services..."></el-input>
     </div>
   </section>
 </template>
@@ -32,11 +32,13 @@ export default {
 
 <style lang="scss" scoped>
 $logo-size: 50px;
-
+  // border-bottom: #510f91;
 .topbar {
   width: 100%;
   background-color: #510f91;
+  border-bottom: 1px solid #eee;
   padding: 7px 40px;
+  transition: all 0.2s ease;
 
   .content {
     width: 100%;
@@ -45,7 +47,7 @@ $logo-size: 50px;
   }
 
   .logo {
-    background: url('../static/logo_white_t.png');
+    background-image: url('../static/logo_white_t.png');
     background-size: $logo-size;
     width: $logo-size;
     height: $logo-size;
@@ -58,6 +60,17 @@ $logo-size: 50px;
     margin-left: auto;
     margin-top: -2px;
     height: 40px;
+    color: #510f91;
+  }
+}
+
+body.light {
+  .topbar {
+    background-color: #fff;
+  }
+
+  .logo {
+    background-image: url('../static/logo_purple_t.png');
   }
 }
 
@@ -72,8 +85,8 @@ $logo-size: 50px;
 .topbar {
   .search input {
     border: 0;
-    background-color: #3d0065;
     color: #fff;
+    background-color: #3d0065;
     border-radius: 25px;
     transition: all 0.2s ease;
 
@@ -81,6 +94,32 @@ $logo-size: 50px;
     &:focus {
       background-color: #fbf5ff;
       color: #111;
+
+      &::placeholder {
+        color: #555;
+      }
+    }
+
+    &::placeholder {
+      color: #ddd;
+    }
+  }
+}
+
+body.light {
+  .topbar {
+    .search input {
+      background-color: #fbf5ff;
+      color: #7609e0;
+      
+      &:focus {
+        background-color: #fefdff;
+        color: #111;
+      }
+
+      &::placeholder {
+        color: #510f91;
+      }
     }
   }
 }

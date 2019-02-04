@@ -7,6 +7,9 @@
     logo="https://www.ikwebtasarim.com/public/images/1535613948.png"
     :readme="service.readme"
     :versions="service.versions"
+    :variables="service.variables"
+    :events="service.events"
+    :tasks="service.tasks"
   />
   <div v-loading="true" v-else></div>
 </template>
@@ -26,6 +29,10 @@ export default {
       const sid = this.$route.params.sid
       return this.$store.state.services.find(service => service.usid === sid)
     }
+  },
+
+  beforeCreate: function() {
+    document.body.className = 'light';
   }
 }
 </script>

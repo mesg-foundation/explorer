@@ -35,7 +35,7 @@ export default {
   transition: all 0.2s ease;
 
   &:hover {
-    box-shadow: 2px 6px 2px #e4e4e4;
+    box-shadow: 2px 6px 2px #e9e9e9;
   }
 
   .prime {

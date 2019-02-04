@@ -88,9 +88,10 @@ export default {
 
 .service-list {
   .info {
-    color: #666;
+    color: #222;
     font-size: 13px;
     text-transform: uppercase;
+    font-weight: 400;
   }
 }
 </style>

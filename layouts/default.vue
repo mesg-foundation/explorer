@@ -36,7 +36,7 @@ html, body {
 }
 
 body {
-  background-color: #f5f5f5;
+  background-color: #f8f8f8;
   font-family: 'Open Sans';
   font-size: 16px;
   -ms-text-size-adjust: 100%;
@@ -45,6 +45,10 @@ body {
   -webkit-font-smoothing: antialiased;
   word-spacing: 1px;
   box-sizing: border-box;
+}
+
+body.light {
+  background-color: #fff;
 }
 
 a {

@@ -23,8 +23,8 @@ span {
   font-size: 12px;
   color: #111;
   background-color: #eee;
-  padding: 2px 5px;
-  border-radius: 3px;
+  padding: 2px 9px;
+  border-radius: 25px;
   margin-right: 5px;
 
   &.uppercase {

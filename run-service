@@ -28,7 +28,9 @@ docker run --detach \
 # run envoy in envoy's network
 # only ExecuteTask and ListenResult APIs exposed
 docker build -t envoy:core -f Dockerfile.envoy .
-docker service create --name core-envoy --network envoy \
+docker service create --name core-envoy \
+  --network core \
+  --network envoy \
   --env "VIRTUAL_HOST=core.marketplace.mesg.com" \
   --env "VIRTUAL_PORT=50053" \
   --env "LETSENCRYPT_HOST=core.marketplace.mesg.com" \

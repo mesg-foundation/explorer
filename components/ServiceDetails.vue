@@ -31,17 +31,66 @@
         </div>
       </div>
       <div class="content">
-        <el-row :gutter="40">
+        <el-row>
           <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17">
-            <el-tabs v-model="activeDescription" @tab-click="handleTabClick">
+            <el-tabs class="main" v-model="activeDescription" @tab-click="handleTabClick">
               <el-tab-pane label="DOC" name="doc">
                 <div class="doc markdown-body" v-html="doc"></div>
               </el-tab-pane>
               <el-tab-pane label="API" name="api">
-                todo
+                <div class="doc api">
+                  <div class="item">
+                    <div class="title">events</div> 
+                    <el-collapse class="content" accordion>
+                      <el-collapse-item v-for="(event, key) in events" :key="key" :name="key">
+                        <template slot="title"> {{ key }} </template>
+                        <div class="text" v-for="(data, key) in event.data" :key="key">
+                          {{ key }}
+                          <Label class="var-info" :name="data.type"/>
+                        </div>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </div>
+                  <div class="item">
+                    <div class="title">tasks</div> 
+                    <el-collapse class="content" accordion>
+                      <el-collapse-item v-for="(task, key) in tasks" :key="key" :name="key">
+                        <template slot="title"> {{ key }} </template>
+                        <div v-if="task.inputs">
+                          <div class="sub-title">inputs</div>
+                          <div class="text" v-for="(data, key) in task.inputs" :key="key">
+                            {{ key }}
+                            <Label class="var-info" :name="data.type"/>
+                            <Label v-if="!data.optional" class="var-info required" name="required"/>
+                          </div>
+                        </div>
+                        <div class="sub-title">outputs</div>
+                        <el-collapse v-for="(output, key) in task.outputs" :key="key" class="content" accordion>
+                          <el-collapse-item name="call.outputs">
+                            <template slot="title">{{ key }}</template>
+                            <div  v-for="(data, key) in output.data" :key="key"  class="text">
+                              {{ key }}
+                              <Label class="var-info" :name="data.type"/>
+                            </div>
+                          </el-collapse-item>
+                        </el-collapse>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </div>
+                </div>
               </el-tab-pane>
               <el-tab-pane label="VARIABLES" name="variables">
-                todo
+                <div class="doc variables">
+                  <div v-for="(variable, key) in variables" :key="key" class="service">
+                    <div class="title">{{ key }}</div>
+                    <div class="vars">
+                      <el-row v-for="v in variable" :key="v.name" class="var">
+                        <el-col class="right" :span="8"><div class="name">{{ v.name }}</div></el-col>
+                        <el-col :span="16"><div class="value">{{ v.value }}</div></el-col>
+                      </el-row>
+                    </div>
+                  </div>
+                </div>
               </el-tab-pane>
               <el-tab-pane label="HASHES" name="hashes">
                 <div class="doc hashes">
@@ -68,10 +117,6 @@
               <div class="item">
                 <Label class="label" name="sid" uppercase/>
                 <div class="text">{{ sid }}</div>
-              </div>
-              <div class="item">
-                <Label class="label" name="mesg token price" background="#ff9b2b" color="#fff" uppercase />
-                <div class="text"><font-awesome-icon class="icon" icon="coins" /><span class="dotted">0.04</span> per execution</div>
               </div>
               <div class="item">
                 <Label class="label" name="latest hash" uppercase/>
@@ -153,7 +198,7 @@ export default {
     }
   },
 
-  props: ['name', 'sid', 'usid', 'description', 'logo', 'readme', 'versions']
+  props: ['name', 'sid', 'usid', 'description', 'logo', 'readme', 'versions', 'variables', 'events', 'tasks']
 }
 </script>
 
@@ -163,7 +208,6 @@ export default {
     display: flex;
     padding: 60px;
     background-color: #fff;
-    box-shadow: 1px 2px 3px #eee;
 
     .prime {
       .name {
@@ -218,7 +262,7 @@ export default {
           background: #1f1f1f;
           font-weight: 400;
           font-size: 13px;
-          padding: 13px 20px;
+          padding: 10px 20px;
           margin-top: 10px;
           transition: all 0.2s ease;
           color: #efefef;
@@ -260,7 +304,9 @@ export default {
   }
 
   .content {
-    margin: 40px 60px;
+    .main {
+      margin-right: 30px;
+    }
 
     .doc {
       color: #222;
@@ -268,9 +314,11 @@ export default {
       font-family: 'Open Sans';
       font-size: 15px;
       font-weight: 300;
-      border-radius: 10px;
       padding: 40px;
-      box-shadow: 1px 2px 3px #eee;
+      margin: 20px 0 20px 40px;
+      border-radius: 10px;
+      border: 1px solid #eee;
+      box-shadow: 1px 1px 1px #eee;
     }
 
     .box {
@@ -279,14 +327,18 @@ export default {
       font-weight: 300;
       border-radius: 10px;
       padding: 10px 25px;
-      box-shadow: 1px 2px 3px #eee;
+      box-shadow: 1px 1px 1px #eee;
+      border: 1px solid #eee;
+      margin-right: 40px;
 
       .item {
         margin: 20px 0;
 
         .label {
-          font-weight: 400;
+          font-weight: 600;
           margin-right: 10px;
+          // border: 1px solid #999;
+          // background-color: #fff;
         }
 
         span.dotted {
@@ -308,6 +360,7 @@ export default {
       font-size: 14px;
 
       .version {
+        border-radius: 25px; 
         .el-col {
           padding: 10px 0;
         }
@@ -340,6 +393,103 @@ export default {
             &:hover {
               border: 0;
             }
+          }
+        }
+      }
+    }
+
+    .title {
+      font-size: 30px;
+      font-weight: 300;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sub-title {
+      font-size: 14px;
+      font-weight: 300;
+      color: #999;
+      padding-bottom: 5px;
+    }
+
+    .variables {
+      font-weight: 400;
+
+      .service {
+        margin-bottom: 30px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .vars {
+        .right {
+          text-align: right;
+          padding-right: 10px;
+        }
+
+        .var {
+          padding: 7px 0;
+
+          .name {
+            font-weight: 600;
+            box-shadow: 0 1px 1px rgba(255, 233, 209, 0.4);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: inline-block;
+            color: #ff8e0f;
+            border: 1px dashed #ffd7ab;
+          }
+
+          .value {
+            color: #222;
+            font-weight: 300;
+            padding: 5px 15px;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    .api {
+      .item {
+        margin-bottom: 30px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .content {
+        padding: 0 20px;
+
+        .section {
+          margin-bottom: 10px 0;
+        }
+
+        .text {
+          font-size: 16px;
+          font-weight: 300;
+          height: 48px;
+          line-height: 48px;
+          padding: 0 20px;
+
+          .var-info {
+            text-align: right;
+            font-size: 12px;
+            padding: 3px 8px;
+            color: #222;
+            font-weight: 400;
+            margin: 0 0 0 10px;
+          }
+
+          .var-info.required {
+            border: 1px solid #ff8e0f;
+            color: #ff8e0f;
+            background-color: #fff;
           }
         }
       }
@@ -377,7 +527,7 @@ export default {
     }
 
     .content {
-      margin: 15px 20px;
+      // margin: 15px 20px;
 
       .box {
         margin-top: 20px;
@@ -411,5 +561,82 @@ export default {
 
 .el-dropdown-menu--mini .el-dropdown-menu__item {
   font-size: 13px;
+}
+
+.service-detail .el-tabs__header {
+  background-color: #510e90;
+  padding: 0 40px;
+  clip-path: polygon(50% 0%, 100% 60%, 100% 60%, 75% 100%, 0 100%, 0% 60%, 0 0);
+}
+
+
+.service-detail .el-tabs__item {
+  color: #fff;
+  padding: 8px 20px;
+  height: auto;
+  transition: all 0.2s ease;
+  font-weight: 400;
+}
+
+.service-detail .el-tabs__item.is-active {
+  padding: 8px 20px;
+  font-weight: 600;
+}
+
+.service-detail .el-tabs__active-bar,  {
+  display: none;
+}
+
+.service-detail .el-tabs__nav-wrap {
+  padding: 0 20px;
+}
+
+.service-detail .el-tabs__nav-wrap::after {
+  height: 0;
+}
+
+.service-detail .el-tabs--top .el-tabs__item.is-top:last-child,
+.service-detail .el-tabs--top .el-tabs__item.is-top:nth-child(2) {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.service-detail .el-tabs__item.is-active {
+  background-color: #fbf5ff;
+  color: #111;
+}
+
+.service-detail .el-tabs__header {
+  margin-bottom: 1px;
+}
+
+.select-version button:first-child  {
+  border-radius: 25px 0 0 25px;
+}
+.select-version button.el-dropdown__caret-button  {
+  border-radius: 0 25px 25px 0;
+}
+
+.service-detail .api .el-collapse-item:last-child .el-collapse-item__header {
+  border-bottom: 0;
+}
+
+.service-detail .api .el-collapse {
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.service-detail .api .el-collapse-item__header {
+  font-size: 16px;
+}
+
+.service-detail .api .el-collapse-item__wrap {
+  border-bottom: 0;
+}
+
+.markdown-body {
+  h1, h2, h3, h4, h5, h5 {
+    font-weight: 300;
+  }
 }
 </style>
