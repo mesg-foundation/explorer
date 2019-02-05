@@ -86,7 +86,8 @@ export const actions = {
             versions: versions,
             variables: variables,
             events: s.definition.events,
-            tasks: s.definition.tasks
+            tasks: s.definition.tasks,
+            owner: service.owner
           }
         })
         stream.cancel()

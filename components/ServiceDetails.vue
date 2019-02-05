@@ -5,8 +5,8 @@
         <ServiceLogo :url="logo" :size=120 />
         <div class="prime">
           <div class="name">{{ name }}
-            <el-dropdown class="select-version" size="mini" split-button title="service's hash">
-              viewing <span>e83ed33</span>
+            <el-dropdown v-if="versionRoute" class="select-version" size="mini" split-button title="service's hash">
+              viewing <span>{{ versionRoute }}</span>
               <el-dropdown-menu slot="dropdown">
                 <nuxt-link :to="'/services/'+usid">
                   <el-dropdown-item>go to latest</el-dropdown-item>
@@ -112,7 +112,7 @@
             <div class="box">
               <div class="item">
                 <Label class="label" name="author" uppercase/>
-                <div class="text">ilgooz</div>
+                <div class="text">{{ author }}...</div>
               </div>
               <div class="item">
                 <Label class="label" name="sid" uppercase/>
@@ -120,7 +120,9 @@
               </div>
               <div class="item">
                 <Label class="label" name="latest hash" uppercase/>
-                <div class="text">e83ed33</div>
+                <div class="text">
+                  <nuxt-link :to="'/services/'+usid+'/'+lastVersion+'#hashes'">{{ lastShortVersion }}</nuxt-link>
+                </div>
               </div>
             </div>
           </el-col>
@@ -162,8 +164,26 @@ export default {
       })).render(this.readme);
     },
 
-    yaml(){
+    yaml() {
       return YAML.stringify(json)
+    },
+
+    lastVersion() {
+      return this.versions[0].hash
+    },
+
+    lastShortVersion() {
+      return this.shortenHash(this.lastVersion)
+    },
+
+    versionRoute() {
+      const version = this.$route.params.hash
+      if (!version) return false
+      return this.shortenHash(version)
+    },
+
+    author() {
+      return this.owner.substring(0,17)
     }
   },
 
@@ -195,10 +215,14 @@ export default {
       setTimeout(() => {
         this.copied = false
       }, 600)
+    },
+
+    shortenHash(hash) {
+      return hash.substring(0,9)
     }
   },
 
-  props: ['name', 'sid', 'usid', 'description', 'logo', 'readme', 'versions', 'variables', 'events', 'tasks']
+  props: ['name', 'sid', 'usid', 'description', 'logo', 'readme', 'versions', 'variables', 'events', 'tasks', 'owner']
 }
 </script>
 
@@ -351,6 +375,16 @@ export default {
           .icon {
             margin-right: 8px;
             color: #3d0065;
+          }
+
+          a {
+            color: #222;
+            border-bottom: 1px dashed #d8d8d8;
+            display: inline-block;
+
+            &:hover {
+              border-bottom: 0;
+            }
           }
         }
       }

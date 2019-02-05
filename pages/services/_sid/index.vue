@@ -10,6 +10,7 @@
     :variables="service.variables"
     :events="service.events"
     :tasks="service.tasks"
+    :owner="service.owner"
   />
   <div v-loading="true" v-else></div>
 </template>
