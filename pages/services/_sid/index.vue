@@ -4,7 +4,7 @@
     :sid="service.sid"
     :usid="service.usid"
     :description="service.description"
-    logo="https://www.ikwebtasarim.com/public/images/1535613948.png"
+    :logo="service.logo"
     :readme="service.readme"
     :versions="service.versions"
     :variables="service.variables"
@@ -16,13 +16,11 @@
 </template>
 
 <script>
-import ServiceDetails from '~/components/ServiceDetails.vue'
-import ServiceDetailsSkeleton from '~/components/ServiceDetailsSkeleton.vue'
+import ServiceDetails from '~/components/ServiceDetails'
 
 export default {
   components: {
-    ServiceDetails,
-    ServiceDetailsSkeleton
+    ServiceDetails
   },
 
   computed: {

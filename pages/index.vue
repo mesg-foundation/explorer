@@ -1,13 +1,13 @@
 <template>
-  <ServiceList />
+  <Services />
 </template>
 
 <script>
-import ServiceList from '~/components/ServiceList.vue'
+import Services from '~/components/Services'
 
 export default {
   components: {
-    ServiceList
+    Services
   },
 
   beforeCreate: function() {

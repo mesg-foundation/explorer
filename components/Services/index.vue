@@ -17,7 +17,7 @@
             :sid="service.sid"
             :usid="service.usid"
             :description="service.description"
-            logo="https://www.ikwebtasarim.com/public/images/1535613948.png"
+            :logo="service.logo"
           />
         </div>
       </div>
@@ -29,8 +29,8 @@
 import { mapState } from 'vuex'
 import Fuse from 'fuse.js'
 
-import ServiceItem from '~/components/ServiceItem.vue'
-import ServiceItemSkeleton from '~/components/ServiceItemSkeleton.vue'
+import ServiceItem from './ServiceItem'
+import ServiceItemSkeleton from './ServiceItem/Skeleton'
 
 export default {
   components: {
