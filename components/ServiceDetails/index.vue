@@ -1,7 +1,8 @@
 <template>
   <section class="container">
     <div class="service-detail">
-      <Info 
+      <Info
+        class="info"
         :name="name"
         :logo="logo"
         :currentHash="versionRoute"
@@ -36,7 +37,7 @@
               </el-tab-pane>
             </el-tabs>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="7" :lg="7" :xl="7">
+          <el-col class="sidebar" :xs="24" :sm="24" :md="7" :lg="7" :xl="7">
             <Box :items="detail" />
           </el-col>
         </el-row>
@@ -87,7 +88,7 @@ export default {
     },
 
     detail() {
-      return [{
+      const detail = [{
         name: 'author',
         text: this.author
       }, {
@@ -98,6 +99,16 @@ export default {
         text: this.lastShortVersion,
         link: '/services/'+ this.usid +'/'+ this.lastVersion +'#hashes'
       }]
+
+      if (this.repository) {
+        detail.push({
+          name: 'repository',
+          text: this.repository,
+          link: this.repository
+        })
+      }
+
+      return detail
     },
 
     lastVersion() {
@@ -172,9 +183,15 @@ export default {
 
 <style lang="scss" scoped>
 .service-detail {
+  .info {
+    padding-bottom: 120px;
+  }
+
   .content {
+    margin: -57px 0 20px 40px;
+
     .main {
-      margin-right: 30px;
+      margin-right: 40px;
 
       .tab-container {
         color: #222;
@@ -182,10 +199,24 @@ export default {
         font-family: 'Open Sans';
         font-weight: 300;
         padding: 40px;
-        margin: 20px 0 20px 40px;
+        margin-top: 20px;
         border-radius: 10px;
         border: 1px solid #eee;
         box-shadow: 1px 1px 1px #eee;
+      }
+    }
+
+    .sidebar {
+      margin-top: 77px;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .service-detail {
+    .content {
+      .sidebar {
+        margin-top: 20px;
       }
     }
   }
@@ -198,13 +229,13 @@ export default {
 }
 
 .service-detail .el-tabs__header {
-  background-color: #510e90;
+  background-color: #fff;
+  border-top: 1px solid #eee;
   padding: 0 40px;
-  clip-path: polygon(50% 0%, 100% 60%, 100% 60%, 75% 100%, 0 100%, 0% 60%, 0 0);
 }
 
 .service-detail .el-tabs__item {
-  color: #fff;
+  color: #333;
   padding: 8px 20px;
   height: auto;
   transition: all 0.2s ease;

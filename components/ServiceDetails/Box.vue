@@ -72,10 +72,4 @@ export default {
     }
   }
 }
-
-@media screen and (max-width: 900px) {
-  .box {
-    margin-top: 20px;
-  }
-}
 </style>

@@ -6,8 +6,11 @@
         <el-collapse-item v-for="(event, key) in events" :key="key" :name="key">
           <template slot="title"> {{ key }} </template>
           <div class="text" v-for="(data, key) in event.data" :key="key">
-            {{ key }}
-            <Label class="var-info" :name="data.type"/>
+            <el-row>
+              <el-col :span="12">{{ key }}</el-col>
+              <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
+              <el-col :span="6"></el-col>
+            </el-row>
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -20,18 +23,23 @@
           <div v-if="task.inputs">
             <div class="sub-title">inputs</div>
             <div class="text" v-for="(data, key) in task.inputs" :key="key">
-              {{ key }}
-              <Label class="var-info" :name="data.type"/>
-              <Label v-if="!data.optional" class="var-info required" name="required"/>
+              <el-row>
+                <el-col :span="12">{{ key }}</el-col>
+                <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
+                <el-col :span="6"><Label v-if="!data.optional" class="var-info required" name="required"/></el-col>
+              </el-row>
             </div>
           </div>
           <div class="sub-title">outputs</div>
           <el-collapse v-for="(output, key) in task.outputs" :key="key" class="content" accordion>
             <el-collapse-item name="call.outputs">
               <template slot="title">{{ key }}</template>
-              <div  v-for="(data, key) in output.data" :key="key"  class="text">
-                {{ key }}
-                <Label class="var-info" :name="data.type"/>
+              <div v-for="(data, key) in output.data" :key="key"  class="text">
+                <el-row>
+                  <el-col :span="12">{{ key }}</el-col>
+                  <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
+                  <el-col :span="6"></el-col>
+                </el-row>
               </div>
             </el-collapse-item>
           </el-collapse>
@@ -86,6 +94,7 @@ export default {
       font-weight: 300;
       color: #999;
       padding-bottom: 5px;
+      clear: both;
     }
   }
 

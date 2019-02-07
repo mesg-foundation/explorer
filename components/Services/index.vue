@@ -1,6 +1,7 @@
 <template>
   <section class="container">
     <div class="service-list">
+      <div class="title">Marketplace</div>
       <div class="info">
         Listing <strong>{{ servicesCount }}</strong> services
       </div>
@@ -87,6 +88,11 @@ export default {
 }
 
 .service-list {
+  .title {
+    font-size: 35px;
+    margin-bottom: 25px;
+  }
+
   .info {
     color: #222;
     font-size: 13px;

@@ -11,6 +11,7 @@
     :events="service.events"
     :tasks="service.tasks"
     :owner="service.owner"
+    :repository="service.repository"
   />
   <div v-loading="true" v-else></div>
 </template>
@@ -31,7 +32,7 @@ export default {
   },
 
   beforeCreate: function() {
-    document.body.className = 'light';
+    // document.body.className = 'light';
   }
 }
 </script>

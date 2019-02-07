@@ -25,12 +25,6 @@ export const mutations = {
   }
 }
 
-// export default {
-//   async fetch ({ store, params }) {
-//     await store.dispatch('fetchServices');
-//   }
-// }
-
 export const actions = {
   fetchServices ({ commit }) {
     return new Promise((resolve, reject)=>{
@@ -87,7 +81,8 @@ export const actions = {
             variables: variables,
             events: s.definition.events,
             tasks: s.definition.tasks,
-            owner: service.owner
+            owner: service.owner,
+            repository: s.definition.repository,
           }
         })
         stream.cancel()
