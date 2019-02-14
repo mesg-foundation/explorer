@@ -1,19 +1,22 @@
 const pkg = require('./package')
 
 module.exports = {
-  mode: 'universal',
+  mode: 'spa',
 
   /*
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: "MESG Marketplace",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      { src: 'https://api.usersnap.com/load/84611590-8e69-4f5f-bfb1-94ef705ea6c9.js' }
+    ]
   },
 
   /*
@@ -21,15 +24,30 @@ module.exports = {
   */
   loading: { color: '#fff' },
 
+  server: {
+    port: 3000,
+    host: '0.0.0.0'
+  },
+
+  sitemap: {
+    hostname: 'https://marketplace.mesg.com',
+    cacheTime: 1000 * 60 * 15,
+    gzip: true,
+    generate: true // Enable me when using nuxt generate
+  },
+
   /*
   ** Global CSS
   */
-  css: ['element-ui/lib/theme-chalk/index.css'],
+  css: ['@/assets/theme.scss'],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/element-ui'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@plugins/font-awesome'
+  ],
 
   /*
   ** Nuxt.js modules
@@ -45,14 +63,14 @@ module.exports = {
     */
     extend(config, ctx) {
       // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
+      // if (ctx.isDev && ctx.isClient) {
+      //   config.module.rules.push({
+      //     enforce: 'pre',
+      //     test: /\.(js|vue)$/,
+      //     loader: 'eslint-loader',
+      //     exclude: /(node_modules)/
+      //   })
+      // }
     }
   }
 }
