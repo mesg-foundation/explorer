@@ -24,8 +24,6 @@
     "element-ui": "^2.4.11",
     "fuse.js": "^3.3.0",
     "github-markdown-css": "^2.10.0",
-    "google-protobuf": "^3.6.1",
-    "grpc-web": "^1.0.3",
     "json-to-pretty-yaml": "^1.2.2",
     "npm": "^6.7.0",
     "nuxt": "^2.3.4",
