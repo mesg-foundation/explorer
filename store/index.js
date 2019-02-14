@@ -68,8 +68,8 @@ export const actions = {
                 readme: s.readme,
                 versions: versions,
                 variables: variables,
-                events: s.definition.events || {},
-                tasks: s.definition.tasks || {},
+                events: s.definition.events,
+                tasks: s.definition.tasks,
                 owner: service.owner,
                 repository: s.definition.repository,
               }

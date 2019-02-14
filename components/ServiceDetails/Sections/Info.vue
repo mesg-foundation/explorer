@@ -22,8 +22,10 @@
       <div class="deploy">
         <div class="title">deploy with command</div>
         <el-tooltip class="item" effect="light" content="copied!" placement="top-end" :manual="true" :value="copied">
-        <div class="command" v-on:click="copyDeploy">mesg-core service deploy <strong>{{ sid }}</strong>
-          <font-awesome-icon class="icon" icon="copy" size="lg" /></div>
+          <div class="command-container" v-on:click="copyDeploy">
+            <div class="command">mesg-core service deploy <strong>{{ deployCommand }}</strong></div>
+            <div class="icon-container"><font-awesome-icon class="icon" icon="copy" size="lg" /></div>
+          </div>
         </el-tooltip>
       </div>
     </div>
@@ -46,10 +48,16 @@ export default {
       copied: false
     }
   },
+  
+  computed: {
+    deployCommand() {
+      return `mesg:marketplace:service:${this.sid}:${this.lastVersion}`
+    }
+  },
 
   methods: {
     copyDeploy() {
-      copy(`mesg-core service deploy ${this.sid}`)
+      copy(this.deployCommand)
       this.copied = true
       setTimeout(() =>  this.copied = false, 600)
     }
@@ -70,7 +78,8 @@ export default {
     },
     description: String,
     logo: String,
-    currentHash: String
+    currentHash: String,
+    lastVersion: String
   }
 }
 </script>
@@ -130,45 +139,66 @@ export default {
         text-transform: uppercase;
       }
 
-      .command {
-        background: #1f1f1f;
-        font-weight: 400;
-        font-size: 13px;
-        padding: 10px 20px;
+      .command-container {
         margin-top: 10px;
+        user-select: none;
         transition: all 0.2s ease;
         color: #efefef;
-        cursor: pointer;
-        user-select: none;
-        border-radius: 25px;
         display: inline-block;
         line-height: 25px;
-        white-space: nowrap;
+        cursor: pointer;
 
-        &::before {
-          content: "$";
-          font-size: 14px;
-          margin-right: 6px;
+        &::after {
+          clear: both;
         }
 
         &:hover {
-          background-color: #000;
-          color: #fff;
+          .command {
+            background-color: #000;
+            color: #fff;
+          }
 
-          .icon {
+          .icon-container .icon {
             opacity: 1;
           }
         }
 
-        strong {
-          font-weight: 600;
+        .command {
+          float: left;
+          background: #1f1f1f;
+          font-weight: 400;
+          font-size: 13px;
+          padding: 12px 20px;
+          border-radius: 25px 0 0 25px;
+          white-space: nowrap;
+          width: 400px;
+          height: 50px;
+          overflow: auto;
+
+          &::before {
+            content: "$";
+            font-size: 14px;
+            margin-right: 6px;
+          }
+
+          strong {
+            font-weight: 600;
+          }
         }
 
-        .icon {
-          vertical-align: middle;
-          margin-left: 15px;
-          opacity: .9;
-          transition: all 0.2s ease;
+        .icon-container {
+          float: left;
+          height: 50px;
+          padding: 10px 13px;
+          width: 40px;
+          border-radius: 0 25px 25px 0;
+          background: #1f1f1f;
+
+          .icon {
+            opacity: .9;
+            font-weight: 400;
+            font-size: 13px;
+          }
         }
       }
     }
@@ -194,8 +224,12 @@ export default {
           display: none;
         }
         
-        .command {
+        .command-container {
           white-space: normal;
+
+          .command {
+            width: 250px;
+          }
 
           .icon {
             margin-left: 3px;

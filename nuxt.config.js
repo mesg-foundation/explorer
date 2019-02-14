@@ -14,9 +14,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [
-      { src: 'https://api.usersnap.com/load/84611590-8e69-4f5f-bfb1-94ef705ea6c9.js' }
-    ]
+    script: [ ]
   },
 
   /*

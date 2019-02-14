@@ -1,6 +1,6 @@
 <template>
   <div class="api">
-    <div class="item">
+    <div v-if="events" class="item">
       <div class="title">events</div> 
       <el-collapse class="content" accordion>
         <el-collapse-item v-for="(event, key) in events" :key="key" :name="key">
@@ -15,7 +15,7 @@
         </el-collapse-item>
       </el-collapse>
     </div>
-    <div class="item">
+    <div v-if="tasks" class="item">
       <div class="title">tasks</div> 
       <el-collapse class="content" accordion>
         <el-collapse-item v-for="(task, key) in tasks" :key="key" :name="key">
@@ -28,6 +28,11 @@
                 <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
                 <el-col :span="6"><Label v-if="!data.optional" class="var-info required" name="required"/></el-col>
               </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <div class="description">{{ data.description }}</div>
+                </el-col>
+              </el-row>
             </div>
           </div>
           <div class="sub-title">outputs</div>
@@ -39,6 +44,11 @@
                   <el-col :span="12">{{ key }}</el-col>
                   <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
                   <el-col :span="6"></el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="24">
+                    <div class="description">{{ data.description }}</div>
+                  </el-col>
                 </el-row>
               </div>
             </el-collapse-item>
@@ -59,12 +69,10 @@ export default {
   
   props: {
     events: {
-      type: Object,
-      required: true
+      type: Object
     },
     tasks: {
-      type: Object,
-      required: true
+      type: Object
     }
   }
 }
@@ -96,6 +104,14 @@ export default {
       padding-bottom: 5px;
       clear: both;
     }
+
+    .description {
+      color: #666;
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 400;
+      margin-bottom: 9px;
+    }
   }
 
   .content {
@@ -107,7 +123,7 @@ export default {
 
     .text {
       font-size: 16px;
-      font-weight: 300;
+      font-weight: 600;
       height: 48px;
       line-height: 48px;
       padding: 0 20px;

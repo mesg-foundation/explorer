@@ -6,6 +6,7 @@
         :name="name"
         :logo="logo"
         :currentHash="versionRoute"
+        :lastVersion="lastVersion"
         :sid="sid"
         :usid="usid"
         :description="description" />
@@ -49,6 +50,7 @@
 <script>
 import Vue from 'vue'
 import * as Remarkable from 'remarkable'
+import anchors from '~/plugins/remarkable-anchors'
 import * as scrollTo from 'scroll-to-element'
 import Box from './Box.vue'
 import Info from './Sections/Info'
@@ -75,12 +77,14 @@ export default {
 
   computed: {
     doc() {
-      return (new Remarkable('full', {
+      const md = new Remarkable('full', {
         html: true,
         breaks: true,
         linkify: true,
         typographer: true
-      })).render(this.readme);
+      })
+      md.use(anchors)
+      return md.render(this.readme);
     },
 
     yaml() {
@@ -90,7 +94,7 @@ export default {
     detail() {
       const detail = [{
         name: 'author',
-        text: this.author
+        text: this.author+'...'
       }, {
         name: 'sid',
         text: this.sid
@@ -143,21 +147,19 @@ export default {
   methods: {
     navigateToHashRoute() {
       const route = this.$route.hash.split('#')[1];
-      if (!route) return
-      scrollTo(`#tab-${route}`)
-      this.activeDescription = route
+      switch (route) {
+      case 'doc':
+      case 'api':
+      case 'variables':
+      case 'hashes':
+        scrollTo(`#tab-${route}`)
+        this.activeDescription = route
+        break;
+      }
     },
 
     handleTabClick() {
       this.$router.push(`#${this.activeDescription}`)
-    },
-
-    copyDeploy() {
-      copy(`mesg-core service deploy ${this.sid}`)
-      this.copied = true
-      setTimeout(() => {
-        this.copied = false
-      }, 600)
     },
 
     shortenHash(hash) {
