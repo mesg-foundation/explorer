@@ -94,7 +94,7 @@ export default {
     detail() {
       const detail = [{
         name: 'author',
-        text: this.author+'...'
+        text: this.owner
       }, {
         name: 'sid',
         text: this.sid
@@ -127,10 +127,6 @@ export default {
       const version = this.$route.params.hash
       if (!version) return ""
       return this.shortenHash(version)
-    },
-
-    author() {
-      return this.owner.substring(0,17)
     }
   },
 
