@@ -21,7 +21,7 @@ export const mutations = {
 export const actions = {
   fetchServices ({ commit }) {
     return new Promise((resolve, reject)=>{
-      fetch('https://core.marketplace.mesg.com/services')
+      fetch('https://application-marketplace.mesg.com/services')
         .then((resp) => { return resp.json() })
         .then((extendedServices) => {
           const services = extendedServices
