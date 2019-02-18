@@ -31,13 +31,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$logo-size: 50px;
-  // border-bottom: #510f91;
 .topbar {
   width: 100%;
   background-color: #510f91;
   border-bottom: 1px solid #eee;
-  padding: 7px 40px;
+  padding: 15px 40px;
   transition: all 0.2s ease;
 
   .content {
@@ -47,10 +45,11 @@ $logo-size: 50px;
   }
 
   .logo {
-    background-image: url('../static/logo_white_t.png');
-    background-size: $logo-size;
-    width: $logo-size;
-    height: $logo-size;
+    background-image: url('../static/logo_white_t_text.png');
+    background-repeat: no-repeat;
+    background-size: 140px;
+    width: 140px;
+    height: 40px;
     vertical-align: center;
     margin-right: 15px;
   }

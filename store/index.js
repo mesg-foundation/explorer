@@ -21,7 +21,7 @@ export const mutations = {
 export const actions = {
   fetchServices ({ commit }) {
     return new Promise((resolve, reject)=>{
-      fetch('https://core.marketplace.mesg.com/services')
+      fetch('https://application-marketplace.mesg.com/services')
         .then((resp) => { return resp.json() })
         .then((extendedServices) => {
           const services = extendedServices
@@ -68,8 +68,8 @@ export const actions = {
                 readme: s.readme,
                 versions: versions,
                 variables: variables,
-                events: s.definition.events || {},
-                tasks: s.definition.tasks || {},
+                events: s.definition.events,
+                tasks: s.definition.tasks,
                 owner: service.owner,
                 repository: s.definition.repository,
               }

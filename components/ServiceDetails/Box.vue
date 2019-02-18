@@ -54,6 +54,7 @@ export default {
 
     .text {
       margin: 9px 1px;
+      word-break: break-all;
 
       .icon {
         margin-right: 8px;
