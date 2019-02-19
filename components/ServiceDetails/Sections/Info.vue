@@ -23,7 +23,7 @@
         <div class="title">deploy with command</div>
         <el-tooltip class="item" effect="light" content="copied!" placement="top-end" :manual="true" :value="copied">
           <div class="command-container" v-on:click="copyDeploy">
-            <div class="command">mesg-core service deploy <strong>{{ deployCommand }}</strong></div>
+            <div class="command">{{ deployCommand }}</div>
             <div class="icon-container"><font-awesome-icon class="icon" icon="copy" size="lg" /></div>
           </div>
         </el-tooltip>
@@ -179,10 +179,6 @@ export default {
             content: "$";
             font-size: 14px;
             margin-right: 6px;
-          }
-
-          strong {
-            font-weight: 600;
           }
         }
 
