@@ -12,6 +12,8 @@
     :tasks="service.tasks"
     :owner="service.owner"
     :repository="service.repository"
+    :offers="service.offers"
+    :purchases="service.purchases"
   />
   <div v-loading="true" v-else></div>
 </template>

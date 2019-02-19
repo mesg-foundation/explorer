@@ -72,6 +72,8 @@ export const actions = {
                 tasks: s.definition.tasks,
                 owner: service.owner,
                 repository: s.definition.repository,
+                offers: service.offers,
+                purchases: service.purchases
               }
             })
             .filter((item) => item)
