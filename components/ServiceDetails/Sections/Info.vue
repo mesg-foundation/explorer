@@ -9,8 +9,8 @@
             <nuxt-link :to="'/services/'+usid">
               <el-dropdown-item>go to latest</el-dropdown-item>
             </nuxt-link>
-            <a href="#hashes">
-              <el-dropdown-item>see all hashes</el-dropdown-item>
+            <a href="#versions">
+              <el-dropdown-item>see all versions</el-dropdown-item>
             </a>
           </el-dropdown-menu>
         </el-dropdown>
@@ -51,7 +51,7 @@ export default {
   
   computed: {
     deployCommand() {
-      return `mesg:marketplace:service:${this.sid}:${this.lastVersion}`
+      return `mesg-core service deploy mesg://marketplace/service/${this.lastVersion}`
     }
   },
 

@@ -14,6 +14,12 @@
         <el-row>
           <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17">
             <el-tabs class="main" v-model="activeDescription" @tab-click="handleTabClick">
+              <el-tab-pane label="VERSIONS" name="versions">
+                <Versions
+                  class="tab-container"
+                  :usid="usid"
+                  :versions="versions" />
+              </el-tab-pane>
               <el-tab-pane label="DOC" name="doc">
                 <Doc
                   class="tab-container"
@@ -29,12 +35,6 @@
                 <Variables
                   class="tab-container"
                   :variables="variables" />
-              </el-tab-pane>
-              <el-tab-pane label="HASHES" name="hashes">
-                <Hashes
-                  class="tab-container"
-                  :usid="usid"
-                  :versions="versions" />
               </el-tab-pane>
             </el-tabs>
           </el-col>
@@ -57,7 +57,7 @@ import Info from './Sections/Info'
 import Doc from './Sections/Doc'
 import API from './Sections/API'
 import Variables from './Sections/Variables'
-import Hashes from './Sections/Hashes'
+import Versions from './Sections/Versions'
 
 export default {
   components: {
@@ -66,7 +66,7 @@ export default {
     Doc,
     API,
     Variables,
-    Hashes
+    Versions
   },
 
   data() {
@@ -99,9 +99,9 @@ export default {
         name: 'sid',
         text: this.sid
       }, {
-        name: 'latest hash',
+        name: 'latest version',
         text: this.lastShortVersion,
-        link: '/services/'+ this.usid +'/'+ this.lastVersion +'#hashes'
+        link: '/services/'+ this.usid +'/'+ this.lastVersion +'#versions'
       }]
 
       if (this.repository) {
@@ -147,7 +147,7 @@ export default {
       case 'doc':
       case 'api':
       case 'variables':
-      case 'hashes':
+      case 'versions':
         scrollTo(`#tab-${route}`)
         this.activeDescription = route
         break;
@@ -229,7 +229,6 @@ export default {
 .service-detail .el-tabs__header {
   background-color: #fff;
   border-top: 1px solid #eee;
-  padding: 0 40px;
 }
 
 .service-detail .el-tabs__item {
@@ -237,11 +236,6 @@ export default {
   padding: 8px 20px;
   height: auto;
   transition: all 0.2s ease;
-  font-weight: 00;
-}
-
-.service-detail .el-tabs__item.is-active {
-  padding: 8px 20px;
   font-weight: 600;
 }
 
@@ -265,7 +259,7 @@ export default {
 
 .service-detail .el-tabs__item.is-active {
   background-color: #fbf5ff;
-  color: #111;
+  color: #430069;
 }
 
 .service-detail .el-tabs__header {

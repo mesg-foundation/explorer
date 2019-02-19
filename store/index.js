@@ -31,7 +31,6 @@ export const actions = {
               const s = service.versions[0].manifest
               const versions = service.versions.map((version) => {
                 return {
-                  number: version.manifest.version,
                   hash: version.hash
                 }
               })
