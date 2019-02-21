@@ -7,7 +7,7 @@
         v{{ version.number }}
       </el-col>
       <el-col class="detail" :span="16">
-        <nuxt-link :to="'/services/'+usid+'/'+version.hash">{{ version.hash }}</nuxt-link>
+        <nuxt-link :to="'/services/'+sid+'/'+version.hash">{{ version.hash }}</nuxt-link>
       </el-col>
     </el-row>
   </div>
@@ -26,7 +26,7 @@ export default {
       type: Array,
       required: true
     },
-    usid: {
+    sid: {
       type: String,
       required: true
     }

@@ -6,7 +6,7 @@
         <el-dropdown v-if="currentHash" class="select-version" size="mini" split-button title="service's hash">
           viewing <span>{{ currentHash }}</span>
           <el-dropdown-menu slot="dropdown">
-            <nuxt-link :to="'/services/'+usid">
+            <nuxt-link :to="'/services/'+sid">
               <el-dropdown-item>go to latest</el-dropdown-item>
             </nuxt-link>
             <a href="#hashes">
@@ -69,10 +69,6 @@ export default {
       required: true
     },
     sid: {
-      type: String,
-      required: true
-    },
-    usid: {
       type: String,
       required: true
     },
