@@ -5,7 +5,7 @@
         class="info"
         :name="name"
         :logo="logo"
-        :currentHash="versionRoute"
+        :currentVersion="currentVersion"
         :lastVersion="lastVersion"
         :sid="sid"
         :usid="usid"
@@ -14,12 +14,6 @@
         <el-row>
           <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17">
             <el-tabs class="main" v-model="activeDescription" @tab-click="handleTabClick">
-              <el-tab-pane label="VERSIONS" name="versions">
-                <Versions
-                  class="tab-container"
-                  :usid="usid"
-                  :versions="versions" />
-              </el-tab-pane>
               <el-tab-pane label="DOC" name="doc">
                 <Doc
                   class="tab-container"
@@ -35,6 +29,12 @@
                 <Variables
                   class="tab-container"
                   :variables="variables" />
+              </el-tab-pane>
+              <el-tab-pane label="VERSIONS" name="versions">
+                <Versions
+                  class="tab-container"
+                  :usid="usid"
+                  :versions="versions" />
               </el-tab-pane>
             </el-tabs>
           </el-col>
@@ -100,7 +100,7 @@ export default {
         text: this.sid
       }, {
         name: 'latest version',
-        text: this.lastShortVersion,
+        text: this.lastVersion.substring(0, 10),
         link: '/services/'+ this.usid +'/'+ this.lastVersion +'#versions'
       }]
 
@@ -119,14 +119,8 @@ export default {
       return this.versions[0].hash
     },
 
-    lastShortVersion() {
-      return this.shortenHash(this.lastVersion)
-    },
-
-    versionRoute() {
-      const version = this.$route.params.hash
-      if (!version) return ""
-      return this.shortenHash(version)
+    currentVersion() {
+      return this.$route.params.hash || this.lastVersion
     }
   },
 
@@ -159,7 +153,7 @@ export default {
     },
 
     shortenHash(hash) {
-      return hash.substring(0,9)
+      return hash
     }
   },
 

@@ -60,8 +60,10 @@ export default {
       padding-left: 20px;
 
       a {
-        color: #555;
+        color: #333;
+        padding-bottom: 2px;
         border-bottom: 1px dashed #eee;
+        font-size: 13px;
 
         &:hover {
           border: 0;
