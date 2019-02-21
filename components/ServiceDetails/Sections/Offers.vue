@@ -10,11 +10,11 @@
       </el-table-column>
       <el-table-column
         prop="price"
-        label="Price">
+        label="Price in MESG Tokens">
       </el-table-column>
       <el-table-column
         prop="duration"
-        label="Duration">
+        label="Duration in seconds">
       </el-table-column>
       <el-table-column
         prop="status"
