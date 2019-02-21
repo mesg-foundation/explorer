@@ -20,8 +20,8 @@
         prop="status"
         label="Status">
           <template slot-scope="scope">
-            <div class="status" :title="scope.row.status ? 'active' : 'passive'">
-              <status-indicator :positive="scope.row.status"></status-indicator>
+            <div class="status" :title="scope.row.active ? 'active' : 'passive'">
+              <status-indicator :positive="scope.row.active"></status-indicator>
             </div>
           </template>
       </el-table-column>
