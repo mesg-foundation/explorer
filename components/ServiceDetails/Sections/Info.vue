@@ -7,7 +7,7 @@
           viewing <span>{{ shortCurrentVersion }}</span>
           <Label v-if="currentVersion == lastVersion" class="latest" name="latest" />
           <el-dropdown-menu slot="dropdown">
-            <nuxt-link :to="'/services/'+usid">
+            <nuxt-link :to="'/services/'+sid">
               <el-dropdown-item v-if="currentVersion != lastVersion">go to latest</el-dropdown-item>
             </nuxt-link>
             <a href="#versions">
@@ -78,10 +78,6 @@ export default {
       required: true
     },
     sid: {
-      type: String,
-      required: true
-    },
-    usid: {
       type: String,
       required: true
     },

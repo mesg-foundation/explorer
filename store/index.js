@@ -59,7 +59,6 @@ export const actions = {
               }
               
               return {
-                usid: service.sidHash,
                 sid: s.definition.sid,
                 name: s.definition.name,
                 description: s.definition.description,
@@ -71,6 +70,8 @@ export const actions = {
                 tasks: s.definition.tasks,
                 owner: service.owner,
                 repository: s.definition.repository,
+                offers: service.offers,
+                purchases: service.purchases
               }
             })
             .filter((item) => item)

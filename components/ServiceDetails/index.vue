@@ -8,7 +8,6 @@
         :currentVersion="currentVersion"
         :lastVersion="lastVersion"
         :sid="sid"
-        :usid="usid"
         :description="description" />
       <div class="content">
         <el-row>
@@ -30,10 +29,20 @@
                   class="tab-container"
                   :variables="variables" />
               </el-tab-pane>
+              <el-tab-pane label="OFFERS" name="offers">
+                <Offers
+                  class="tab-container"
+                  :offers="offers" />
+              </el-tab-pane>
+              <el-tab-pane label="PURCHASES" name="purchases">
+                <Purchases
+                  class="tab-container"
+                  :purchases="purchases" />
+              </el-tab-pane>
               <el-tab-pane label="VERSIONS" name="versions">
                 <Versions
                   class="tab-container"
-                  :usid="usid"
+                  :sid="sid"
                   :versions="versions" />
               </el-tab-pane>
             </el-tabs>
@@ -58,6 +67,8 @@ import Doc from './Sections/Doc'
 import API from './Sections/API'
 import Variables from './Sections/Variables'
 import Versions from './Sections/Versions'
+import Offers from './Sections/Offers'
+import Purchases from './Sections/Purchases'
 
 export default {
   components: {
@@ -66,7 +77,9 @@ export default {
     Doc,
     API,
     Variables,
-    Versions
+    Versions,
+    Offers,
+    Purchases
   },
 
   data() {
@@ -101,7 +114,7 @@ export default {
       }, {
         name: 'latest version',
         text: this.lastVersion.substring(0, 10),
-        link: '/services/'+ this.usid +'/'+ this.lastVersion +'#versions'
+        link: '/services/'+ this.sid +'/'+ this.lastVersion +'#versions'
       }]
 
       if (this.repository) {
@@ -142,6 +155,8 @@ export default {
       case 'api':
       case 'variables':
       case 'versions':
+      case 'offers':
+      case 'purchases':
         scrollTo(`#tab-${route}`)
         this.activeDescription = route
         break;
@@ -160,7 +175,6 @@ export default {
   props: [
     'name',
     'sid',
-    'usid',
     'description',
     'logo',
     'readme',
@@ -169,6 +183,8 @@ export default {
     'events',
     'tasks',
     'owner',
+    'offers',
+    'purchases'
   ]
 }
 </script>

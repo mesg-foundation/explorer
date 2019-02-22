@@ -13,10 +13,9 @@
         <div v-else>
           <ServiceItem
             v-for="service in services"
-            :key="service.usid"
+            :key="service.sid"
             :name="service.name"
             :sid="service.sid"
-            :usid="service.usid"
             :description="service.description"
             :logo="service.logo"
           />
