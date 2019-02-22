@@ -60,7 +60,6 @@ export const actions = {
               }
               
               return {
-                usid: service.sidHash,
                 sid: s.definition.sid,
                 name: s.definition.name,
                 description: s.definition.description,

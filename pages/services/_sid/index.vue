@@ -2,7 +2,6 @@
   <ServiceDetails v-if="service"
     :name="service.name"
     :sid="service.sid"
-    :usid="service.usid"
     :description="service.description"
     :logo="service.logo"
     :readme="service.readme"
@@ -29,7 +28,7 @@ export default {
   computed: {
     service() {
       const sid = this.$route.params.sid
-      return this.$store.state.services.find(service => service.usid === sid)
+      return this.$store.state.services.find(service => service.sid === sid)
     }
   },
 

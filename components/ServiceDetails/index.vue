@@ -8,7 +8,6 @@
         :currentHash="versionRoute"
         :lastVersion="lastVersion"
         :sid="sid"
-        :usid="usid"
         :description="description" />
       <div class="content">
         <el-row>
@@ -33,7 +32,7 @@
               <el-tab-pane label="HASHES" name="hashes">
                 <Hashes
                   class="tab-container"
-                  :usid="usid"
+                  :sid="sid"
                   :versions="versions" />
               </el-tab-pane>
               <el-tab-pane label="OFFERS" name="offers">
@@ -115,7 +114,7 @@ export default {
       }, {
         name: 'latest hash',
         text: this.lastShortVersion,
-        link: '/services/'+ this.usid +'/'+ this.lastVersion +'#hashes'
+        link: '/services/'+ this.sid +'/'+ this.lastVersion +'#hashes'
       }]
 
       if (this.repository) {
@@ -182,7 +181,6 @@ export default {
   props: [
     'name',
     'sid',
-    'usid',
     'description',
     'logo',
     'readme',
