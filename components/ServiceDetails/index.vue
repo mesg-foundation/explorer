@@ -35,6 +35,16 @@
                   :sid="sid"
                   :versions="versions" />
               </el-tab-pane>
+              <el-tab-pane label="OFFERS" name="offers">
+                <Offers
+                  class="tab-container"
+                  :offers="offers" />
+              </el-tab-pane>
+              <el-tab-pane label="PURCHASES" name="purchases">
+                <Purchases
+                  class="tab-container"
+                  :purchases="purchases" />
+              </el-tab-pane>
             </el-tabs>
           </el-col>
           <el-col class="sidebar" :xs="24" :sm="24" :md="7" :lg="7" :xl="7">
@@ -57,6 +67,8 @@ import Doc from './Sections/Doc'
 import API from './Sections/API'
 import Variables from './Sections/Variables'
 import Hashes from './Sections/Hashes'
+import Offers from './Sections/Offers'
+import Purchases from './Sections/Purchases'
 
 export default {
   components: {
@@ -65,7 +77,9 @@ export default {
     Doc,
     API,
     Variables,
-    Hashes
+    Hashes,
+    Offers,
+    Purchases
   },
 
   data() {
@@ -147,6 +161,8 @@ export default {
       case 'api':
       case 'variables':
       case 'hashes':
+      case 'offers':
+      case 'purchases':
         scrollTo(`#tab-${route}`)
         this.activeDescription = route
         break;
@@ -173,6 +189,8 @@ export default {
     'events',
     'tasks',
     'owner',
+    'offers',
+    'purchases'
   ]
 }
 </script>

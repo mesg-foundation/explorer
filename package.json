@@ -31,6 +31,7 @@
     "scroll-to-element": "^2.0.2",
     "slug": "^0.9.3",
     "vue-nl2br": "^0.1.1",
+    "vue-status-indicator": "^1.1.1",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
