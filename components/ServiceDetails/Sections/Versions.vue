@@ -1,10 +1,8 @@
 <template>
-  <div class="hashes">
+  <div class="versions">
     <el-row v-for="(version, index) in versions" :key="version.hash" class="version">
-      <el-col class="number" :span="6">
+      <el-col class="tag" :span="6">
         <Label v-if="index == 0" class="latest" name="latest" uppercase background="#ff9b2b" color="#fff"/>
-        <font-awesome-icon class="icon" icon="tag" />
-        v{{ version.number }}
       </el-col>
       <el-col class="detail" :span="16">
         <nuxt-link :to="'/services/'+sid+'/'+version.hash">{{ version.hash }}</nuxt-link>
@@ -35,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.hashes {
+.versions {
   font-size: 14px;
 
   .version {
@@ -45,10 +43,10 @@ export default {
       padding: 10px 0;
     }
 
-    .number {
+    .tag {
       color: #555;
       font-weight: 400;
-      border-right: 5px solid #eee;
+      border-right: 2px solid #eee;
       text-align: right;
       padding-right: 20px;
 
@@ -56,19 +54,16 @@ export default {
         display: inline-block;
         margin-right: 10px;
       }
-
-      .icon {
-        color: #e0e0e0;
-        margin-right: 5px;
-      }
     }
 
     .detail {
       padding-left: 20px;
 
       a {
-        color: #555;
+        color: #333;
+        padding-bottom: 2px;
         border-bottom: 1px dashed #eee;
+        font-size: 13px;
 
         &:hover {
           border: 0;

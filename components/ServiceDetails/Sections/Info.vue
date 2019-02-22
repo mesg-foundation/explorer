@@ -3,14 +3,15 @@
     <ServiceLogo :url="logo" :size=120 />
     <div class="prime">
       <div class="name">{{ name }}
-        <el-dropdown v-if="currentHash" class="select-version" size="mini" split-button title="service's hash">
-          viewing <span>{{ currentHash }}</span>
+        <el-dropdown class="select-version" size="mini" split-button title="service's hash">
+          viewing <span>{{ shortCurrentVersion }}</span>
+          <Label v-if="currentVersion == lastVersion" class="latest" name="latest" />
           <el-dropdown-menu slot="dropdown">
             <nuxt-link :to="'/services/'+sid">
-              <el-dropdown-item>go to latest</el-dropdown-item>
+              <el-dropdown-item v-if="currentVersion != lastVersion">go to latest</el-dropdown-item>
             </nuxt-link>
-            <a href="#hashes">
-              <el-dropdown-item>see all hashes</el-dropdown-item>
+            <a href="#versions">
+              <el-dropdown-item>see all versions</el-dropdown-item>
             </a>
           </el-dropdown-menu>
         </el-dropdown>
@@ -23,7 +24,7 @@
         <div class="title">deploy with command</div>
         <el-tooltip class="item" effect="light" content="copied!" placement="top-end" :manual="true" :value="copied">
           <div class="command-container" v-on:click="copyDeploy">
-            <div class="command">mesg-core service deploy <strong>{{ deployCommand }}</strong></div>
+            <div class="command">{{ deployCommand }}</div>
             <div class="icon-container"><font-awesome-icon class="icon" icon="copy" size="lg" /></div>
           </div>
         </el-tooltip>
@@ -51,7 +52,15 @@ export default {
   
   computed: {
     deployCommand() {
-      return `mesg:marketplace:service:${this.sid}:${this.lastVersion}`
+      return `mesg-core service deploy mesg://marketplace/service/${this.lastVersion}`
+    },
+
+    shortCurrentVersion(){
+      return this.currentVersion.substring(0, 10)
+    },
+
+    shortLastVersion(){
+      return this.lastVersion.substring(0, 10)
     }
   },
 
@@ -74,7 +83,7 @@ export default {
     },
     description: String,
     logo: String,
-    currentHash: String,
+    currentVersion: String,
     lastVersion: String
   }
 }
@@ -114,9 +123,16 @@ export default {
 
     .select-version {
       vertical-align: middle;
+      margin-left: 10px;
 
       span {
         font-weight: 400;
+      }
+
+      .latest {
+        margin: 0 0 0 5px;
+        background-color: #ff9b2b;
+        color: #fff;
       }
     }
   }
@@ -175,10 +191,6 @@ export default {
             content: "$";
             font-size: 14px;
             margin-right: 6px;
-          }
-
-          strong {
-            font-weight: 600;
           }
         }
 
@@ -243,6 +255,7 @@ export default {
     .el-button--mini {
       font-size: 12px;
       font-weight: 300;
+      padding: 9px 6px 8px 15px;
     }
 
     .el-button {

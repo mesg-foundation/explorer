@@ -5,7 +5,7 @@
         class="info"
         :name="name"
         :logo="logo"
-        :currentHash="versionRoute"
+        :currentVersion="currentVersion"
         :lastVersion="lastVersion"
         :sid="sid"
         :description="description" />
@@ -29,12 +29,6 @@
                   class="tab-container"
                   :variables="variables" />
               </el-tab-pane>
-              <el-tab-pane label="HASHES" name="hashes">
-                <Hashes
-                  class="tab-container"
-                  :sid="sid"
-                  :versions="versions" />
-              </el-tab-pane>
               <el-tab-pane label="OFFERS" name="offers">
                 <Offers
                   class="tab-container"
@@ -44,6 +38,12 @@
                 <Purchases
                   class="tab-container"
                   :purchases="purchases" />
+              </el-tab-pane>
+              <el-tab-pane label="VERSIONS" name="versions">
+                <Versions
+                  class="tab-container"
+                  :sid="sid"
+                  :versions="versions" />
               </el-tab-pane>
             </el-tabs>
           </el-col>
@@ -66,7 +66,7 @@ import Info from './Sections/Info'
 import Doc from './Sections/Doc'
 import API from './Sections/API'
 import Variables from './Sections/Variables'
-import Hashes from './Sections/Hashes'
+import Versions from './Sections/Versions'
 import Offers from './Sections/Offers'
 import Purchases from './Sections/Purchases'
 
@@ -77,7 +77,7 @@ export default {
     Doc,
     API,
     Variables,
-    Hashes,
+    Versions,
     Offers,
     Purchases
   },
@@ -112,9 +112,9 @@ export default {
         name: 'sid',
         text: this.sid
       }, {
-        name: 'latest hash',
-        text: this.lastShortVersion,
-        link: '/services/'+ this.sid +'/'+ this.lastVersion +'#hashes'
+        name: 'latest version',
+        text: this.lastVersion.substring(0, 10),
+        link: '/services/'+ this.sid +'/'+ this.lastVersion +'#versions'
       }]
 
       if (this.repository) {
@@ -132,14 +132,8 @@ export default {
       return this.versions[0].hash
     },
 
-    lastShortVersion() {
-      return this.shortenHash(this.lastVersion)
-    },
-
-    versionRoute() {
-      const version = this.$route.params.hash
-      if (!version) return ""
-      return this.shortenHash(version)
+    currentVersion() {
+      return this.$route.params.hash || this.lastVersion
     }
   },
 
@@ -160,7 +154,7 @@ export default {
       case 'doc':
       case 'api':
       case 'variables':
-      case 'hashes':
+      case 'versions':
       case 'offers':
       case 'purchases':
         scrollTo(`#tab-${route}`)
@@ -174,7 +168,7 @@ export default {
     },
 
     shortenHash(hash) {
-      return hash.substring(0,9)
+      return hash
     }
   },
 
@@ -245,7 +239,6 @@ export default {
 .service-detail .el-tabs__header {
   background-color: #fff;
   border-top: 1px solid #eee;
-  padding: 0 40px;
 }
 
 .service-detail .el-tabs__item {
@@ -253,11 +246,6 @@ export default {
   padding: 8px 20px;
   height: auto;
   transition: all 0.2s ease;
-  font-weight: 00;
-}
-
-.service-detail .el-tabs__item.is-active {
-  padding: 8px 20px;
   font-weight: 600;
 }
 
@@ -281,7 +269,7 @@ export default {
 
 .service-detail .el-tabs__item.is-active {
   background-color: #fbf5ff;
-  color: #111;
+  color: #430069;
 }
 
 .service-detail .el-tabs__header {
