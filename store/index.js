@@ -23,8 +23,8 @@ export const actions = {
     return new Promise((resolve, reject)=>{
       fetch('https://application-marketplace.mesg.com/services')
         .then((resp) => { return resp.json() })
-        .then((extendedServices) => {
-          const services = extendedServices
+        .then((resp) => {
+          const services = resp.services
             .map((service) => {
               if (service.versions.length === 0) return
 
