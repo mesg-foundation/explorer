@@ -26,18 +26,24 @@ export const actions = {
         .then((resp) => {
           const services = resp.services
             .map((service) => {
-              if (service.versions.length === 0) return
+              if (!service.versions || service.versions.length === 0) return
 
-              const s = service.versions[0].manifest
-              const versions = service.versions.map((version) => {
-                return {
-                  hash: version.hash
-                }
-              })
+              const manifestData = service.versions[service.versions.length-1].manifestData
+              if (!manifestData) return
+
+              const s = manifestData.service
+              if (!s || !s.definition) return
+
+              const versions = service.versions.map((version) => ({
+                hash: version.versionHash
+              }))
 
               const variables = {}
-              if (s.definition.configuration && s.definition.configuration.env) {
-                const vars = s.definition.configuration.env.map((variable) => {
+              const definition = s.definition
+              const configuration = definition.configuration
+
+              if (configuration && configuration.env) {
+                const vars = configuration.env.map((variable) => {
                   const parsedVar = variable.split('=')
                   const name = parsedVar[0]
                   const value = parsedVar.length == 2 ? parsedVar[1] : ''
@@ -46,30 +52,32 @@ export const actions = {
                 variables['service'] = vars
               }
 
-              if (s.definition.dependencies) {
-                Object.keys(s.definition.dependencies).forEach((dependency) => {
-                  const vars = s.definition.dependencies[dependency].env.map((variable) => {
+              if (definition.dependencies) {
+                Object.keys(definition.dependencies).forEach((name) => {
+                  const dependency = definition.dependencies[name]
+                  if (!dependency.env) return
+                  const vars = dependency.env.map((variable) => {
                     const parsedVar = variable.split('=')
                     const name = parsedVar[0]
                     const value = parsedVar.length == 2 ? parsedVar[1] : ''
                     return { name, value }
                   })
-                  variables[dependency] = vars
+                  variables[name] = vars
                 })
               }
               
               return {
-                sid: s.definition.sid,
-                name: s.definition.name,
-                description: s.definition.description,
-                logo: s.definition.logo,
+                sid: definition.sid,
+                name: definition.name,
+                description: definition.description,
+                logo: definition.logo,
                 readme: s.readme,
                 versions: versions,
                 variables: variables,
-                events: s.definition.events,
-                tasks: s.definition.tasks,
+                events: definition.events,
+                tasks: definition.tasks,
                 owner: service.owner,
-                repository: s.definition.repository,
+                repository: definition.repository,
                 offers: service.offers,
                 purchases: service.purchases
               }
