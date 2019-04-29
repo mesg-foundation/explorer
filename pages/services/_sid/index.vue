@@ -28,12 +28,20 @@ export default {
   computed: {
     service() {
       const sid = this.$route.params.sid
-      return this.$store.state.services.find(service => service.sid === sid)
+      const hash = this.$route.params.hash
+      if (hash) {
+        return this.$store.getters.getService(hash)
+      }
+      return this.$store.getters.getServiceLatest(sid)
     }
   },
 
   beforeCreate: function() {
     // document.body.className = 'light';
+  },
+
+  beforeMount() {
+    this.$store.dispatch('fetchService', this.$route.params.sid);
   }
 }
 </script>

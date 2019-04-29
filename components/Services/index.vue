@@ -37,6 +37,10 @@ export default {
     ServiceItem,
     ServiceItemSkeleton
   },
+
+  created() {
+    this.$store.dispatch('fetchServices');
+  },
   
   destroyed() {
     this.$store.commit('updateSearch');
@@ -48,7 +52,7 @@ export default {
     },
 
     services() {
-      var services = this.$store.state.services
+      var services = this.$store.state.serviceList
       if (this.search) {
         return new Fuse(this.$store.state.services ,{
           shouldSort: true,

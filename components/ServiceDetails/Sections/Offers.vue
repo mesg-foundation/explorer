@@ -4,7 +4,7 @@
       :data="offers"
       style="width: 100%">
       <el-table-column
-        prop="index"
+        prop="offerIndex"
         label="Index"
         width="180">
       </el-table-column>

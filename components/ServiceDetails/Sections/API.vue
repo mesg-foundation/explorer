@@ -3,11 +3,11 @@
     <div v-if="events" class="item">
       <div class="title">events</div> 
       <el-collapse class="content" accordion>
-        <el-collapse-item v-for="(event, key) in events" :key="key" :name="key">
-          <template slot="title"> {{ key }} </template>
-          <div class="text" v-for="(data, key) in event.data" :key="key">
+        <el-collapse-item v-for="event in events" :key="event.ke" :name="event.ke">
+          <template slot="title"> {{ event.key }} </template>
+          <div class="text" v-for="data in event.data" :key="data.key">
             <el-row>
-              <el-col :span="12">{{ key }}</el-col>
+              <el-col :span="12">{{ data.key }}</el-col>
               <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
               <el-col :span="6"></el-col>
             </el-row>
@@ -18,13 +18,13 @@
     <div v-if="tasks" class="item">
       <div class="title">tasks</div> 
       <el-collapse class="content" accordion>
-        <el-collapse-item v-for="(task, key) in tasks" :key="key" :name="key">
-          <template slot="title"> {{ key }} </template>
+        <el-collapse-item v-for="task in tasks" :key="task.key" :name="task.key">
+          <template slot="title"> {{ task.key }} </template>
           <div v-if="task.inputs">
             <div class="sub-title">inputs</div>
-            <div class="text" v-for="(data, key) in task.inputs" :key="key">
+            <div class="text" v-for="data in task.inputs" :key="data.key">
               <el-row>
-                <el-col :span="12">{{ key }}</el-col>
+                <el-col :span="12">{{ data.key }}</el-col>
                 <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
                 <el-col :span="6"><Label v-if="!data.optional" class="var-info required" name="required"/></el-col>
               </el-row>
@@ -36,12 +36,12 @@
             </div>
           </div>
           <div class="sub-title">outputs</div>
-          <el-collapse v-for="(output, key) in task.outputs" :key="key" class="content" accordion>
+          <el-collapse v-for="output in task.outputs" :key="output.key" class="content" accordion>
             <el-collapse-item name="call.outputs">
-              <template slot="title">{{ key }}</template>
-              <div v-for="(data, key) in output.data" :key="key"  class="text">
+              <template slot="title">{{ output.key }}</template>
+              <div v-for="data in output.data" :key="data.key"  class="text">
                 <el-row>
-                  <el-col :span="12">{{ key }}</el-col>
+                  <el-col :span="12">{{ data.key }}</el-col>
                   <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
                   <el-col :span="6"></el-col>
                 </el-row>
@@ -69,10 +69,10 @@ export default {
   
   props: {
     events: {
-      type: Object
+      type: Array
     },
     tasks: {
-      type: Object
+      type: Array
     }
   }
 }

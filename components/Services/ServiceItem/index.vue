@@ -3,7 +3,7 @@
     <section class="service-item">
       <ServiceLogo :url="logo" />
       <div class="prime">
-        <div class="name">{{ name }}</div>
+        <div class="name">{{ name || sid }}</div>
         <div class="sid">{{ sid }}</div>
         <div class="description">{{ description }}</div>
       </div>

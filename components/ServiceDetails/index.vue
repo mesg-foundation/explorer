@@ -81,7 +81,7 @@ export default {
     Offers,
     Purchases
   },
-
+  
   data() {
     return {
       activeDescription: 'doc'

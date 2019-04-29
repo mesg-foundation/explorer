@@ -14,10 +14,6 @@ export default {
   components: {
     TopBar,
     Footer
-  },
-
-  mounted() {
-    this.$store.dispatch('fetchServices');
   }
 }
 </script>
