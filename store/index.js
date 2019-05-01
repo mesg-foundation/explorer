@@ -9,14 +9,15 @@ export const getters = {
   getService: (state) => (hash) => {
     const service = state.services.find(s => {
       return s.versions.find((version) => {
-        return version.manifestData.service.definition.hash === hash
+        console.log(version)
+        return version.versionHash === hash
       })
     })
 
     if (!service || !service.versions || service.versions.length === 0) return
 
     const manifestData = service.versions.find((version) => {
-      return version.manifestData.service.definition.hash === hash
+      return version.versionHash === hash
     }).manifestData
     if (!manifestData) return
 
@@ -24,7 +25,7 @@ export const getters = {
     if (!s || !s.definition) return
 
     const versions = service.versions.map((version) => ({
-      hash: version.manifestData.service.definition.hash
+      hash: version.versionHash
     }))
 
     const variables = {}
@@ -75,7 +76,7 @@ export const getters = {
   getServiceLatest: (state, getters) => (sid) => {
     const service = state.services.find(s => s.sid == sid)
     if (!service) return
-    const hash = service.versions[service.versions.length-1].manifestData.service.definition.hash
+    const hash = service.versions[service.versions.length - 1].versionHash
     return getters.getService(hash)
   },
 }
