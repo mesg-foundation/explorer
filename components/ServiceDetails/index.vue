@@ -24,11 +24,6 @@
                   :events="events"
                   :tasks="tasks" />
               </el-tab-pane>
-              <el-tab-pane label="VARIABLES" name="variables">
-                <Variables
-                  class="tab-container"
-                  :variables="variables" />
-              </el-tab-pane>
               <el-tab-pane label="OFFERS" name="offers">
                 <Offers
                   class="tab-container"
@@ -65,7 +60,6 @@ import Box from './Box.vue'
 import Info from './Sections/Info'
 import Doc from './Sections/Doc'
 import API from './Sections/API'
-import Variables from './Sections/Variables'
 import Versions from './Sections/Versions'
 import Offers from './Sections/Offers'
 import Purchases from './Sections/Purchases'
@@ -76,7 +70,6 @@ export default {
     Info,
     Doc,
     API,
-    Variables,
     Versions,
     Offers,
     Purchases
@@ -153,7 +146,6 @@ export default {
       switch (route) {
       case 'doc':
       case 'api':
-      case 'variables':
       case 'versions':
       case 'offers':
       case 'purchases':
@@ -179,7 +171,6 @@ export default {
     'logo',
     'readme',
     'versions',
-    'variables',
     'events',
     'tasks',
     'owner',

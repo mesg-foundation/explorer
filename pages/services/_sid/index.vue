@@ -6,7 +6,6 @@
     :logo="service.logo"
     :readme="service.readme"
     :versions="service.versions"
-    :variables="service.variables"
     :events="service.events"
     :tasks="service.tasks"
     :owner="service.owner"

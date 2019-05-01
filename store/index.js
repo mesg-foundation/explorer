@@ -27,46 +27,11 @@ export const getters = {
       hash: version.manifestData.service.definition.hash
     }))
 
-    const variables = {}
-    const definition = s.definition
-    const configuration = definition.configuration
-
-    if (configuration && configuration.env) {
-      const vars = configuration.env.map((variable) => {
-        const parsedVar = variable.split('=')
-        const name = parsedVar[0]
-        const value = parsedVar.length == 2 ? parsedVar[1] : ''
-        return { name, value }
-      })
-      variables['service'] = vars
-    }
-
-    if (definition.dependencies) {
-      Object.keys(definition.dependencies).forEach((name) => {
-        const dependency = definition.dependencies[name]
-        if (!dependency.env) return
-        const vars = dependency.env.map((variable) => {
-          const parsedVar = variable.split('=')
-          const name = parsedVar[0]
-          const value = parsedVar.length == 2 ? parsedVar[1] : ''
-          return { name, value }
-        })
-        variables[name] = vars
-      })
-    }
-    
     return {
-      sid: definition.sid,
-      name: definition.name,
-      description: definition.description,
-      logo: definition.logo,
+      ...s.definition,
       readme: s.readme,
       versions: versions,
-      variables: variables,
-      events: definition.events,
-      tasks: definition.tasks,
       owner: service.owner,
-      repository: definition.repository,
       offers: service.offers,
       purchases: service.purchases
     }
@@ -75,17 +40,17 @@ export const getters = {
   getServiceLatest: (state, getters) => (sid) => {
     const service = state.services.find(s => s.sid == sid)
     if (!service) return
-    const hash = service.versions[service.versions.length-1].manifestData.service.definition.hash
+    const hash = service.versions[service.versions.length - 1].manifestData.service.definition.hash
     return getters.getService(hash)
   },
 }
 
 export const mutations = {
-  updateSearch (state, query) {
+  updateSearch(state, query) {
     state.search = query
   },
 
-  cacheService (state, service) {
+  cacheService(state, service) {
     const i = state.services.map((s) => s.sid).indexOf(service.sid);
     if (i === -1) {
       state.services.push(service)
@@ -94,19 +59,19 @@ export const mutations = {
     }
   },
 
-  updateServiceList (state, services) {
+  updateServiceList(state, services) {
     state.serviceList = services
   },
 
-  updateLoading (state, status) {
+  updateLoading(state, status) {
     state.loading = status
   }
 }
 
 export const actions = {
-  fetchService ({ commit }, sid) {
-    return new Promise((resolve)=>{
-      fetch('https://marketplace.app.mesg.com/services/'+sid)
+  fetchService({ commit }, sid) {
+    return new Promise((resolve) => {
+      fetch('https://marketplace.app.mesg.com/services/' + sid)
         .then((resp) => { return resp.json() })
         .then((service) => {
           commit('cacheService', service)
@@ -115,9 +80,9 @@ export const actions = {
         })
     })
   },
-  
-  fetchServices ({ commit }) {
-    return new Promise((resolve)=>{
+
+  fetchServices({ commit }) {
+    return new Promise((resolve) => {
       fetch('https://marketplace.app.mesg.com/services')
         .then((resp) => { return resp.json() })
         .then(({ services }) => {
