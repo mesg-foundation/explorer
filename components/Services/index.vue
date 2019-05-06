@@ -54,7 +54,7 @@ export default {
     services() {
       var services = this.$store.state.serviceList
       if (this.search) {
-        return new Fuse(this.$store.state.services ,{
+        return new Fuse(services ,{
           shouldSort: true,
           findAllMatches: true,
           tokenize: true,
