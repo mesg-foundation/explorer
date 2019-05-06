@@ -1,11 +1,13 @@
 <template>
   <div class="info">
-    <ServiceLogo :url="logo" :size=120 />
+    <ServiceLogo :url="logo" :size="120"/>
     <div class="prime">
-      <div class="name">{{ name }}
+      <div class="name">
+        {{ name }}
         <el-dropdown class="select-version" size="mini" split-button title="service's hash">
-          viewing <span>{{ shortCurrentVersion }}</span>
-          <Label v-if="currentVersion == lastVersion" class="latest" name="latest" />
+          viewing
+          <span>{{ shortCurrentVersion }}</span>
+          <Label v-if="currentVersion == lastVersion" class="latest" name="latest"/>
           <el-dropdown-menu slot="dropdown">
             <nuxt-link :to="'/services/'+sid">
               <el-dropdown-item v-if="currentVersion != lastVersion">go to latest</el-dropdown-item>
@@ -16,18 +18,58 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div class="sid"><Label name="sid" uppercase/>{{ sid }}</div>
+      <div class="sid">
+        <Label name="sid" uppercase/>
+        {{ sid }}
+      </div>
       <div class="description">{{ description }}</div>
     </div>
     <div class="actions">
       <div class="deploy">
-        <div class="title">deploy with command</div>
-        <el-tooltip class="item" effect="light" content="copied!" placement="top-end" :manual="true" :value="copied">
-          <div class="command-container" v-on:click="copyDeploy">
-            <div class="command">{{ deployCommand }}</div>
-            <div class="icon-container"><font-awesome-icon class="icon" icon="copy" size="lg" /></div>
-          </div>
-        </el-tooltip>
+        <el-button type="primary" round @click="dialogVisible = true">Get this service</el-button>
+
+        <el-dialog :title="`Get the service ${name}`" :visible.sync="dialogVisible" width="30%">
+          <table>
+            <tr>
+              <td>Index</td>
+              <td>Duration</td>
+              <td>Price</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1 day</td>
+              <td>10 MESG</td>
+              <td>
+                <button>purchase</button>
+              </td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>2 day</td>
+              <td>20 MESG</td>
+              <td>
+                <button>purchase</button>
+              </td>
+            </tr>
+          </table>
+          <div class="title">deploy with command</div>
+          <el-tooltip
+            class="item"
+            effect="light"
+            content="copied!"
+            placement="top-end"
+            :manual="true"
+            :value="copied"
+          >
+            <div class="command-container" v-on:click="copyDeploy">
+              <div class="command">{{ deployCommand }}</div>
+              <div class="icon-container">
+                <font-awesome-icon class="icon" icon="copy" size="lg"/>
+              </div>
+            </div>
+          </el-tooltip>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -37,30 +79,37 @@
 import * as copy from 'copy-text-to-clipboard'
 import ServiceLogo from '~/components/ServiceLogo.vue'
 import Label from '~/components/Label.vue'
-  
+
 export default {
   components: {
     ServiceLogo,
     Label
   },
-  
+
   data() {
     return {
-      copied: false
+      copied: false,
+      dialogVisible: false
     }
   },
-  
+
   computed: {
     deployCommand() {
-      return `mesg-core service deploy mesg://marketplace/service/${this.lastVersion}`
+      return `mesg-core service deploy mesg://marketplace/service/${
+        this.lastVersion
+      }`
     },
 
-    shortCurrentVersion(){
+    shortCurrentVersion() {
       return this.currentVersion.substring(0, 10)
     },
 
-    shortLastVersion(){
+    shortLastVersion() {
       return this.lastVersion.substring(0, 10)
+    },
+
+    free() {
+      return this.offers.length === 0 || !!this.offers.find(x => x.price === 0)
     }
   },
 
@@ -68,7 +117,7 @@ export default {
     copyDeploy() {
       copy(this.deployCommand)
       this.copied = true
-      setTimeout(() =>  this.copied = false, 600)
+      setTimeout(() => (this.copied = false), 600)
     }
   },
 
@@ -84,7 +133,11 @@ export default {
     description: String,
     logo: String,
     currentVersion: String,
-    lastVersion: String
+    lastVersion: String,
+    offers: {
+      type: Array,
+      default: () => []
+    }
   }
 }
 </script>
@@ -141,7 +194,6 @@ export default {
     margin-left: auto;
     margin-top: auto;
     padding-left: 40px;
-    border-left: 1px solid #eee;
 
     .deploy {
       .title {
@@ -188,7 +240,7 @@ export default {
           overflow: auto;
 
           &::before {
-            content: "$";
+            content: '$';
             font-size: 14px;
             margin-right: 6px;
           }
@@ -203,7 +255,7 @@ export default {
           background: #1f1f1f;
 
           .icon {
-            opacity: .9;
+            opacity: 0.9;
             font-weight: 400;
             font-size: 13px;
           }
@@ -231,7 +283,7 @@ export default {
         .title {
           display: none;
         }
-        
+
         .command-container {
           white-space: normal;
 
@@ -264,11 +316,11 @@ export default {
       // border: 0;
     }
 
-    button:first-child  {
+    button:first-child {
       border-radius: 25px 0 0 25px;
     }
 
-    button.el-dropdown__caret-button  {
+    button.el-dropdown__caret-button {
       border-radius: 0 25px 25px 0;
     }
   }

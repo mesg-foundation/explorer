@@ -145,7 +145,7 @@ export default {
 
   mounted() {
     Vue.nextTick(() => this.navigateToHashRoute())
-  },
+  }, 
 
   methods: {
     navigateToHashRoute() {

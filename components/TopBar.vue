@@ -4,7 +4,17 @@
       <nuxt-link to="/">
         <div @click="clearSearch" class="logo" title="MESG Foundation" alt="MESG Fountation"></div>
       </nuxt-link>
-      <el-input class="search" :value="search" @input="updateSearch" placeholder="search services..."></el-input>
+      <el-input
+        class="search"
+        :value="search"
+        @input="updateSearch"
+        placeholder="search services..."
+      ></el-input>
+      <a
+        class="el-button is-round"
+        href="https://docs.mesg.com/guide/marketplace/"
+        target="_blank"
+      >Add my service</a>
     </div>
   </section>
 </template>
@@ -13,18 +23,16 @@
 import { mapState } from 'vuex'
 
 export default {
-  computed: mapState([
-    'search'
-  ]),
+  computed: mapState(['search']),
 
   methods: {
     updateSearch(query) {
       this.$router.push('/')
-      this.$store.commit('updateSearch', query.trim());
+      this.$store.commit('updateSearch', query.trim())
     },
 
     clearSearch() {
-      this.$store.commit('updateSearch');
+      this.$store.commit('updateSearch')
     }
   }
 }
@@ -63,6 +71,10 @@ export default {
   }
 }
 
+.el-button {
+  margin-left: 1em;
+}
+
 body.light {
   .topbar {
     background-color: #fff;
@@ -89,7 +101,6 @@ body.light {
     border-radius: 25px;
     transition: all 0.2s ease;
 
-    
     &:focus {
       background-color: #fbf5ff;
       color: #111;
@@ -110,7 +121,7 @@ body.light {
     .search input {
       background-color: #fbf5ff;
       color: #7609e0;
-      
+
       &:focus {
         background-color: #fefdff;
         color: #111;
