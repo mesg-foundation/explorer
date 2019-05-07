@@ -1,7 +1,6 @@
 <template>
   <section class="container">
     <div class="service-list">
-      <div class="title">Marketplace</div>
       <div class="info">
         Listing <strong>{{ servicesCount }}</strong> services
       </div>
@@ -14,10 +13,7 @@
           <ServiceItem
             v-for="service in services"
             :key="service.sid"
-            :name="service.name"
-            :sid="service.sid"
-            :description="service.description"
-            :logo="service.logo"
+            :service="service"
           />
         </div>
       </div>

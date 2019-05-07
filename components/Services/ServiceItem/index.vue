@@ -1,11 +1,14 @@
 <template>
-  <nuxt-link :to="'services/' + sid">
+  <nuxt-link :to="'services/' + version.sid">
     <section class="service-item">
-      <ServiceLogo :url="logo" />
       <div class="prime">
-        <div class="name">{{ name || sid }}</div>
-        <div class="sid">{{ sid }}</div>
-        <div class="description">{{ description }}</div>
+        <div class="name">{{ version.name || version.sid }}</div>
+        <div class="sid">{{ version.sid }}</div>
+        <div class="description">{{ version.description }}</div>
+      </div>
+      <div class="price">
+        <span v-if="offer">From {{offer.price}} MESG</span>
+        <span v-else>Free service</span>
       </div>
     </section>
   </nuxt-link>
@@ -19,7 +22,25 @@ export default {
     ServiceLogo
   },
 
-  props: ['name', 'sid', 'description', 'logo']
+  props: {
+    service: {
+      type: Object,
+      required: true
+    }
+  },
+
+  computed: {
+    version() {
+      return [...this.service.versions].sort(
+        (a, b) => new Date(b.createTime) - new Date(a.createTime)
+      )[0].manifestData.service.definition
+    },
+    offer() {
+      return [...this.service.offers]
+        .filter(x => x.active)
+        .sort((a, b) => parseInt(a.price, 10) - parseInt(b.price, 10))[0]
+    }
+  }
 }
 </script>
 
@@ -39,6 +60,7 @@ export default {
   }
 
   .prime {
+    flex: 2;
     .name {
       font-size: 15px;
       color: #333;
@@ -57,6 +79,13 @@ export default {
       margin-top: 12px;
       line-height: 20px;
     }
+  }
+  .price {
+    flex: 1;
+    font-size: 15px;
+    color: #333;
+    font-weight: 600;
+    text-align: right;
   }
 }
 </style>
