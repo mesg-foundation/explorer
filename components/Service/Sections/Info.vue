@@ -1,16 +1,15 @@
 <template>
   <div class="info">
-    <ServiceLogo :url="logo" :size="120"/>
     <div class="prime">
       <div class="name">
-        {{ name }}
+        {{ definition.name }}
         <el-dropdown class="select-version" size="mini" split-button title="service's hash">
           viewing
           <span>{{ shortCurrentVersion }}</span>
-          <Label v-if="currentVersion == lastVersion" class="latest" name="latest"/>
+          <Label v-if="versionHash == service.latestVersion" class="latest" name="latest"/>
           <el-dropdown-menu slot="dropdown">
-            <nuxt-link :to="'/services/'+sid">
-              <el-dropdown-item v-if="currentVersion != lastVersion">go to latest</el-dropdown-item>
+            <nuxt-link :to="'/services/'+definition.sid">
+              <el-dropdown-item v-if="versionHash != service.latestVersion">go to latest</el-dropdown-item>
             </nuxt-link>
             <a href="#versions">
               <el-dropdown-item>see all versions</el-dropdown-item>
@@ -20,39 +19,16 @@
       </div>
       <div class="sid">
         <Label name="sid" uppercase/>
-        {{ sid }}
+        {{ definition.sid }}
       </div>
-      <div class="description">{{ description }}</div>
+      <div class="description">{{ definition.description }}</div>
     </div>
     <div class="actions">
       <div class="deploy">
         <el-button type="primary" round @click="dialogVisible = true">Get this service</el-button>
 
-        <el-dialog :title="`Get the service ${name}`" :visible.sync="dialogVisible" width="30%">
-          <table>
-            <tr>
-              <td>Index</td>
-              <td>Duration</td>
-              <td>Price</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>0</td>
-              <td>1 day</td>
-              <td>10 MESG</td>
-              <td>
-                <button>purchase</button>
-              </td>
-            </tr>
-            <tr>
-              <td>0</td>
-              <td>2 day</td>
-              <td>20 MESG</td>
-              <td>
-                <button>purchase</button>
-              </td>
-            </tr>
-          </table>
+        <el-dialog :title="`Get the service ${definition.name}`" :visible.sync="dialogVisible">
+          <Offers :service="service"/>
           <div class="title">deploy with command</div>
           <el-tooltip
             class="item"
@@ -77,13 +53,25 @@
 
 <script>
 import * as copy from 'copy-text-to-clipboard'
-import ServiceLogo from '~/components/ServiceLogo.vue'
 import Label from '~/components/Label.vue'
+import Offers from '~/components/Service/Sections/Offers.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    ServiceLogo,
-    Label
+    Label,
+    Offers
+  },
+
+  props: {
+    service: {
+      type: Object,
+      required: true
+    },
+    versionHash: {
+      type: String,
+      required: true
+    }
   },
 
   data() {
@@ -94,18 +82,24 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      versionsByHash: 'versionsByHash'
+    }),
     deployCommand() {
       return `mesg-core service deploy mesg://marketplace/service/${
-        this.lastVersion
+        this.versionHash
       }`
     },
-
+    definition() {
+      return this.versionsByHash[this.versionHash].manifestData.service
+        .definition
+    },
     shortCurrentVersion() {
-      return this.currentVersion.substring(0, 10)
+      return this.versionHash.substring(0, 10)
     },
 
     shortLastVersion() {
-      return this.lastVersion.substring(0, 10)
+      return this.service.latestVersion.substring(0, 10)
     },
 
     free() {
@@ -118,25 +112,6 @@ export default {
       copy(this.deployCommand)
       this.copied = true
       setTimeout(() => (this.copied = false), 600)
-    }
-  },
-
-  props: {
-    name: {
-      type: String,
-      required: true
-    },
-    sid: {
-      type: String,
-      required: true
-    },
-    description: String,
-    logo: String,
-    currentVersion: String,
-    lastVersion: String,
-    offers: {
-      type: Array,
-      default: () => []
     }
   }
 }

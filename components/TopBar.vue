@@ -5,17 +5,19 @@
         <img src="/logo_white_t_text.png" alt="MESG Marketplace">
         Marketplace (beta)
       </nuxt-link>
-      <el-input
+      <div class="actions">
+        <!-- <el-input
         class="search"
         :value="search"
         @input="updateSearch"
         placeholder="search services..."
-      ></el-input>
-      <a
-        class="el-button is-round"
-        href="https://docs.mesg.com/guide/marketplace/"
-        target="_blank"
-      >Add my service</a>
+        ></el-input>-->
+        <a
+          class="el-button is-round"
+          href="https://docs.mesg.com/guide/marketplace/"
+          target="_blank"
+        >Add my service</a>
+      </div>
     </div>
   </section>
 </template>
@@ -51,6 +53,7 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   .logo {

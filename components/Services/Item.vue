@@ -1,13 +1,13 @@
 <template>
-  <nuxt-link :to="'services/' + version.sid">
+  <nuxt-link :to="'services/' + definition.sid">
     <section class="service-item">
       <div class="prime">
-        <div class="name">{{ version.name || version.sid }}</div>
-        <div class="sid">{{ version.sid }}</div>
-        <div class="description">{{ version.description }}</div>
+        <div class="name">{{ definition.name || definition.sid }}</div>
+        <div class="sid">{{ definition.sid }}</div>
+        <div class="description">{{ definition.description }}</div>
       </div>
       <div class="price">
-        <span v-if="offer">From {{offer.price}} MESG</span>
+        <span v-if="baseOffer">From {{baseOffer.price}} MESG</span>
         <span v-else>Free service</span>
       </div>
     </section>
@@ -15,13 +15,8 @@
 </template>
 
 <script>
-import ServiceLogo from '~/components/ServiceLogo.vue'
-
+import { mapGetters } from 'vuex'
 export default {
-  components: {
-    ServiceLogo
-  },
-
   props: {
     service: {
       type: Object,
@@ -30,15 +25,15 @@ export default {
   },
 
   computed: {
-    version() {
-      return [...this.service.versions].sort(
-        (a, b) => new Date(b.createTime) - new Date(a.createTime)
-      )[0].manifestData.service.definition
+    ...mapGetters({
+      versionsByHash: 'versionsByHash'
+    }),
+    definition() {
+      const version = this.versionsByHash[this.service.latestVersion]
+      return version.manifestData.service.definition
     },
-    offer() {
-      return [...this.service.offers]
-        .filter(x => x.active)
-        .sort((a, b) => parseInt(a.price, 10) - parseInt(b.price, 10))[0]
+    baseOffer() {
+      return this.service.offers[0]
     }
   }
 }

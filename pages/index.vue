@@ -32,17 +32,24 @@
         </div>
       </el-card>
     </div>
-    <Services/>
+    <ServiceList :services="services"/>
   </div>
 </template>
 
 <script>
-import Services from '~/components/Services'
+import ServiceList from '~/components/Services/List'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    Services
-  }
+    ServiceList
+  },
+  async fetch({ store }) {
+    await store.dispatch('fetchServices')
+  },
+  computed: mapGetters({
+    services: 'services'
+  })
 }
 </script>
 
