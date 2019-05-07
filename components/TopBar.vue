@@ -1,10 +1,23 @@
 <template>
   <section class="topbar">
     <div class="content">
-      <nuxt-link to="/">
-        <div @click="clearSearch" class="logo" title="MESG Foundation" alt="MESG Fountation"></div>
+      <nuxt-link to="/" class="logo" @click.native="clearSearch">
+        <img src="/logo_white_t_text.png" alt="MESG Marketplace">
+        Marketplace (beta)
       </nuxt-link>
-      <el-input class="search" :value="search" @input="updateSearch" placeholder="search services..."></el-input>
+      <div class="actions">
+        <!-- <el-input
+        class="search"
+        :value="search"
+        @input="updateSearch"
+        placeholder="search services..."
+        ></el-input>-->
+        <a
+          class="el-button is-round"
+          href="https://docs.mesg.com/guide/marketplace/"
+          target="_blank"
+        >Add my service</a>
+      </div>
     </div>
   </section>
 </template>
@@ -13,18 +26,16 @@
 import { mapState } from 'vuex'
 
 export default {
-  computed: mapState([
-    'search'
-  ]),
+  computed: mapState(['search']),
 
   methods: {
     updateSearch(query) {
       this.$router.push('/')
-      this.$store.commit('updateSearch', query.trim());
+      this.$store.commit('updateSearch', query.trim())
     },
 
     clearSearch() {
-      this.$store.commit('updateSearch');
+      this.$store.commit('updateSearch')
     }
   }
 }
@@ -42,16 +53,19 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   .logo {
-    background-image: url('../static/logo_white_t_text.png');
-    background-repeat: no-repeat;
-    background-size: 140px;
-    width: 140px;
-    height: 40px;
-    vertical-align: center;
-    margin-right: 15px;
+    display: inline-block;
+    color: white;
+    font-size: 1.5em;
+    line-height: 37px;
+    img {
+      vertical-align: sub;
+      height: 37px;
+      margin-right: 0.5em;
+    }
   }
 
   .search {
@@ -61,6 +75,10 @@ export default {
     height: 40px;
     color: #510f91;
   }
+}
+
+.el-button {
+  margin-left: 1em;
 }
 
 body.light {
@@ -89,7 +107,6 @@ body.light {
     border-radius: 25px;
     transition: all 0.2s ease;
 
-    
     &:focus {
       background-color: #fbf5ff;
       color: #111;
@@ -110,7 +127,7 @@ body.light {
     .search input {
       background-color: #fbf5ff;
       color: #7609e0;
-      
+
       &:focus {
         background-color: #fefdff;
         color: #111;

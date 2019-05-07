@@ -1,14 +1,15 @@
 <template>
   <div class="info">
-    <ServiceLogo :url="logo" :size=120 />
     <div class="prime">
-      <div class="name">{{ name }}
+      <div class="name">
+        {{ definition.name }}
         <el-dropdown class="select-version" size="mini" split-button title="service's hash">
-          viewing <span>{{ shortCurrentVersion }}</span>
-          <Label v-if="currentVersion == lastVersion" class="latest" name="latest" />
+          viewing
+          <span>{{ shortCurrentVersion }}</span>
+          <Label v-if="versionHash == service.latestVersion" class="latest" name="latest"/>
           <el-dropdown-menu slot="dropdown">
-            <nuxt-link :to="'/services/'+sid">
-              <el-dropdown-item v-if="currentVersion != lastVersion">go to latest</el-dropdown-item>
+            <nuxt-link :to="'/services/'+definition.sid">
+              <el-dropdown-item v-if="versionHash != service.latestVersion">go to latest</el-dropdown-item>
             </nuxt-link>
             <a href="#versions">
               <el-dropdown-item>see all versions</el-dropdown-item>
@@ -16,75 +17,76 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div class="sid"><Label name="sid" uppercase/>{{ sid }}</div>
-      <div class="description">{{ description }}</div>
+      <div class="sid">
+        <Label name="sid" uppercase/>
+        {{ definition.sid }}
+      </div>
+      <div class="description">{{ definition.description }}</div>
     </div>
     <div class="actions">
       <div class="deploy">
-        <div class="title">deploy with command</div>
-        <el-tooltip class="item" effect="light" content="copied!" placement="top-end" :manual="true" :value="copied">
-          <div class="command-container" v-on:click="copyDeploy">
-            <div class="command">{{ deployCommand }}</div>
-            <div class="icon-container"><font-awesome-icon class="icon" icon="copy" size="lg" /></div>
-          </div>
-        </el-tooltip>
+        <el-button type="primary" round @click="dialogVisible = true">
+          <span v-if="free">Get this service</span>
+          <span v-else>Buy for {{ service.offers[0].price }} MESG</span>
+        </el-button>
+
+        <el-dialog :title="`Get the service ${definition.name}`" :visible.sync="dialogVisible">
+          <Purchase :service="service" :versionHash="versionHash"/>
+        </el-dialog>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import * as copy from 'copy-text-to-clipboard'
-import ServiceLogo from '~/components/ServiceLogo.vue'
 import Label from '~/components/Label.vue'
-  
+import Purchase from '~/components/Purchase.vue'
+import { mapGetters } from 'vuex'
+
 export default {
   components: {
-    ServiceLogo,
-    Label
-  },
-  
-  data() {
-    return {
-      copied: false
-    }
-  },
-  
-  computed: {
-    deployCommand() {
-      return `mesg-core service deploy mesg://marketplace/service/${this.lastVersion}`
-    },
-
-    shortCurrentVersion(){
-      return this.currentVersion.substring(0, 10)
-    },
-
-    shortLastVersion(){
-      return this.lastVersion.substring(0, 10)
-    }
-  },
-
-  methods: {
-    copyDeploy() {
-      copy(this.deployCommand)
-      this.copied = true
-      setTimeout(() =>  this.copied = false, 600)
-    }
+    Label,
+    Purchase
   },
 
   props: {
-    name: {
-      type: String,
+    service: {
+      type: Object,
       required: true
     },
-    sid: {
+    versionHash: {
       type: String,
       required: true
+    }
+  },
+
+  data() {
+    return {
+      dialogVisible: false
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      versionsByHash: 'versionsByHash'
+    }),
+    definition() {
+      return this.versionsByHash[this.versionHash].manifestData.service
+        .definition
     },
-    description: String,
-    logo: String,
-    currentVersion: String,
-    lastVersion: String
+    shortCurrentVersion() {
+      return this.versionHash.substring(0, 10)
+    },
+
+    shortLastVersion() {
+      return this.service.latestVersion.substring(0, 10)
+    },
+    free() {
+      return (
+        this.service.offers.length === 0 ||
+        !!this.service.offers.find(x => x.price === 0)
+      )
+    }
   }
 }
 </script>
@@ -141,7 +143,6 @@ export default {
     margin-left: auto;
     margin-top: auto;
     padding-left: 40px;
-    border-left: 1px solid #eee;
 
     .deploy {
       .title {
@@ -188,7 +189,7 @@ export default {
           overflow: auto;
 
           &::before {
-            content: "$";
+            content: '$';
             font-size: 14px;
             margin-right: 6px;
           }
@@ -203,7 +204,7 @@ export default {
           background: #1f1f1f;
 
           .icon {
-            opacity: .9;
+            opacity: 0.9;
             font-weight: 400;
             font-size: 13px;
           }
@@ -231,7 +232,7 @@ export default {
         .title {
           display: none;
         }
-        
+
         .command-container {
           white-space: normal;
 
@@ -264,11 +265,11 @@ export default {
       // border: 0;
     }
 
-    button:first-child  {
+    button:first-child {
       border-radius: 25px 0 0 25px;
     }
 
-    button.el-dropdown__caret-button  {
+    button.el-dropdown__caret-button {
       border-radius: 0 25px 25px 0;
     }
   }

@@ -3,7 +3,8 @@
     <div v-for="item in items" :key="item.name" class="item">
       <Label class="label" :name="item.name" uppercase/>
       <div v-if="item.link" class="text">
-        <nuxt-link :to="item.link">{{ item.text }}</nuxt-link>
+        <a v-if="externalLink(item.link)" :href="item.link" target="_blank">{{ item.text }}</a>
+        <nuxt-link v-else :to="item.link">{{ item.text }}</nuxt-link>
       </div>
       <div v-else class="text">{{ item.text }}</div>
     </div>
@@ -17,11 +18,16 @@ export default {
   components: {
     Label
   },
-  
+
   props: {
     items: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    externalLink(link) {
+      return link.match(/^http/)
     }
   }
 }

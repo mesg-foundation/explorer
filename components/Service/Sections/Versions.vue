@@ -1,11 +1,18 @@
 <template>
   <div class="versions">
-    <el-row v-for="(version, index) in versions" :key="version.hash" class="version">
+    <el-row v-for="version in service.versions" :key="version.hash" class="version">
       <el-col class="tag" :span="6">
-        <Label v-if="index == 0" class="latest" name="latest" uppercase background="#ff9b2b" color="#fff"/>
+        <Label
+          v-if="version.versionHash === service.latestVersion"
+          class="latest"
+          name="latest"
+          uppercase
+          background="#ff9b2b"
+          color="#fff"
+        />
       </el-col>
       <el-col class="detail" :span="16">
-        <nuxt-link :to="'/services/'+sid+'/'+version.hash">{{ version.hash }}</nuxt-link>
+        <nuxt-link :to="`/services/${service.sid}/${version.versionHash}`">{{ version.versionHash }}</nuxt-link>
       </el-col>
     </el-row>
   </div>
@@ -20,12 +27,8 @@ export default {
   },
 
   props: {
-    versions: {
-      type: Array,
-      required: true
-    },
-    sid: {
-      type: String,
+    service: {
+      type: Object,
       required: true
     }
   }
@@ -37,8 +40,8 @@ export default {
   font-size: 14px;
 
   .version {
-    border-radius: 25px; 
-    
+    border-radius: 25px;
+
     .el-col {
       padding: 10px 0;
     }

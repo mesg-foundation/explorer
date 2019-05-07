@@ -1,49 +1,30 @@
 <template>
   <section class="container">
     <div class="service-detail">
-      <Info
-        class="info"
-        :name="name"
-        :logo="logo"
-        :currentVersion="currentVersion"
-        :lastVersion="lastVersion"
-        :sid="sid"
-        :description="description" />
+      <Info class="info" :service="service" :versionHash="versionHash"/>
       <div class="content">
         <el-row>
           <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17">
             <el-tabs class="main" v-model="activeDescription" @tab-click="handleTabClick">
               <el-tab-pane label="DOC" name="doc">
-                <Doc
-                  class="tab-container"
-                  :content="doc" />
+                <Doc class="tab-container" :content="version.manifestData.service.readme"/>
               </el-tab-pane>
               <el-tab-pane label="API" name="api">
-                <API
-                  class="tab-container"
-                  :events="events"
-                  :tasks="tasks" />
+                <API class="tab-container" :events="definition.events" :tasks="definition.tasks"/>
               </el-tab-pane>
               <el-tab-pane label="OFFERS" name="offers">
-                <Offers
-                  class="tab-container"
-                  :offers="offers" />
+                <Offers class="tab-container" :service="service"/>
               </el-tab-pane>
               <el-tab-pane label="PURCHASES" name="purchases">
-                <Purchases
-                  class="tab-container"
-                  :purchases="purchases" />
+                <Purchases class="tab-container" :purchases="service.purchases"/>
               </el-tab-pane>
               <el-tab-pane label="VERSIONS" name="versions">
-                <Versions
-                  class="tab-container"
-                  :sid="sid"
-                  :versions="versions" />
+                <Versions class="tab-container" :service="service"/>
               </el-tab-pane>
             </el-tabs>
           </el-col>
           <el-col class="sidebar" :xs="24" :sm="24" :md="7" :lg="7" :xl="7">
-            <Box :items="detail" />
+            <Box :items="detail"/>
           </el-col>
         </el-row>
       </div>
@@ -52,10 +33,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import * as Remarkable from 'remarkable'
-import anchors from '~/plugins/remarkable-anchors'
-import * as scrollTo from 'scroll-to-element'
+import { mapGetters } from 'vuex'
 import Box from './Box.vue'
 import Info from './Sections/Info'
 import Doc from './Sections/Doc'
@@ -74,7 +52,18 @@ export default {
     Offers,
     Purchases
   },
-  
+
+  props: {
+    service: {
+      type: Object,
+      required: true
+    },
+    versionHash: {
+      type: String,
+      required: true
+    }
+  },
+
   data() {
     return {
       activeDescription: 'doc'
@@ -82,101 +71,61 @@ export default {
   },
 
   computed: {
-    doc() {
-      const md = new Remarkable('full', {
-        html: true,
-        breaks: true,
-        linkify: true,
-        typographer: true
-      })
-      md.use(anchors)
-      return md.render(this.readme);
+    ...mapGetters({
+      versionsByHash: 'versionsByHash'
+    }),
+    version() {
+      return this.versionsByHash[this.versionHash]
     },
-
-    yaml() {
-      return YAML.stringify(json)
+    definition() {
+      return this.version.manifestData.service.definition
     },
-
     detail() {
-      const detail = [{
-        name: 'author',
-        text: this.owner
-      }, {
-        name: 'sid',
-        text: this.sid
-      }, {
-        name: 'latest version',
-        text: this.lastVersion.substring(0, 10),
-        link: '/services/'+ this.sid +'/'+ this.lastVersion +'#versions'
-      }]
-
-      if (this.repository) {
-        detail.push({
+      return [
+        { name: 'author', text: this.service.owner },
+        { name: 'sid', text: this.service.sid },
+        {
+          name: 'latest version',
+          text: this.service.latestVersion.substring(0, 10),
+          link: `/services/${this.service.sid}/${this.service.latestVersion}#versions`
+        },
+        {
           name: 'repository',
-          text: this.repository,
-          link: this.repository
-        })
-      }
-
-      return detail
-    },
-
-    lastVersion() {
-      return this.versions[0].hash
-    },
-
-    currentVersion() {
-      return this.$route.params.hash || this.lastVersion
+          text: this.definition.repository,
+          link: this.definition.repository
+        }
+      ].filter(x => x.text)
     }
   },
 
   watch: {
-    '$route.hash': function(){
+    '$route.hash': function() {
       this.navigateToHashRoute()
     }
   },
 
   mounted() {
-    Vue.nextTick(() => this.navigateToHashRoute())
+    this.$nextTick(() => this.navigateToHashRoute())
   },
 
   methods: {
     navigateToHashRoute() {
-      const route = this.$route.hash.split('#')[1];
+      const route = this.$route.hash.split('#')[1]
       switch (route) {
-      case 'doc':
-      case 'api':
-      case 'versions':
-      case 'offers':
-      case 'purchases':
-        scrollTo(`#tab-${route}`)
-        this.activeDescription = route
-        break;
+        case 'doc':
+        case 'api':
+        case 'versions':
+        case 'offers':
+        case 'purchases':
+          this.activeDescription = route
+          break
       }
     },
 
     handleTabClick() {
       this.$router.push(`#${this.activeDescription}`)
-    },
-
-    shortenHash(hash) {
-      return hash
     }
-  },
-
-  props: [
-    'name',
-    'sid',
-    'description',
-    'logo',
-    'readme',
-    'versions',
-    'events',
-    'tasks',
-    'owner',
-    'offers',
-    'purchases'
-  ]
+  }
 }
 </script>
 
@@ -240,7 +189,7 @@ export default {
   font-weight: 600;
 }
 
-.service-detail .el-tabs__active-bar,  {
+.service-detail .el-tabs__active-bar {
   display: none;
 }
 
