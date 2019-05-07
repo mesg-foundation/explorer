@@ -1,8 +1,9 @@
 <template>
   <section class="topbar">
     <div class="content">
-      <nuxt-link to="/">
-        <div @click="clearSearch" class="logo" title="MESG Foundation" alt="MESG Fountation"></div>
+      <nuxt-link to="/" class="logo" @click.native="clearSearch">
+        <img src="/logo_white_t_text.png" alt="MESG Marketplace">
+        Marketplace (beta)
       </nuxt-link>
       <el-input
         class="search"
@@ -53,13 +54,15 @@ export default {
   }
 
   .logo {
-    background-image: url('../static/logo_white_t_text.png');
-    background-repeat: no-repeat;
-    background-size: 140px;
-    width: 140px;
-    height: 40px;
-    vertical-align: center;
-    margin-right: 15px;
+    display: inline-block;
+    color: white;
+    font-size: 1.5em;
+    line-height: 37px;
+    img {
+      vertical-align: sub;
+      height: 37px;
+      margin-right: 0.5em;
+    }
   }
 
   .search {

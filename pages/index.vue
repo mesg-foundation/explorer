@@ -19,7 +19,10 @@
             target="_blank"
           >custom smart contract</a> and uses the
           <a href="https://mesg.com/token/" target="_blank">MESG Token</a> for purchasing access to services. The source code of the services are also decentralized as they are published on
-          <a href="https://ipfs.io/" target="_blank">IPFS</a>.
+          <a
+            href="https://ipfs.io/"
+            target="_blank"
+          >IPFS</a>.
           <br>
           <br>Check the full article about the
           <a
