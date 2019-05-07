@@ -25,26 +25,13 @@
     </div>
     <div class="actions">
       <div class="deploy">
-        <el-button type="primary" round @click="dialogVisible = true">Get this service</el-button>
+        <el-button type="primary" round @click="dialogVisible = true">
+          <span v-if="free">Get this service</span>
+          <span v-else>Buy for {{ service.offers[0].price }} MESG</span>
+        </el-button>
 
         <el-dialog :title="`Get the service ${definition.name}`" :visible.sync="dialogVisible">
-          <Offers :service="service"/>
-          <div class="title">deploy with command</div>
-          <el-tooltip
-            class="item"
-            effect="light"
-            content="copied!"
-            placement="top-end"
-            :manual="true"
-            :value="copied"
-          >
-            <div class="command-container" v-on:click="copyDeploy">
-              <div class="command">{{ deployCommand }}</div>
-              <div class="icon-container">
-                <font-awesome-icon class="icon" icon="copy" size="lg"/>
-              </div>
-            </div>
-          </el-tooltip>
+          <Purchase :service="service" :versionHash="versionHash"/>
         </el-dialog>
       </div>
     </div>
@@ -52,15 +39,14 @@
 </template>
 
 <script>
-import * as copy from 'copy-text-to-clipboard'
 import Label from '~/components/Label.vue'
-import Offers from '~/components/Service/Sections/Offers.vue'
+import Purchase from '~/components/Purchase.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Label,
-    Offers
+    Purchase
   },
 
   props: {
@@ -76,7 +62,6 @@ export default {
 
   data() {
     return {
-      copied: false,
       dialogVisible: false
     }
   },
@@ -85,11 +70,6 @@ export default {
     ...mapGetters({
       versionsByHash: 'versionsByHash'
     }),
-    deployCommand() {
-      return `mesg-core service deploy mesg://marketplace/service/${
-        this.versionHash
-      }`
-    },
     definition() {
       return this.versionsByHash[this.versionHash].manifestData.service
         .definition
@@ -101,17 +81,11 @@ export default {
     shortLastVersion() {
       return this.service.latestVersion.substring(0, 10)
     },
-
     free() {
-      return this.offers.length === 0 || !!this.offers.find(x => x.price === 0)
-    }
-  },
-
-  methods: {
-    copyDeploy() {
-      copy(this.deployCommand)
-      this.copied = true
-      setTimeout(() => (this.copied = false), 600)
+      return (
+        this.service.offers.length === 0 ||
+        !!this.service.offers.find(x => x.price === 0)
+      )
     }
   }
 }
