@@ -55,7 +55,7 @@ export const getters = {
         variables[name] = vars
       })
     }
-    
+
     return {
       sid: definition.sid,
       name: definition.name,
@@ -82,11 +82,11 @@ export const getters = {
 }
 
 export const mutations = {
-  updateSearch (state, query) {
+  updateSearch(state, query) {
     state.search = query
   },
 
-  cacheService (state, service) {
+  cacheService(state, service) {
     const i = state.services.map((s) => s.sid).indexOf(service.sid);
     if (i === -1) {
       state.services.push(service)
@@ -95,19 +95,19 @@ export const mutations = {
     }
   },
 
-  updateServiceList (state, services) {
+  updateServiceList(state, services) {
     state.serviceList = services
   },
 
-  updateLoading (state, status) {
+  updateLoading(state, status) {
     state.loading = status
   }
 }
 
 export const actions = {
-  fetchService ({ commit }, sid) {
-    return new Promise((resolve)=>{
-      fetch('https://marketplace.app.mesg.com/services/'+sid)
+  fetchService({ commit }, sid) {
+    return new Promise((resolve) => {
+      fetch('https://marketplace.app.mesg.com/services/' + sid)
         .then((resp) => { return resp.json() })
         .then((service) => {
           commit('cacheService', service)
@@ -116,12 +116,12 @@ export const actions = {
         })
     })
   },
-  
-  fetchServices ({ commit }) {
-    return new Promise((resolve)=>{
+
+  fetchServices({ commit }) {
+    return new Promise((resolve) => {
       fetch('https://marketplace.app.mesg.com/services')
         .then((resp) => { return resp.json() })
-        .then(({ services }) => {
+        .then((services) => {
           commit('updateServiceList', services)
           commit('updateLoading', false)
           resolve()
