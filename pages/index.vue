@@ -25,7 +25,7 @@
           <br>
           <br>Check the full article about the
           <a
-            href="https://medium.com/p/75c40cd70f4b"
+            href="https://medium.com/mesg/mesg-marketplace-beta-now-live-on-the-mainnet-75c40cd70f4b"
             target="_blank"
           >release of the Marketplace on Medium</a>
         </div>
