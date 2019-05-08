@@ -4,7 +4,6 @@
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>MESG Marketplace</span>
-          <el-button style="float: right; padding: 3px 0" type="text">&times;</el-button>
         </div>
         <div>
           This beta version of the MESG Marketplace lets users buy and sell access to modular application components for a limited period of time.
@@ -32,7 +31,7 @@
         </div>
       </el-card>
     </div>
-    <ServiceList :services="services"/>
+    <ServiceList :services="filteredServices"/>
   </div>
 </template>
 
@@ -47,9 +46,14 @@ export default {
   async fetch({ store }) {
     await store.dispatch('fetchServices')
   },
-  computed: mapGetters({
-    services: 'services'
-  })
+  computed: {
+    ...mapGetters({
+      services: 'services'
+    }),
+    filteredServices() {
+      return this.services.filter(x => x.offers.length > 0)
+    }
+  }
 }
 </script>
 
