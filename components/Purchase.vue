@@ -40,7 +40,7 @@ export default {
     free() {
       return (
         this.service.offers.length === 0 ||
-        !!this.service.offers.find(x => x.price === 0)
+        !!this.service.offers.find(x => parseFloat(x.price) === 0)
       )
     }
   }

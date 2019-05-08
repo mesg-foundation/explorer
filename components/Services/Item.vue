@@ -7,8 +7,8 @@
         <div class="description">{{ definition.description }}</div>
       </div>
       <div class="price">
-        <span v-if="baseOffer">From {{baseOffer.price}} MESG</span>
-        <span v-else>Free service</span>
+        <span v-if="free">Free service</span>
+        <span v-else>From {{baseOffer.price}} MESG</span>
       </div>
     </section>
   </nuxt-link>
@@ -34,6 +34,12 @@ export default {
     },
     baseOffer() {
       return this.service.offers[0]
+    },
+    free() {
+      return (
+        this.service.offers.length === 0 ||
+        !!this.service.offers.find(x => parseFloat(x.price) === 0)
+      )
     }
   }
 }
