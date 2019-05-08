@@ -14,7 +14,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [ ]
+    script: []
   },
 
   /*
@@ -50,7 +50,12 @@ module.exports = {
   /*
   ** Nuxt.js modules
   */
-  modules: ['@nuxtjs/pwa'],
+  modules: [
+    '@nuxtjs/pwa',
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-117583862-5'
+    }]
+  ],
 
   /*
   ** Build configuration
