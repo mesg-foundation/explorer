@@ -29,7 +29,7 @@
     "npm": "^6.7.0",
     "nuxt": "^2.3.4",
     "remarkable": "^1.7.1",
-    "scroll-to-element": "^2.0.2",
+    "scroll-to-element": "^2.0.3",
     "slug": "^0.9.3",
     "vue-nl2br": "^0.1.1",
     "vue-status-indicator": "^1.1.1",
