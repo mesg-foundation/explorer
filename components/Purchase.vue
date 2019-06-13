@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     deployCommand() {
-      return `mesg-core service deploy mesg://marketplace/service/${
+      return `mesg-cli service:deploy mesg://marketplace/service/${
         this.versionHash
       }`
     },
@@ -50,7 +50,7 @@ export default {
 <style scoped>
 h2 {
   margin-top: 1em;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 p {
   margin-bottom: 1em;
