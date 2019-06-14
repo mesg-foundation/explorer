@@ -1,7 +1,7 @@
 <template>
   <div class="api">
     <div v-if="events" class="item">
-      <div class="title">events</div> 
+      <div class="title">events</div>
       <el-collapse class="content" accordion>
         <el-collapse-item v-for="event in events" :key="event.ke" :name="event.ke">
           <template slot="title"> {{ event.key }} </template>
@@ -16,7 +16,7 @@
       </el-collapse>
     </div>
     <div v-if="tasks" class="item">
-      <div class="title">tasks</div> 
+      <div class="title">tasks</div>
       <el-collapse class="content" accordion>
         <el-collapse-item v-for="task in tasks" :key="task.key" :name="task.key">
           <template slot="title"> {{ task.key }} </template>
@@ -36,23 +36,18 @@
             </div>
           </div>
           <div class="sub-title">outputs</div>
-          <el-collapse v-for="output in task.outputs" :key="output.key" class="content" accordion>
-            <el-collapse-item name="call.outputs">
-              <template slot="title">{{ output.key }}</template>
-              <div v-for="data in output.data" :key="data.key"  class="text">
-                <el-row>
-                  <el-col :span="12">{{ data.key }}</el-col>
-                  <el-col :span="6"><Label class="var-info" :name="data.type"/></el-col>
-                  <el-col :span="6"></el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="24">
-                    <div class="description">{{ data.description }}</div>
-                  </el-col>
-                </el-row>
-              </div>
-            </el-collapse-item>
-          </el-collapse>
+          <div class="text" v-for="data in task.outputs" :key="data.key">
+            <el-row>
+              <el-col :span="12">{{ data.key }}</el-col>
+              <el-col :span="6"><Label v-if="data.type" class="var-info" :name="data.type"/></el-col>
+              <el-col :span="6"><Label v-if="data.optional" class="var-info optional" name="optional"/></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <div class="description">{{ data.description }}</div>
+              </el-col>
+            </el-row>
+          </div>
         </el-collapse-item>
       </el-collapse>
     </div>
@@ -66,7 +61,7 @@ export default {
   components: {
     Label
   },
-  
+
   props: {
     events: {
       type: Array
