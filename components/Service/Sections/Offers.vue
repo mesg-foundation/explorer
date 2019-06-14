@@ -12,7 +12,7 @@
       <el-table-column label="Purchase command" align="right">
         <template slot-scope="scope">
           <CommandLine
-            :value="`mesg-core marketplace purchase ${service.sid} --offer-index ${scope.row.offerIndex}`"
+            :value="`mesg-cli marketplace:purchase ${service.sid} ${scope.row.offerIndex}`"
           />
         </template>
       </el-table-column>
