@@ -54,6 +54,9 @@ module.exports = {
     '@nuxtjs/pwa',
     ['@nuxtjs/google-analytics', {
       id: 'UA-117583862-5'
+    }],
+    ['@nuxtjs/google-tag-manager', {
+      id: 'GTM-NKW9QNR'
     }]
   ],
 
