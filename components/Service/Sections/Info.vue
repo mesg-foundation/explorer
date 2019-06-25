@@ -25,10 +25,10 @@
     </div>
     <div class="actions">
       <div class="deploy">
-        <el-button type="primary" round @click="dialogVisible = true">
-          <span v-if="free">Get this service</span>
-          <span v-else>Buy for {{ service.offers[0].price }} MESG</span>
-        </el-button>
+        <a class="el-button el-button--primary is-round" @click="dialogVisible = true">
+          <template v-if="free">Get this service</template>
+          <template v-else>Buy for {{ service.offers[0].price }} MESG</template>
+        </a>
 
         <el-dialog :title="`Get the service ${definition.name}`" :visible.sync="dialogVisible">
           <Purchase :service="service" :versionHash="versionHash"/>
