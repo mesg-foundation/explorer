@@ -29,7 +29,7 @@
     "json-to-pretty-yaml": "^1.2.2",
     "npm": "^6.9.0",
     "nuxt": "^2.8.1",
-    "remarkable": "^1.7.1",
+    "remarkable": "^1.7.2",
     "scroll-to-element": "^2.0.3",
     "slug": "^0.9.4",
     "vue": "^2.6.10",
