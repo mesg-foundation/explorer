@@ -1,67 +1,44 @@
 {
-  "name": "marketplace.mesg.com",
+  "name": "marketplace",
   "version": "1.0.0",
-  "description": "A simplified MESG Marketplace index for the website",
-  "author": "MESG Foundation Developers",
+  "description": "MESG Marketplace",
+  "author": "Anthony ESTEBE",
   "private": true,
-  "endpoint": "https://core.marketplace.mesg.com",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate && cp _redirects dist",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint",
-    "test": "ava"
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --ignore-path .eslintignore ."
+  },
+  "lint-staged": {
+    "*.{js,vue}": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.19",
-    "@fortawesome/free-solid-svg-icons": "^5.9.0",
-    "@fortawesome/vue-fontawesome": "^0.1.6",
-    "@nuxtjs/google-analytics": "^2.2.0",
-    "@nuxtjs/google-tag-manager": "^2.2.0",
-    "@nuxtjs/pwa": "^2.6.0",
-    "copy-text-to-clipboard": "^1.0.4",
-    "cross-env": "^5.2.0",
-    "element-ui": "^2.9.1",
-    "fuse.js": "^3.4.5",
-    "github-markdown-css": "^2.10.0",
-    "json-to-pretty-yaml": "^1.2.2",
-    "npm": "^6.9.0",
-    "nuxt": "^2.8.1",
-    "remarkable": "^1.7.1",
-    "scroll-to-element": "^2.0.3",
-    "slug": "^0.9.4",
-    "vue": "^2.6.10",
-    "vue-nl2br": "^0.1.1",
-    "vue-status-indicator": "^1.1.1",
-    "vue-template-compiler": "^2.6.10",
-    "yamljs": "^0.3.0"
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "google-protobuf": "^3.9.2",
+    "grpc-web": "^1.0.6",
+    "mesg-js": "^4.4.0",
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^0.0.1",
-    "@vue/test-utils": "^1.0.0-beta.29",
-    "ava": "^1.4.1",
-    "babel-eslint": "^8.2.1",
-    "browser-env": "^3.2.6",
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^3.1.0",
-    "eslint-config-standard": ">=12.0.0",
-    "eslint-loader": "^2.1.2",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-jest": "^22.6.4",
-    "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-prettier": "2.6.2",
-    "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-standard": ">=4.0.0",
-    "eslint-plugin-vue": "^5.2.2",
-    "node-sass": "^4.12.0",
-    "nodemon": "^1.19.1",
-    "prettier": "1.14.3",
-    "raw-loader": "^1.0.0",
-    "require-extension-hooks": "^0.3.3",
-    "require-extension-hooks-babel": "^0.1.1",
-    "require-extension-hooks-vue": "^2.0.0",
-    "sass-loader": "^7.1.0"
+    "@nuxtjs/eslint-config": "^1.0.1",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/vuetify": "^1.0.0",
+    "@types/google-protobuf": "^3.7.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-prettier": "^3.0.1",
+    "husky": "^2.6.0",
+    "lint-staged": "^8.2.1",
+    "prettier": "^1.16.4",
+    "ts-protoc-gen": "^0.11.0"
   }
 }

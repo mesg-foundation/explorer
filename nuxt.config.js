@@ -1,82 +1,75 @@
-const pkg = require('./package')
+import colors from 'vuetify/es5/util/colors'
 
-module.exports = {
+export default {
   mode: 'spa',
-
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
-    title: "MESG Marketplace",
+    titleTemplate: '%s - ' + process.env.npm_package_name,
+    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || ''
+      }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: []
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: '#fff' },
-
-  server: {
-    port: 3000,
-    host: '0.0.0.0'
-  },
-
-  sitemap: {
-    hostname: 'https://marketplace.mesg.com',
-    cacheTime: 1000 * 60 * 15,
-    gzip: true,
-    generate: true // Enable me when using nuxt generate
-  },
-
   /*
-  ** Global CSS
-  */
-  css: ['@/assets/theme.scss'],
-
+   ** Global CSS
+   */
+  css: [],
   /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-    '@/plugins/element-ui',
-    '@plugins/font-awesome'
+   ** Plugins to load before mounting the App
+   */
+  plugins: [],
+  /*
+   ** Nuxt.js dev-modules
+   */
+  buildModules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify'
   ],
-
   /*
-  ** Nuxt.js modules
-  */
-  modules: [
-    '@nuxtjs/pwa',
-    ['@nuxtjs/google-analytics', {
-      id: 'UA-117583862-5'
-    }],
-    ['@nuxtjs/google-tag-manager', {
-      id: 'GTM-NKW9QNR'
-    }]
-  ],
-
+   ** Nuxt.js modules
+   */
+  modules: ['@nuxtjs/pwa'],
   /*
-  ** Build configuration
-  */
+   ** vuetify module configuration
+   ** https://github.com/nuxt-community/vuetify-module
+   */
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    theme: {
+      themes: {
+        dark: {
+          primary: colors.blue.darken2,
+          accent: colors.grey.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
+        }
+      }
+    }
+  },
+  /*
+   ** Build configuration
+   */
   build: {
     /*
-    ** You can extend webpack config here
-    */
-    extend(config, ctx) {
-      // Run ESLint on save
-      // if (ctx.isDev && ctx.isClient) {
-      //   config.module.rules.push({
-      //     enforce: 'pre',
-      //     test: /\.(js|vue)$/,
-      //     loader: 'eslint-loader',
-      //     exclude: /(node_modules)/
-      //   })
-      // }
-    }
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) {}
   }
 }
