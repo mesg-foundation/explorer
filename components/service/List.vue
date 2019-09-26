@@ -12,10 +12,10 @@
           <!-- <span class="caption">By {{author}}</span> -->
           <p v-text="service.description" />
           <v-chip label small class="mr-1">{{
-            count(service.events, 'event')
+            'task' | pluralize(service.tasks.length, true)
           }}</v-chip>
           <v-chip label small class="mr-1">{{
-            count(service.tasks, 'task')
+            'event' | pluralize(service.events.length, true)
           }}</v-chip>
         </v-card-text>
       </v-card>
@@ -24,17 +24,11 @@
 </template>
 
 <script>
-import pluralize from 'pluralize'
 export default {
   props: {
     services: {
       type: Array,
       required: true
-    }
-  },
-  methods: {
-    count(object, word) {
-      return pluralize(word, Object.keys(object || {}).length, true)
     }
   }
 }

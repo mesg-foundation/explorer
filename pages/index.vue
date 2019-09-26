@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    {{ 'result' | pluralize(services.length, true) }}
     <ServiceList :services="services" />
   </v-container>
 </template>

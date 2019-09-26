@@ -16,7 +16,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  list: (state) => state.list
+  list: (state) => state.list,
+  orderedList: (state) => Object.keys(state.list).map((x) => state.list[x])
 }
 
 export const mutations = {
@@ -25,7 +26,9 @@ export const mutations = {
       ...state.list,
       [encode(service.hash)]: {
         ...service,
-        hash: encode(service.hash)
+        hash: encode(service.hash),
+        events: service.events ? service.events : [],
+        tasks: service.tasks ? service.tasks : []
       }
     }
   }
