@@ -1,20 +1,18 @@
 <template>
-  <v-layout column justify-center align-center>
-    <ul>
-      <li v-for="service in services" :key="service.hash">
-        <nuxt-link :to="`/service/${service.hash}`">
-          {{ service.hash }}
-        </nuxt-link>
-      </li>
-    </ul>
-  </v-layout>
+  <v-container>
+    <ServiceList :services="services" />
+  </v-container>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import ServiceList from '~/components/service/List'
 export default {
+  components: {
+    ServiceList
+  },
   computed: mapGetters({
-    services: 'service/list'
+    services: 'service/orderedList'
   }),
   fetch: async ({ store }) => {
     await store.dispatch('service/fetchAll', {})

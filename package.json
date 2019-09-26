@@ -24,7 +24,8 @@
     "google-protobuf": "^3.9.2",
     "grpc-web": "^1.0.6",
     "mesg-js": "^4.4.0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
