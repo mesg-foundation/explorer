@@ -22,6 +22,23 @@
                 />
               </v-card-text>
             </v-card>
+
+            <v-card v-if="service.repository" class="mt-4">
+              <v-card-title>Source repository</v-card-title>
+              <v-list>
+                <v-list-item :href="service.repository">
+                  <v-list-item-avatar>
+                    <v-icon>mdi-github-circle</v-icon>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title>Github</v-list-item-title>
+                    <v-list-item-subtitle>{{
+                      service.repository
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card>
           </v-col>
         </v-row>
       </v-layout>
