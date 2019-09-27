@@ -28,7 +28,8 @@ export const mutations = {
         ...service,
         hash: encode(service.hash),
         events: service.events ? service.events : [],
-        tasks: service.tasks ? service.tasks : []
+        tasks: service.tasks ? service.tasks : [],
+        dependencies: service.dependencies ? service.dependencies : []
       }
     }
   }

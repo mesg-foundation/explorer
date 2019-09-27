@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="headline mb-4">Tasks</h2>
-    <v-expansion-panels accordion>
+    <v-expansion-panels accordion v-if="tasks.length">
       <v-expansion-panel v-for="task in tasks" :key="task.key">
         <v-expansion-panel-header>{{
           task.name || task.key
@@ -15,6 +15,9 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
+    <div v-else>
+      No tasks
+    </div>
   </div>
 </template>
 
