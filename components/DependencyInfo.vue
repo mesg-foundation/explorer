@@ -2,7 +2,12 @@
   <ul>
     <li v-for="item in items" :key="item.key">
       <strong>{{ item.label }}</strong>
-      {{ item.value }}
+      <ul v-if="Array.isArray(item.value)">
+        <li v-for="(value, i) in item.value" :key="i">
+          {{ value }}
+        </li>
+      </ul>
+      <span v-else>{{ item.value }}</span>
     </li>
   </ul>
 </template>

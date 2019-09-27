@@ -16,8 +16,8 @@
         <v-tab nuxt :to="`/service/${service.hash}/dependencies`"
           >Dependencies</v-tab
         >
-        <v-tab nuxt :to="`/service/${service.hash}/environment`"
-          >Environment</v-tab
+        <v-tab nuxt :to="`/service/${service.hash}/configuration`"
+          >Configuration</v-tab
         >
       </v-tabs>
     </v-container>
