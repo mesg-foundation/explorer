@@ -11,7 +11,7 @@
         'event' | pluralize(service.events.length, true)
       }}</v-chip>
       <v-tabs class="mt-4">
-        <v-tab nuxt :to="`/service/${service.hash}/tasks`">Tasks</v-tab>
+        <v-tab nuxt :to="`/service/${service.hash}`">Tasks</v-tab>
         <v-tab nuxt :to="`/service/${service.hash}/events`">Events</v-tab>
         <v-tab nuxt :to="`/service/${service.hash}/dependencies`"
           >Dependencies</v-tab
