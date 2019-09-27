@@ -13,3 +13,10 @@ export const mutations = {
     state.endpoint = endpoint
   }
 }
+
+export const actions = {
+  updateEndpoint: ({ commit }, endpoint) => {
+    commit('service/reset', null, { root: true })
+    commit('updateEndpoint', endpoint)
+  }
+}

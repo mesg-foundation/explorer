@@ -8,10 +8,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import ServiceList from '~/components/service/List'
+import refreshable from '~/pages/refreshable'
 export default {
   components: {
     ServiceList
   },
+  mixins: [refreshable],
   computed: mapGetters({
     services: 'service/orderedList'
   }),

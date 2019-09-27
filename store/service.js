@@ -12,6 +12,9 @@ export const getters = {
 }
 
 export const mutations = {
+  reset: (state) => {
+    state.list = {}
+  },
   insert: (state, service) => {
     state.list = {
       ...state.list,

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="service">
     <ServiceHeader :service="service" />
     <v-divider />
     <v-container>
@@ -48,6 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import refreshable from '~/pages/refreshable'
 import ServiceHeader from '~/components/service/Header'
 import CodeCopy from '~/components/CodeCopy'
 export default {
@@ -55,6 +56,7 @@ export default {
     ServiceHeader,
     CodeCopy
   },
+  mixins: [refreshable],
   computed: {
     ...mapGetters({
       services: 'service/list'
