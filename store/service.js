@@ -1,13 +1,4 @@
 import { encode } from 'mesg-js/lib/util/base58'
-// import { ServicePromiseClient } from './protobuf/api/service_grpc_web_pb'
-// import {
-//   GetServiceRequest,
-//   ListServiceRequest
-// } from './protobuf/api/service_pb'
-
-// const client = new ServicePromiseClient('http://127.0.0.1:50053', null, null)
-
-const host = 'http://localhost:3001'
 
 export const namespaced = true
 
@@ -36,15 +27,17 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchAll: async ({ commit }) => {
-    const response = await fetch(`${host}/services`)
+  fetchAll: async ({ commit, rootGetters }) => {
+    const endpoint = `${rootGetters['engine/getEndpoint']}/services`
+    const response = await fetch(endpoint)
     const { services } = await response.json()
     if (!services) return
     services.forEach((service) => commit('insert', service))
     return services
   },
-  fetch: async ({ commit }, { hash }) => {
-    const response = await fetch(`${host}/services/${hash}`)
+  fetch: async ({ commit, rootGetters }, { hash }) => {
+    const endpoint = `${rootGetters['engine/getEndpoint']}/services/${hash}`
+    const response = await fetch(endpoint)
     const service = await response.json()
     if (!service) throw new Error(`Cannot find service ${hash}`)
     commit('insert', service)
