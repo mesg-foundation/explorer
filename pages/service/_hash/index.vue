@@ -1,42 +1,39 @@
 <template>
-  <div>
-    <h2 class="headline mb-4">Tasks</h2>
-    <v-expansion-panels v-if="tasks.length" accordion>
-      <v-expansion-panel v-for="task in tasks" :key="task.key">
-        <v-expansion-panel-header>{{
-          task.name || task.key
-        }}</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <p>{{ task.description }}</p>
-          <h3 class="subtitle-1">Inputs</h3>
-          <ParameterTable class="mb-6" :params="task.inputs || []" />
-          <h3 class="subtitle-1">Outputs</h3>
-          <ParameterTable :params="task.outputs || []" />
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-    <div v-else>
-      No tasks
-    </div>
-  </div>
+  <div class="markdown" v-html="service.readme" />
 </template>
 
 <script>
-import ParameterTable from '~/components/ParameterTable'
 export default {
-  components: {
-    ParameterTable
-  },
   props: {
     service: {
       type: Object,
       required: true
     }
-  },
-  computed: {
-    tasks() {
-      return this.service.tasks
-    }
   }
 }
 </script>
+
+<style>
+.markdown table {
+  /* border: solid 1px rgba(0, 0, 0, 0.2); */
+  border-collapse: collapse;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  margin-bottom: 1em;
+}
+
+.markdown th,
+.markdown td {
+  padding: 0.5em 1em;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+</style>
