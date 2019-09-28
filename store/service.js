@@ -38,12 +38,26 @@ export const actions = {
     services.forEach((service) => commit('insert', service))
     return services
   },
-  fetch: async ({ commit, rootGetters }, { hash }) => {
-    const endpoint = `${rootGetters['engine/getEndpoint']}/services/${hash}`
-    const response = await fetch(endpoint)
+  fetch: async ({ commit, rootGetters, dispatch }, { hash }) => {
+    const serviceEndpoint = [
+      rootGetters['engine/getEndpoint'],
+      'services',
+      hash
+    ].join('/')
+    const response = await fetch(serviceEndpoint)
     const service = await response.json()
     if (!service) throw new Error(`Cannot find service ${hash}`)
+    service.readme = await dispatch('fetchReadme', service.source)
     commit('insert', service)
     return service
+  },
+  fetchReadme: async ({ rootGetters }, hash) => {
+    const readmeEndpoint = [
+      rootGetters['engine/getEndpoint'],
+      'readme',
+      hash
+    ].join('/')
+    const readme = await fetch(readmeEndpoint)
+    return readme.text()
   }
 }
