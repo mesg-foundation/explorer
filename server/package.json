@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "const LRU = require('lru-cache') const ipfsClient = require('ipfs-http-client') const tar = require('tar') const fs = require('fs') const { join } = require('path') const { tmpdir } = require('os')",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mesg-js": "^4.4.0"
+  }
+}
