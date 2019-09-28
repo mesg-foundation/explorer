@@ -24,6 +24,7 @@ export default {
 
 .markdown th,
 .markdown td {
+  text-align: left;
   padding: 0.5em 1em;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
