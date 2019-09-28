@@ -11,6 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "mesg-js": "^4.4.0"
+    "ipfs-http-client": "^38.0.0",
+    "markdown-it": "^10.0.0",
+    "mesg-js": "^4.4.0",
+    "tar": "^4.4.13"
   }
 }
