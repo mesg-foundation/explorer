@@ -26,10 +26,14 @@ const extract = async (content, hash) => {
   if (!fs.existsSync(target)) {
     fs.mkdirSync(target)
   }
-  await fs.createReadStream(tarFile).pipe(tar.extract({
-    cwd: target,
-    filter: (path, stat) => path.match(REGEXP)
-  }))
+  await new Promise((resolve, reject) => {
+    fs.createReadStream(tarFile).pipe(tar.extract({
+      cwd: target,
+      filter: path => path.match(REGEXP)
+    }))
+      .on('finish', resolve)
+      .on('error', reject)
+  })
   fs.unlinkSync(tarFile)
   return target
 }
