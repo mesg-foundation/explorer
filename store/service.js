@@ -30,34 +30,23 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchAll: async ({ commit, rootGetters }) => {
-    const endpoint = `${rootGetters['engine/getEndpoint']}/services`
-    const response = await fetch(endpoint)
+  fetchAll: async ({ commit }) => {
+    const response = await fetch(`${process.env.API_ENDPOINT}/services`)
     const { services } = await response.json()
     if (!services) return
     services.forEach((service) => commit('insert', service))
     return services
   },
-  fetch: async ({ commit, rootGetters, dispatch }, { hash }) => {
-    const serviceEndpoint = [
-      rootGetters['engine/getEndpoint'],
-      'services',
-      hash
-    ].join('/')
-    const response = await fetch(serviceEndpoint)
+  fetch: async ({ commit, dispatch }, { hash }) => {
+    const response = await fetch(`${process.env.API_ENDPOINT}/services/${hash}`)
     const service = await response.json()
     if (!service) throw new Error(`Cannot find service ${hash}`)
     service.readme = await dispatch('fetchReadme', service.source)
     commit('insert', service)
     return service
   },
-  fetchReadme: async ({ rootGetters }, hash) => {
-    const readmeEndpoint = [
-      rootGetters['engine/getEndpoint'],
-      'readme',
-      hash
-    ].join('/')
-    const readme = await fetch(readmeEndpoint)
+  fetchReadme: async (_, hash) => {
+    const readme = await fetch(`${process.env.API_ENDPOINT}/readme/${hash}`)
     return readme.text()
   }
 }

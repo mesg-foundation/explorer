@@ -5,7 +5,7 @@
   "author": "Anthony ESTEBE",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "API_ENDPOINT=http://localhost:3001 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

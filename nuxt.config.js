@@ -42,6 +42,9 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
+  env: {
+    API_ENDPOINT: process.env.API_ENDPOINT || "https://api.marketplace.mesg.com"
+  },
   /*
    ** Nuxt.js modules
    */
