@@ -1,14 +1,15 @@
 <template>
   <v-app light>
-    <v-app-bar app dark>
+    <v-app-bar app dark color="primary">
+      <nuxt-link to="/">
+        <img
+          class="mr-4"
+          height="40"
+          src="https://handbook.mesg.com/logo/MESG-logo-horizontal-white.svg"
+        />
+      </nuxt-link>
       <v-toolbar-title>
-        <nuxt-link to="/">
-          <img
-            class="mt-1"
-            height="50px"
-            src="https://handbook.mesg.com/logo/MESG-logo-horizontal-white.svg"
-          />
-        </nuxt-link>
+        Marketplace
       </v-toolbar-title>
     </v-app-bar>
     <v-content>
@@ -16,3 +17,9 @@
     </v-content>
   </v-app>
 </template>
+
+<style scoped>
+span {
+  color: white;
+}
+</style>
