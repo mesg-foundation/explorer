@@ -14,12 +14,9 @@
           </v-col>
           <v-col sm="4">
             <v-card>
-              <v-card-title>Start this service</v-card-title>
+              <v-card-title>Add this service</v-card-title>
               <v-card-text class="pt-4">
-                <CodeCopy
-                  :code="`mesg-cli service:start ${service.hash}`"
-                  class="code-copy"
-                />
+                <CodeCopy :code="code" class="code-copy" />
               </v-card-text>
             </v-card>
 
@@ -48,7 +45,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import refreshable from '~/pages/refreshable'
 import ServiceHeader from '~/components/service/Header'
 import CodeCopy from '~/components/CodeCopy'
 export default {
@@ -56,13 +52,16 @@ export default {
     ServiceHeader,
     CodeCopy
   },
-  mixins: [refreshable],
   computed: {
     ...mapGetters({
       services: 'service/list'
     }),
     service() {
       return this.services[this.$route.params.hash]
+    },
+    code() {
+      const endpoint = `${process.env.API_ENDPOINT}/services/${this.service.hash}`
+      return `mesg-cli service:create "$(curl ${endpoint})"`
     }
   },
   fetch: async ({ store, params }) => {
