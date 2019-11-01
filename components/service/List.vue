@@ -8,8 +8,7 @@
     >
       <v-card>
         <v-card-text>
-          <h4 v-text="service.name" />
-          <!-- <span class="caption">By {{author}}</span> -->
+          <h2 class="headline" v-text="service.name" />
           <p v-text="service.description" />
           <v-chip label small class="mr-1">{{
             'task' | pluralize(service.tasks.length, true)

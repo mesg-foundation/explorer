@@ -1,7 +1,7 @@
 <template>
   <header class="pt-5">
     <v-container class="pb-0">
-      <h1 v-text="service.name" />
+      <h1 class="display-1" v-text="service.name" />
       <!-- <span class="caption">By {{author}}</span> -->
       <p v-text="service.description" />
       <v-chip label small class="mr-1">{{
