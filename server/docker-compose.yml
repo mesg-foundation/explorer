@@ -19,9 +19,9 @@ services:
     environment:
       MESG_ENDPOINT: engine:50052
       PORT: 3000
-      VIRTUAL_HOST: api.marketplace.mesg.com
+      VIRTUAL_HOST: marketplace.api.mesg.com
       VIRTUAL_PORT: 3000
-      LETSENCRYPT_HOST: api.marketplace.mesg.com
+      LETSENCRYPT_HOST: marketplace.api.mesg.com
       LETSENCRYPT_EMAIL: contact@mesg.com
     depends_on:
       - engine

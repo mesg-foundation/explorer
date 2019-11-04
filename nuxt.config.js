@@ -43,7 +43,7 @@ export default {
     '@nuxtjs/vuetify'
   ],
   env: {
-    API_ENDPOINT: process.env.API_ENDPOINT || "https://api.marketplace.mesg.com"
+    API_ENDPOINT: process.env.API_ENDPOINT || "https://marketplace.api.mesg.com"
   },
   /*
    ** Nuxt.js modules
