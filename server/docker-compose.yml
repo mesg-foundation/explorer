@@ -1,0 +1,51 @@
+version: "2"
+services:
+  engine:
+    image: mesg/engine:v0.16.0
+    restart: always
+    environment:
+      MESG_NAME: engine
+    volumes:
+      - ./.mesg:/root/.mesg
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    # ports:
+    #   - 50052:50052
+    networks: 
+      - engine
+  api:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      MESG_ENDPOINT: engine:50052
+      PORT: 3000
+      VIRTUAL_HOST: api.marketplace.mesg.com
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: api.marketplace.mesg.com
+      LETSENCRYPT_EMAIL: contact@mesg.com
+    depends_on:
+      - engine
+    networks: 
+      - engine
+  nginx:
+    image: jwilder/nginx-proxy
+    restart: always
+    volumes:
+      - /etc/nginx/certs 
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock
+    ports:
+      - "80:80"
+      - "443:443"
+    networks: 
+      - engine
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx
+networks: 
+  engine:
