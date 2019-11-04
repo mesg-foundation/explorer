@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 services:
   engine:
     image: mesg/engine:v0.16.0
@@ -13,7 +13,7 @@ services:
     networks: 
       - engine
   api:
-    build: .
+    image: mesg/marketplace-api:latest
     ports:
       - 3000:3000
     environment:
@@ -31,10 +31,12 @@ services:
     image: jwilder/nginx-proxy
     restart: always
     volumes:
-      - /etc/nginx/certs 
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
-      - /var/run/docker.sock:/tmp/docker.sock
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     ports:
       - "80:80"
       - "443:443"
@@ -44,8 +46,13 @@ services:
     image: jrcs/letsencrypt-nginx-proxy-companion
     restart: always
     volumes:
+      - certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    volumes_from:
-      - nginx
 networks: 
   engine:
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
