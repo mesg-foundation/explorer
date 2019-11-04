@@ -5,7 +5,7 @@
   "author": "Anthony ESTEBE",
   "private": true,
   "scripts": {
-    "dev": "API_ENDPOINT=http://localhost:3001 nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@nuxtjs/pwa": "^3.0.0-0",
+    "fibers": "^4.0.2",
     "google-protobuf": "^3.9.2",
     "grpc-web": "^1.0.6",
     "mesg-js": "^4.4.0",
@@ -40,7 +41,9 @@
     "eslint-plugin-prettier": "^3.0.1",
     "husky": "^2.6.0",
     "lint-staged": "^8.2.1",
+    "node-sass": "^4.13.0",
     "prettier": "^1.16.4",
+    "sass-loader": "^8.0.0",
     "ts-protoc-gen": "^0.11.0"
   }
 }
