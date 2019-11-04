@@ -61,7 +61,7 @@ export default {
     },
     code() {
       const endpoint = `${process.env.API_ENDPOINT}/services/${this.service.hash}`
-      return `mesg-cli service:create "$(curl ${endpoint})"`
+      return `mesg-cli service:create "$(curl -s ${endpoint})"`
     }
   },
   fetch: async ({ store, params }) => {
