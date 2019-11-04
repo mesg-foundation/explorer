@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="headline mb-4">Events</h2>
-    <v-expansion-panels v-if="events.length" accordion>
+    <v-expansion-panels v-if="events.length" multiple>
       <v-expansion-panel v-for="event in events" :key="event.key">
         <v-expansion-panel-header>{{
           event.name || event.key

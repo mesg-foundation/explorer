@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="headline mb-4">Dependencies</h2>
-    <v-expansion-panels v-if="dependencies.length" accordion>
+    <v-expansion-panels v-if="dependencies.length" multiple>
       <v-expansion-panel
         v-for="dependency in dependencies"
         :key="dependency.key"
