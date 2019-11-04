@@ -16,6 +16,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  head() {
+    return {
+      title: `${this.service.name} - Configuration`
+    }
   }
 }
 </script>

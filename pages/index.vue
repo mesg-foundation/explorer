@@ -12,6 +12,11 @@ export default {
   components: {
     ServiceList
   },
+  head() {
+    return {
+      title: 'Services'
+    }
+  },
   computed: mapGetters({
     services: 'service/orderedList'
   }),

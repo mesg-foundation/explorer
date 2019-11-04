@@ -1,7 +1,7 @@
 {
   "name": "marketplace",
   "version": "1.0.0",
-  "description": "MESG Marketplace",
+  "description": "Decentralized marketplace of services based on MESG Network",
   "author": "Anthony ESTEBE",
   "private": true,
   "scripts": {

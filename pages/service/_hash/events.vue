@@ -31,6 +31,11 @@ export default {
       required: true
     }
   },
+  head() {
+    return {
+      title: `${this.service.name} - Events`
+    }
+  },
   computed: {
     events() {
       return this.service.events

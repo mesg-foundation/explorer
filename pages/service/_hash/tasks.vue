@@ -33,6 +33,11 @@ export default {
       required: true
     }
   },
+  head() {
+    return {
+      title: `${this.service.name} - Tasks`
+    }
+  },
   computed: {
     tasks() {
       return this.service.tasks

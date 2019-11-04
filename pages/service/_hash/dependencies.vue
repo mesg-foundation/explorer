@@ -32,6 +32,11 @@ export default {
       required: true
     }
   },
+  head() {
+    return {
+      title: `${this.service.name} - Dependencies`
+    }
+  },
   computed: {
     dependencies() {
       return this.service.dependencies

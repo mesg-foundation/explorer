@@ -52,6 +52,11 @@ export default {
     ServiceHeader,
     CodeCopy
   },
+  head() {
+    return {
+      title: this.service.name
+    }
+  },
   computed: {
     ...mapGetters({
       services: 'service/list'
