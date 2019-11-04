@@ -23,6 +23,7 @@ export default {
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
       0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     margin-bottom: 1em;
+    width: 100%;
   }
 
   th,
@@ -30,6 +31,10 @@ export default {
     text-align: left;
     padding: 0.5em 1em;
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+
+    code {
+      margin-bottom: 0;
+    }
   }
 
   h1 {
@@ -51,6 +56,7 @@ export default {
   code {
     padding-right: 0.5em;
     padding-left: 0.5em;
+    margin-bottom: 1em;
     &::after,
     &::before {
       display: none;
