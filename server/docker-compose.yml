@@ -1,0 +1,62 @@
+version: "3"
+services:
+  engine:
+    image: mesg/engine:v0.16.0
+    restart: always
+    environment:
+      MESG_NAME: engine
+    volumes:
+      - ~/.mesg:/root/.mesg
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    # ports:
+    #   - 50052:50052
+    networks: 
+      - engine
+  api:
+    image: mesg/marketplace-api:latest
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      MESG_ENDPOINT: engine:50052
+      PORT: 3000
+      VIRTUAL_HOST: marketplace.api.mesg.com
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: marketplace.api.mesg.com
+      LETSENCRYPT_EMAIL: contact@mesg.com
+    networks: 
+      - engine
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks: 
+      - engine
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    volumes:
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam:ro
+      - certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+networks: 
+  engine:
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
