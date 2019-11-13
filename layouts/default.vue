@@ -11,6 +11,11 @@
       <v-toolbar-title>
         Marketplace
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn href="https://mesg.com" text primary>
+        mesg.com
+        <v-icon>mdi-chevron-right</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-content>
       <nuxt />
