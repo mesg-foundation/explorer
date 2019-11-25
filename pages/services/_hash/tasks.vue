@@ -9,7 +9,7 @@
         <v-expansion-panel-content>
           <p>{{ task.description }}</p>
           <h3 class="subtitle-1">Inputs</h3>
-          <ParameterTable class="mb-6" :params="task.inputs || []" />
+          <ParameterTable :params="task.inputs || []" class="mb-6" />
           <h3 class="subtitle-1">Outputs</h3>
           <ParameterTable :params="task.outputs || []" />
         </v-expansion-panel-content>
@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     tasks() {
-      return this.service.tasks
+      return this.service.tasks || []
     }
   }
 }

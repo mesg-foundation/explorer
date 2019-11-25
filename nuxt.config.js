@@ -6,8 +6,8 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - MESG Marketplace',
-    title: 'MESG Marketplace',
+    titleTemplate: '%s - ' + process.env.npm_package_name,
+    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -40,7 +40,9 @@ export default {
     '@nuxtjs/vuetify'
   ],
   env: {
-    API_ENDPOINT: process.env.API_ENDPOINT || 'https://marketplace.api.mesg.com'
+    API_ENDPOINT:
+      process.env.API_ENDPOINT || 'https://marketplace.api.mesg.com',
+    WS_ENDPOINT: process.env.WS_ENDPOINT || 'ws://localhost:50054'
   },
   /*
    ** Nuxt.js modules

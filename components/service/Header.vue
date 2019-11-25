@@ -1,32 +1,42 @@
 <template>
-  <header class="pt-5">
-    <v-container class="pb-0">
-      <h1 class="display-1" v-text="service.name" />
+  <div>
+    <Header>
+      <h1 v-text="service.name" class="display-1" />
       <!-- <span class="caption">By {{author}}</span> -->
       <p v-text="service.description" />
       <v-chip label small class="mr-1">{{
-        'task' | pluralize(service.tasks.length, true)
+        'task' | pluralize((service.tasks || []).length, true)
       }}</v-chip>
       <v-chip label small class="mr-1">{{
-        'event' | pluralize(service.events.length, true)
+        'event' | pluralize((service.events || []).length, true)
       }}</v-chip>
-      <v-tabs class="mt-4">
-        <v-tab nuxt exact :to="`/service/${service.hash}`">Readme</v-tab>
-        <v-tab nuxt exact :to="`/service/${service.hash}/tasks`">Tasks</v-tab>
-        <v-tab nuxt exact :to="`/service/${service.hash}/events`">Events</v-tab>
-        <v-tab nuxt exact :to="`/service/${service.hash}/dependencies`"
-          >Dependencies</v-tab
-        >
-        <v-tab nuxt exact :to="`/service/${service.hash}/configuration`"
-          >Configuration</v-tab
-        >
-      </v-tabs>
-    </v-container>
-  </header>
+    </Header>
+    <div style="background-color:white;">
+      <v-container class="pa-0">
+        <v-tabs class="mt-0">
+          <v-tab :to="`/services/${service.hash}`" nuxt exact>Readme</v-tab>
+          <v-tab :to="`/services/${service.hash}/tasks`" nuxt exact
+            >Tasks</v-tab
+          >
+          <v-tab :to="`/services/${service.hash}/events`" nuxt exact
+            >Events</v-tab
+          >
+          <v-tab :to="`/services/${service.hash}/dependencies`" nuxt exact
+            >Dependencies</v-tab
+          >
+          <v-tab :to="`/services/${service.hash}/configuration`" nuxt exact
+            >Configuration</v-tab
+          >
+        </v-tabs>
+      </v-container>
+    </div>
+  </div>
 </template>
 
 <script>
+import Header from '../Header'
 export default {
+  components: { Header },
   props: {
     service: {
       type: Object,
@@ -35,9 +45,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-header {
-  background: white;
-}
-</style>

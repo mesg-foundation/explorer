@@ -1,6 +1,6 @@
-# marketplace
+# dashboard
 
-> MESG Marketplace
+> My spectacular Nuxt.js project
 
 ## Build Setup
 
@@ -20,13 +20,3 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
-
-
-
-```
-git clone https://github.com/grpc/grpc-web /tmp/grpc-web
-cd /tmp/grpc-web && sudo make install-plugin
-rm -rf /tmp/grpc-web
-cd -
-```

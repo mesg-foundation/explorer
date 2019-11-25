@@ -1,5 +1,5 @@
 <template>
-  <div class="markdown" v-html="service.readme" />
+  <div v-html="readme" class="markdown" />
 </template>
 
 <script>
@@ -14,6 +14,17 @@ export default {
     return {
       title: `${this.service.name} - Readme`
     }
+  },
+  data() {
+    return {
+      readme: ''
+    }
+  },
+  async mounted() {
+    const resp = await fetch(
+      `${process.env.API_ENDPOINT}/readme/${this.service.source}`
+    )
+    this.readme = await resp.text()
   }
 }
 </script>

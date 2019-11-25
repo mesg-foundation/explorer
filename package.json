@@ -1,11 +1,11 @@
 {
-  "name": "marketplace",
+  "name": "dashboard",
   "version": "1.0.0",
-  "description": "Decentralized marketplace of services based on MESG Network",
+  "description": "My spectacular Nuxt.js project",
   "author": "Anthony ESTEBE",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "API_ENDPOINT=http://localhost:50053 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate && cp _redirects dist/_redirects",
@@ -22,24 +22,25 @@
   "dependencies": {
     "@mesg/api": "^0.1.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "cytoscape": "^3.12.1",
+    "cytoscape-dagre": "^2.2.2",
     "fibers": "^4.0.2",
     "nuxt": "^2.10.2",
+    "pluralize": "^8.0.0",
     "vue-clipboard2": "^0.3.1",
     "vue-pluralize": "0.0.2"
   },
   "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
-    "@nuxtjs/vuetify": "^1.9.0",
     "babel-eslint": "^10.0.1",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^4.1.0",
+    "eslint": "^6.1.0",
     "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "husky": "^2.6.0",
-    "lint-staged": "^8.2.1",
-    "node-sass": "^4.13.0",
     "prettier": "^1.16.4",
-    "sass-loader": "^8.0.0"
+    "husky": "^2.6.0",
+    "lint-staged": "^8.2.1"
   }
 }

@@ -20,6 +20,22 @@
               </v-card-text>
             </v-card>
 
+            <v-card class="mt-4">
+              <v-card-title>Instances</v-card-title>
+              <v-list>
+                <v-list-item
+                  v-for="instance in instances"
+                  :key="instance.hash"
+                  :to="`/instances/${instance.hash}`"
+                  nuxt
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>{{ instance.hash }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card>
+
             <v-card v-if="service.repository" class="mt-4">
               <v-card-title>Source repository</v-card-title>
               <v-list>
@@ -45,6 +61,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { encode } from '@mesg/api/lib/util/base58'
 import ServiceHeader from '~/components/service/Header'
 import CodeCopy from '~/components/CodeCopy'
 export default {
@@ -59,18 +76,27 @@ export default {
   },
   computed: {
     ...mapGetters({
-      services: 'service/list'
+      services: 'services/list',
+      _instances: 'instances/list'
     }),
     service() {
       return this.services[this.$route.params.hash]
+    },
+    instances() {
+      return Object.keys(this._instances)
+        .map((x) => this._instances[x])
+        .filter((x) => encode(x.serviceHash) === this.$route.params.hash)
     },
     code() {
       const endpoint = `${process.env.API_ENDPOINT}/services/${this.service.hash}`
       return `mesg-cli service:create "$(curl -s ${endpoint})"`
     }
   },
-  fetch: async ({ store, params }) => {
-    await store.dispatch('service/fetch', params)
+  fetch: ({ store, params }) => {
+    return Promise.all([
+      store.dispatch('services/get', params.hash),
+      store.dispatch('instances/list')
+    ])
   }
 }
 </script>

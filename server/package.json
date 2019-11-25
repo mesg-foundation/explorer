@@ -4,6 +4,7 @@
   "description": "Marketplace API",
   "main": "index.js",
   "scripts": {
+    "dev": "MESG_ENDPOINT=localhost:50052 PORT=50053 WS_PORT=50054 node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,6 +16,7 @@
     "express": "^4.17.1",
     "ipfs-http-client": "^38.0.0",
     "markdown-it": "^10.0.0",
+    "pluralize": "^8.0.0",
     "tar": "^4.4.13"
   }
 }
