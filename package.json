@@ -8,7 +8,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
+    "generate": "nuxt generate && cp _redirects dist/_redirects",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --ignore-path .eslintignore ."
   },
   "lint-staged": {
