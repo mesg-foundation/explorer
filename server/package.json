@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "const LRU = require('lru-cache') const ipfsClient = require('ipfs-http-client') const tar = require('tar') const fs = require('fs') const { join } = require('path') const { tmpdir } = require('os')",
+  "description": "Marketplace API",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mesg/api": "^0.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "ipfs-http-client": "^38.0.0",
     "markdown-it": "^10.0.0",
-    "mesg-js": "^4.4.0",
     "tar": "^4.4.13"
   }
 }
