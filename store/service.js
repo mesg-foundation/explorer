@@ -1,4 +1,4 @@
-import { encode } from 'mesg-js/lib/util/base58'
+import { encode } from '@mesg/api/lib/util/base58'
 
 export const namespaced = true
 

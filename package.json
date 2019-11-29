@@ -20,9 +20,9 @@
     }
   },
   "dependencies": {
+    "@mesg/api": "^0.1.0",
     "@nuxtjs/pwa": "^3.0.0-0",
     "fibers": "^4.0.2",
-    "mesg-js": "^4.4.0",
     "nuxt": "^2.10.2",
     "vue-clipboard2": "^0.3.1",
     "vue-pluralize": "0.0.2"

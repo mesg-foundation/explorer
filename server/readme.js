@@ -1,11 +1,10 @@
-const LRU = require('lru-cache')
-const ipfsClient = require('ipfs-http-client')
-const tar = require('tar')
 const fs = require('fs')
 const { join } = require('path')
 const { tmpdir } = require('os')
+const LRU = require('lru-cache')
+const ipfsClient = require('ipfs-http-client')
+const tar = require('tar')
 const MarkdownIt = require('markdown-it')
-
 
 const md = new MarkdownIt()
 const IPFS = ipfsClient('ipfs.app.mesg.com', '5001', { protocol: 'http' })
@@ -27,10 +26,13 @@ const extract = async (content, hash) => {
     fs.mkdirSync(target)
   }
   await new Promise((resolve, reject) => {
-    fs.createReadStream(tarFile).pipe(tar.extract({
-      cwd: target,
-      filter: path => path.match(REGEXP)
-    }))
+    fs.createReadStream(tarFile)
+      .pipe(
+        tar.extract({
+          cwd: target,
+          filter: (path) => path.match(REGEXP)
+        })
+      )
       .on('finish', resolve)
       .on('error', reject)
   })
@@ -38,8 +40,8 @@ const extract = async (content, hash) => {
   return target
 }
 
-const parseReadme = async (path) => {
-  const readmeFile = fs.readdirSync(path).find(x => x.match(REGEXP))
+const parseReadme = (path) => {
+  const readmeFile = fs.readdirSync(path).find((x) => x.match(REGEXP))
   const html = md.render(fs.readFileSync(join(path, readmeFile)).toString())
   return html
 }

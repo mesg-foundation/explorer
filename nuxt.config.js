@@ -30,10 +30,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '~/plugins/pluralize',
-    '~/plugins/clipboard'
-  ],
+  plugins: ['~/plugins/pluralize', '~/plugins/clipboard'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -43,7 +40,7 @@ export default {
     '@nuxtjs/vuetify'
   ],
   env: {
-    API_ENDPOINT: process.env.API_ENDPOINT || "https://marketplace.api.mesg.com"
+    API_ENDPOINT: process.env.API_ENDPOINT || 'https://marketplace.api.mesg.com'
   },
   /*
    ** Nuxt.js modules
@@ -58,8 +55,8 @@ export default {
     theme: {
       themes: {
         light: {
-          primary: "#491E8C",
-          accent: "#FFA744",
+          primary: '#491E8C',
+          accent: '#FFA744',
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
@@ -76,6 +73,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) { }
+    extend(config, ctx) {}
   }
 }
