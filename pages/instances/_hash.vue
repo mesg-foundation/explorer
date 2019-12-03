@@ -30,7 +30,7 @@
             </v-card>
           </v-col>
           <v-col sm="4">
-            <v-card>
+            <v-card v-if="runners.length">
               <v-card-title>Runners</v-card-title>
               <v-list>
                 <v-list-item

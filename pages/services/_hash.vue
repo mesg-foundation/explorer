@@ -20,7 +20,7 @@
               </v-card-text>
             </v-card>
 
-            <v-card class="mt-4">
+            <v-card v-if="instances.length" class="mt-4">
               <v-card-title>Instances</v-card-title>
               <v-list>
                 <v-list-item

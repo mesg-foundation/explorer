@@ -25,12 +25,6 @@
               </v-list>
             </v-card>
           </v-col>
-          <v-col sm="4">
-            <v-card>
-              <v-card-title></v-card-title>
-              <v-card-text> </v-card-text>
-            </v-card>
-          </v-col>
         </v-row>
       </v-layout>
     </v-container>

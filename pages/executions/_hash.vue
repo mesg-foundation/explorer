@@ -25,7 +25,7 @@
                 <v-list-item>
                   <v-list-item-content>
                     <v-list-item-title>{{
-                      execution.tags.join(', ')
+                      (execution.tags || []).join(', ')
                     }}</v-list-item-title>
                     <v-list-item-subtitle>Tags</v-list-item-subtitle>
                   </v-list-item-content>
