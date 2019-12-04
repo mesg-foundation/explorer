@@ -5,7 +5,7 @@
   "author": "Anthony ESTEBE",
   "private": true,
   "scripts": {
-    "dev": "API_ENDPOINT=http://localhost:50053 nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate && cp _redirects dist/_redirects",
@@ -22,11 +22,15 @@
   "dependencies": {
     "@mesg/api": "^0.1.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "cors": "^2.8.5",
     "cytoscape": "^3.12.1",
     "cytoscape-dagre": "^2.2.2",
     "fibers": "^4.0.2",
+    "ipfs-http-client": "^40.0.1",
+    "markdown-it": "^10.0.0",
     "nuxt": "^2.10.2",
     "pluralize": "^8.0.0",
+    "tar": "^5.0.5",
     "vue-clipboard2": "^0.3.1",
     "vue-pluralize": "0.0.2"
   },

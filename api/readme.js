@@ -7,7 +7,7 @@ const tar = require('tar')
 const MarkdownIt = require('markdown-it')
 
 const md = new MarkdownIt()
-const IPFS = ipfsClient('ipfs.app.mesg.com', '5001', { protocol: 'http' })
+const IPFS = ipfsClient('http://ipfs.app.mesg.com:5001')
 const readme = new LRU({})
 
 const REGEXP = /^readme.md$/i

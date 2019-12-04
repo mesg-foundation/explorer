@@ -31,6 +31,10 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: ['~/plugins/pluralize', '~/plugins/clipboard'],
+  serverMiddleware: [
+    // API middleware
+    '~/api/index.js'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -40,9 +44,7 @@ export default {
     '@nuxtjs/vuetify'
   ],
   env: {
-    API_ENDPOINT:
-      process.env.API_ENDPOINT || 'https://marketplace.api.mesg.com',
-    WS_ENDPOINT: process.env.WS_ENDPOINT || 'ws://localhost:50054'
+    HOST: process.env.HOST || 'http://localhost:3000'
   },
   /*
    ** Nuxt.js modules

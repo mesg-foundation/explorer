@@ -10,12 +10,12 @@ const getReadme = require('./readme')
 app.use(cors())
 const server = createServer(app)
 const ws = new Server({ server, port: process.env.WS_PORT })
-const api = new API(process.env.MESG_ENDPOINT)
+const api = new API('localhost:50052')
 
 const createListEndpoint = (app, api) => (resource) =>
-  app.get(`/${pluralize(resource)}`, async (req, res) =>
-    res.json(await api[resource].list({}))
-  )
+  app.get(`/${pluralize(resource)}`, async (req, res) => {
+    return res.json(await api[resource].list({}))
+  })
 
 const createGetEndpoint = (app, api) => (resource) =>
   app.get(`/${pluralize(resource)}/:hash`, async (req, res) =>
@@ -45,6 +45,11 @@ resourcesList.forEach(createListEndpoint(app, api))
 resourcesGet.forEach(createGetEndpoint(app, api))
 resourcesStream.forEach(createStreamSocket(ws, api))
 
-app.listen(process.env.PORT, () =>
-  process.stdout.write(`started on port ${process.env.PORT}`)
-)
+// app.listen(process.env.PORT, () =>
+//   console.log(`started on port ${process.env.PORT}`)
+// )
+
+module.exports = {
+  path: '/api',
+  handler: app
+}
