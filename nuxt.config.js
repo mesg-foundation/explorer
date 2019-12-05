@@ -43,11 +43,7 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
-  env: {
-    PROTOCOL: process.env.PROTOCOL || 'http',
-    HOST: process.env.HOST || 'localhost',
-    PORT: process.env.PORT || 3000
-  },
+  env: {},
   /*
    ** Nuxt.js modules
    */
