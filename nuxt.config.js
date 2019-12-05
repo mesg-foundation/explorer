@@ -44,7 +44,9 @@ export default {
     '@nuxtjs/vuetify'
   ],
   env: {
-    HOST: process.env.HOST || 'http://localhost:3000'
+    PROTOCOL: process.env.PROTOCOL || 'http',
+    HOST: process.env.HOST || 'localhost',
+    PORT: process.env.PORT || 3000
   },
   /*
    ** Nuxt.js modules

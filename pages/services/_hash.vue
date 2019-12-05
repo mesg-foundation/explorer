@@ -88,7 +88,7 @@ export default {
         .filter((x) => encode(x.serviceHash) === this.$route.params.hash)
     },
     code() {
-      const endpoint = `${process.env.HOST}/api/services/${this.service.hash}`
+      const endpoint = `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}/api/services/${this.service.hash}`
       return `mesg-cli service:create "$(curl -s ${endpoint})"`
     }
   },

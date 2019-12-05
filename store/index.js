@@ -18,12 +18,13 @@ const createResource = (resourceName, actions) => {
       return data
     },
     stream: ({ commit }) => {
-      const ws = new WebSocket(process.env.WS_ENDPOINT)
-      ws.onmessage = (event) => {
-        const { resource, data } = JSON.parse(event.data)
-        if (resource !== resourceName) return
-        commit('add', data)
-      }
+      // console.info('Streams are not yet implemented')
+      // const ws = new WebSocket('ws://localhost:3001')
+      // ws.onmessage = (event) => {
+      //   const { resource, data } = JSON.parse(event.data)
+      //   if (resource !== resourceName) return
+      //   commit('add', data)
+      // }
     }
   }
   return {
