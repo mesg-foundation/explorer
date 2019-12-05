@@ -11,7 +11,7 @@ app.use(cors())
 // const server = createServer(app)
 // const ws = new Server({ server, port: process.env.WS_PORT })
 // server.listen(process.env.WS_PORT)
-const api = new API('localhost:50052')
+const api = new API(process.env.ENGINE_ENDPOINT || 'localhost:50052')
 
 const createListEndpoint = (app, api) => (resource) =>
   app.get(`/${pluralize(resource)}`, async (req, res) => {
