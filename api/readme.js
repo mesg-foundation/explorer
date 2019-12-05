@@ -42,6 +42,7 @@ const extract = async (content, hash) => {
 
 const parseReadme = (path) => {
   const readmeFile = fs.readdirSync(path).find((x) => x.match(REGEXP))
+  if (!readmeFile) return '<p>No readme</p>'
   const html = md.render(fs.readFileSync(join(path, readmeFile)).toString())
   return html
 }
