@@ -1,12 +1,12 @@
 <template>
   <v-data-table
     v-bind="$attrs"
+    :headers="headers"
+    :items="params"
     disable-filtering
     disable-pagination
     hide-default-footer
     disable-sort
-    :headers="headers"
-    :items="params"
     class="elevation-1 root-table"
   >
     <template v-slot:item="{ item }">

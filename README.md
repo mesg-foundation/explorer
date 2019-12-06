@@ -1,6 +1,12 @@
-# marketplace
+# Dashboard
 
-> MESG Marketplace
+Dashboard to interact with the MESG Engine.
+
+To run it, you need to have your MESG Engine running that you can run with `mesg-cli daemon:start` then start the dashboard with the following command:
+
+```bash
+docker service create --network engine -p 5000:5000 --env ENGINE_ENDPOINT=engine:50052 mesg/dashboard
+```
 
 ## Build Setup
 
@@ -20,13 +26,3 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
-
-
-
-```
-git clone https://github.com/grpc/grpc-web /tmp/grpc-web
-cd /tmp/grpc-web && sudo make install-plugin
-rm -rf /tmp/grpc-web
-cd -
-```

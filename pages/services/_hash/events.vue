@@ -9,7 +9,7 @@
         <v-expansion-panel-content>
           <p>{{ event.description }}</p>
           <h3 class="subtitle-1">Data</h3>
-          <ParameterTable class="mb-6" :params="event.data || []" />
+          <ParameterTable :params="event.data || []" class="mb-6" />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     events() {
-      return this.service.events
+      return this.service.events || []
     }
   }
 }

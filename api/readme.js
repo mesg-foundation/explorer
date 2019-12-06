@@ -7,7 +7,7 @@ const tar = require('tar')
 const MarkdownIt = require('markdown-it')
 
 const md = new MarkdownIt()
-const IPFS = ipfsClient('ipfs.app.mesg.com', '5001', { protocol: 'http' })
+const IPFS = ipfsClient('http://ipfs.app.mesg.com:5001')
 const readme = new LRU({})
 
 const REGEXP = /^readme.md$/i
@@ -42,6 +42,7 @@ const extract = async (content, hash) => {
 
 const parseReadme = (path) => {
   const readmeFile = fs.readdirSync(path).find((x) => x.match(REGEXP))
+  if (!readmeFile) return '<p>No readme</p>'
   const html = md.render(fs.readFileSync(join(path, readmeFile)).toString())
   return html
 }

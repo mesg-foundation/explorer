@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import DependencyInfo from '~/components/DependencyInfo'
+import DependencyInfo from '~/components/service/DependencyInfo'
 export default {
   components: {
     DependencyInfo

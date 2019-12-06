@@ -3,18 +3,18 @@
     <nuxt-link
       v-for="service in services"
       :key="service.hash"
-      :to="`/service/${service.hash}`"
+      :to="`/services/${service.hash}`"
       class="mb-4"
     >
       <v-card>
         <v-card-text>
-          <h2 class="headline" v-text="service.name" />
+          <h2 v-text="service.name" class="headline" />
           <p v-text="service.description" />
           <v-chip label small class="mr-1">{{
-            'task' | pluralize(service.tasks.length, true)
+            'task' | pluralize((service.tasks || []).length, true)
           }}</v-chip>
           <v-chip label small class="mr-1">{{
-            'event' | pluralize(service.events.length, true)
+            'event' | pluralize((service.events || []).length, true)
           }}</v-chip>
         </v-card-text>
       </v-card>

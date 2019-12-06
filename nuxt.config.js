@@ -6,8 +6,8 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - MESG Marketplace',
-    title: 'MESG Marketplace',
+    titleTemplate: '%s - ' + process.env.npm_package_name,
+    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -31,6 +31,10 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: ['~/plugins/pluralize', '~/plugins/clipboard'],
+  serverMiddleware: [
+    // API middleware
+    '~/api/index.js'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -39,9 +43,7 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
-  env: {
-    API_ENDPOINT: process.env.API_ENDPOINT || 'https://marketplace.api.mesg.com'
-  },
+  env: {},
   /*
    ** Nuxt.js modules
    */

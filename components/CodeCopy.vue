@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-text-field
+      :value="code"
+      @click:append="copy"
       solo
       append-icon="mdi-content-copy"
       readonly
       hide-details
       flat
       dark
-      :value="code"
-      @click:append="copy"
     ></v-text-field>
     <v-snackbar v-model="done" :timeout="2000">
       Code copied
