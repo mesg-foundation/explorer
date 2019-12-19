@@ -5,13 +5,17 @@ import { encode } from '@mesg/api/lib/util/base58'
 const createResource = (resourceName, actions) => {
   const _actions = {
     get: async ({ commit }, id) => {
-      const res = await fetch(`/api/${pluralize(resourceName)}/${id}`)
+      const res = await fetch(
+        `${process.env.HOST}/api/${pluralize(resourceName)}/${id}`
+      )
       const data = await res.json()
       commit('add', data)
       return data
     },
     list: async ({ commit }) => {
-      const res = await fetch(`/api/${pluralize(resourceName)}`)
+      const res = await fetch(
+        `${process.env.HOST}/api/${pluralize(resourceName)}`
+      )
       const data = await res.json()
       const result = data[pluralize(resourceName)] || []
       result.forEach((d) => commit('add', d))

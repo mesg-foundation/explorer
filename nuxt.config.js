@@ -1,7 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  mode: 'spa',
+  // mode: 'spa',
   /*
    ** Headers of the page
    */
@@ -43,7 +43,9 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
-  env: {},
+  env: {
+    HOST: process.env.HOST || 'http://localhost:3000'
+  },
   /*
    ** Nuxt.js modules
    */
