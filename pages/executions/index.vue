@@ -34,7 +34,7 @@ import { encode } from '@mesg/api/lib/util/base58'
 export default {
   computed: {
     ...mapGetters({
-      list: 'executions/list'
+      list: 'execution/list'
     }),
     headers() {
       return [
@@ -52,8 +52,8 @@ export default {
   },
   fetch: ({ store }) =>
     Promise.all([
-      store.dispatch('executions/list'),
-      store.dispatch('executions/stream')
+      store.dispatch('execution/list'),
+      store.dispatch('execution/stream')
     ]),
   methods: {
     encode

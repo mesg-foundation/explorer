@@ -39,9 +39,9 @@ export default {
   components: { Header },
   computed: {
     ...mapGetters({
-      runners: 'runners/list',
-      services: 'services/list',
-      instances: 'instances/list'
+      runners: 'runner/list',
+      services: 'service/list',
+      instances: 'instance/list'
     }),
     runner() {
       return this.runners[this.$route.params.hash]
@@ -54,12 +54,12 @@ export default {
     }
   },
   fetch: async ({ store, params }) => {
-    const runner = await store.dispatch('runners/get', params.hash)
+    const runner = await store.dispatch('runner/get', params.hash)
     const instance = await store.dispatch(
-      'instances/get',
+      'instance/get',
       encode(runner.instanceHash)
     )
-    return store.dispatch('services/get', encode(instance.serviceHash))
+    return store.dispatch('service/get', encode(instance.serviceHash))
   },
   methods: { encode }
 }

@@ -1,8 +1,7 @@
-import Vuex from 'vuex'
 import pluralize from 'pluralize'
 import { encode } from '@mesg/api/lib/util/base58'
 
-const createResource = (resourceName, actions) => {
+export default (resourceName, actions) => {
   const _actions = {
     get: async ({ commit }, id) => {
       const res = await fetch(
@@ -59,20 +58,4 @@ const createResource = (resourceName, actions) => {
       {}
     )
   }
-}
-
-export default () => {
-  const store = new Vuex.Store({
-    strict: true,
-    modules: {
-      services: createResource('service', ['get', 'list']),
-      instances: createResource('instance', ['get', 'list']),
-      processes: createResource('process', ['get', 'list']),
-      runners: createResource('runner', ['get', 'list']),
-      executions: createResource('execution', ['get', 'list', 'stream']),
-      events: createResource('event', ['stream'])
-    }
-  })
-
-  return store
 }

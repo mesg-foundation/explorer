@@ -76,8 +76,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      services: 'services/list',
-      _instances: 'instances/list'
+      services: 'service/list',
+      _instances: 'instance/list'
     }),
     service() {
       return this.services[this.$route.params.hash]
@@ -94,8 +94,8 @@ export default {
   },
   fetch: ({ store, params }) => {
     return Promise.all([
-      store.dispatch('services/get', params.hash),
-      store.dispatch('instances/list')
+      store.dispatch('service/get', params.hash),
+      store.dispatch('instance/list')
     ])
   }
 }

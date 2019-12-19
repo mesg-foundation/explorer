@@ -21,7 +21,7 @@ import { encode } from '@mesg/api/lib/util/base58'
 export default {
   computed: {
     ...mapGetters({
-      list: 'instances/list'
+      list: 'instance/list'
     }),
     headers() {
       return [
@@ -33,7 +33,7 @@ export default {
       return Object.keys(this.list).map((x) => this.list[x])
     }
   },
-  fetch: ({ store }) => store.dispatch('instances/list'),
+  fetch: ({ store }) => store.dispatch('instance/list'),
   methods: {
     encode
   }

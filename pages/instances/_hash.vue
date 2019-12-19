@@ -63,9 +63,9 @@ export default {
   components: { Header },
   computed: {
     ...mapGetters({
-      instances: 'instances/list',
-      services: 'services/list',
-      _runners: 'runners/list'
+      instances: 'instance/list',
+      services: 'service/list',
+      _runners: 'runner/list'
     }),
     instance() {
       return this.instances[this.$route.params.hash]
@@ -80,10 +80,10 @@ export default {
     }
   },
   fetch: async ({ store, params }) => {
-    const instance = await store.dispatch('instances/get', params.hash)
+    const instance = await store.dispatch('instance/get', params.hash)
     return Promise.all([
-      store.dispatch('services/get', encode(instance.serviceHash)),
-      store.dispatch('runners/list')
+      store.dispatch('service/get', encode(instance.serviceHash)),
+      store.dispatch('runner/list')
     ])
   },
   methods: { encode }

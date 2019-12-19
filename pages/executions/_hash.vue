@@ -71,9 +71,9 @@ export default {
   components: { Header },
   computed: {
     ...mapGetters({
-      executions: 'executions/list',
-      services: 'services/list',
-      instances: 'instances/list'
+      executions: 'execution/list',
+      services: 'service/list',
+      instances: 'instance/list'
     }),
     execution() {
       return this.executions[this.$route.params.hash]
@@ -86,12 +86,12 @@ export default {
     }
   },
   fetch: async ({ store, params }) => {
-    const execution = await store.dispatch('executions/get', params.hash)
+    const execution = await store.dispatch('execution/get', params.hash)
     const instance = await store.dispatch(
-      'instances/get',
+      'instance/get',
       encode(execution.instanceHash)
     )
-    await store.dispatch('services/get', encode(instance.serviceHash))
+    await store.dispatch('service/get', encode(instance.serviceHash))
   },
   methods: { encode }
 }

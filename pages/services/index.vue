@@ -19,14 +19,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      _services: 'services/list'
+      _services: 'service/list'
     }),
     services() {
       return Object.keys(this._services).map((x) => this._services[x])
     }
   },
   fetch: async ({ store }) => {
-    await store.dispatch('services/list')
+    await store.dispatch('service/list')
   }
 }
 </script>

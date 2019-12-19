@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      processes: 'processes/list'
+      processes: 'process/list'
     }),
     process() {
       return this.processes[this.$route.params.hash]
@@ -61,7 +61,7 @@ export default {
       return this.process.edges
     }
   },
-  fetch: ({ store, params }) => store.dispatch('processes/get', params.hash),
+  fetch: ({ store, params }) => store.dispatch('process/get', params.hash),
   methods: {
     encode
   }
