@@ -20,11 +20,13 @@
     <v-content>
       <nuxt />
     </v-content>
+    <StatusBar />
   </v-app>
 </template>
 
-<style scoped>
-span {
-  color: white;
+<script>
+import StatusBar from '~/components/StatusBar'
+export default {
+  components: { StatusBar }
 }
-</style>
+</script>
