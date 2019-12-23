@@ -27,7 +27,7 @@ export default {
     headers() {
       return [
         { text: 'Hash', value: 'hash' },
-        { text: 'Key', value: 'key' },
+        { text: 'Name', value: 'name' },
         { text: 'Trigger', value: 'trigger' },
         { text: 'Tasks', value: 'tasks' }
       ]

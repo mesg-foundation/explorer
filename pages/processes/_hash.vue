@@ -52,10 +52,16 @@ export default {
       return this.processes[this.$route.params.hash]
     },
     nodes() {
-      return this.process.nodes.map((x) => ({
-        ...(x.event || x.result || x.filter || x.map || x.task),
-        type: Object.keys(x)[0]
-      }))
+      const nodeTypes = ['event', 'result', 'filter', 'map', 'task']
+      debugger
+      return this.process.nodes.map((x) => {
+        const nodeType = nodeTypes.find((type) => !!x[type])
+        return {
+          ...x[nodeType],
+          type: nodeType,
+          key: x.key
+        }
+      })
     },
     edges() {
       return this.process.edges
