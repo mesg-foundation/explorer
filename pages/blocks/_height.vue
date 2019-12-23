@@ -32,9 +32,6 @@
         :items="block.results.deliver_tx || []"
         :headers="headersTx"
       >
-        <template v-slot:item.height="{ item }">
-          {{ item }}
-        </template>
         <template v-slot:item.events="{ value }">
           {{ value.length }}
         </template>
