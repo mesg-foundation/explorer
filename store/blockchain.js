@@ -1,38 +1,44 @@
 import RpcClient from 'tendermint/lib/rpc'
-import { getBlockHash } from 'tendermint/lib/hash'
+import { getBlockHash, tmhash } from 'tendermint/lib/hash'
 const client = new RpcClient('ws://localhost:26657')
 
-const decode = (str) => {
-  if (!str) {
-    return ''
-  }
-  return typeof Buffer === 'function'
-    ? Buffer.from(str, 'base64').toString()
-    : atob
-}
+const decode = (str) => Buffer.from(str || '', 'base64').toString()
+
+const txHash = (tx) =>
+  tmhash(Buffer.from(tx.tx, 'base64'))
+    .toString('hex')
+    .toUpperCase()
+
+const convertEvents = (events) =>
+  (events || []).map((event) => ({
+    type: event.type,
+    attributes: event.attributes.map((attribute) => ({
+      key: decode(attribute.key),
+      value: decode(attribute.value)
+    }))
+  }))
 
 const convertBlock = (block) => {
-  let results = {}
-  if (block.results) {
-    const events = (block.results.begin_block.events || []).map((event) => ({
-      type: event.type,
-      attributes: event.attributes.map((attribute) => ({
-        key: decode(attribute.key),
-        value: decode(attribute.value)
-      }))
-    }))
-    results = {
-      ...results,
-      begin_block: {
-        ...results.begin_block,
-        events
-      }
-    }
+  const results = { ...block.results }
+  if (results.begin_block) {
+    results.begin_block.events = convertEvents(results.begin_block.events)
   }
   return {
     ...block,
     hash: getBlockHash(block.header),
     results
+  }
+}
+
+const convertTx = (tx) => {
+  const hash = txHash(tx)
+  const result = { ...tx.result }
+  result.events = convertEvents(result.events)
+  return {
+    ...tx,
+    result,
+    tx: Buffer.from(tx.tx, 'base64').toString(),
+    hash
   }
 }
 
@@ -58,15 +64,17 @@ export const mutations = {
     state.syncInfo = status.sync_info
   },
   addBlock: (state, block) => {
+    const convertedBlock = convertBlock(block)
     state.blocksByHeight = {
       ...state.blocksByHeight,
-      [block.header.height]: convertBlock(block)
+      [convertedBlock.header.height]: convertedBlock
     }
   },
   addTx: (state, tx) => {
+    const convertedTx = convertTx(tx)
     state.txsByHash = {
       ...state.txsByHash,
-      [tx.tx]: tx
+      [convertedTx.hash]: convertedTx
     }
   }
 }
@@ -93,7 +101,12 @@ export const actions = {
     })
   },
   fetchTx: async ({ commit }, hash) => {
-    const tx = await client.tx({ hash })
+    // TODO: this request doesn't work yet
+    // > error converting json params to arguments: illegal base64 data at input byte 64
+    const tx = await client.tx({
+      hash: Buffer.from(hash, 'hex'),
+      prove: false
+    })
     commit('addTx', tx)
   }
 }
