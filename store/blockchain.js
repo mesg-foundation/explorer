@@ -5,7 +5,8 @@ const client = new RpcClient('ws://localhost:26657')
 export const state = () => ({
   nodeInfo: {},
   syncInfo: {},
-  blocksByHeight: {}
+  blocksByHeight: {},
+  txsByHash: {}
 })
 
 export const getters = {
@@ -13,7 +14,8 @@ export const getters = {
   syncInfo: (state) => state.syncInfo,
   blocks: (state) => state.blocksByHeight,
   latestBlock: (state) =>
-    Object.keys(state.blocksByHeight).sort((a, b) => b.localeCompare(a))[0]
+    Object.keys(state.blocksByHeight).sort((a, b) => b.localeCompare(a))[0],
+  txs: (state) => state.txsByHash
 }
 
 export const mutations = {
@@ -29,6 +31,12 @@ export const mutations = {
         hash: getBlockHash(block.header)
       }
     }
+  },
+  addTx: (state, tx) => {
+    state.txsByHash = {
+      ...state.txsByHash,
+      [tx.tx]: tx
+    }
   }
 }
 
@@ -38,6 +46,9 @@ export const actions = {
     commit('updateStatus', status)
     await client.subscribe({ query: "tm.event = 'NewBlock'" }, (event) =>
       commit('addBlock', event.block)
+    )
+    await client.subscribe({ query: "tm.event = 'Tx'" }, (event) =>
+      commit('addTx', event.TxResult)
     )
   },
   fetchBlock: async ({ commit }, height) => {
@@ -49,5 +60,9 @@ export const actions = {
       ...block,
       results
     })
+  },
+  fetchTx: async ({ commit }, hash) => {
+    const tx = await client.tx({ hash })
+    commit('addTx', tx)
   }
 }
