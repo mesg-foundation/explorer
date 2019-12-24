@@ -1,6 +1,7 @@
 import RpcClient from 'tendermint/lib/rpc'
 import { getBlockHash, tmhash } from 'tendermint/lib/hash'
-const client = new RpcClient('ws://localhost:26657')
+const wsClient = new RpcClient('ws://localhost:26657')
+const httpClient = new RpcClient('http://localhost:26657')
 
 const decode = (str) => Buffer.from(str || '', 'base64').toString()
 
@@ -30,15 +31,20 @@ const convertBlock = (block) => {
   }
 }
 
-const convertTx = (tx) => {
-  const hash = txHash(tx)
-  const result = { ...tx.result }
-  result.events = convertEvents(result.events)
+const normalizeTx = (tx) => {
+  const result = { ...tx.result, ...tx.tx_result } // result are not the same if it comes from an event or a fetch
   return {
-    ...tx,
-    result,
+    hash: tx.hash || txHash(tx),
+    height: tx.height,
+    index: tx.index,
     tx: Buffer.from(tx.tx, 'base64').toString(),
-    hash
+    result: {
+      data: result.data,
+      log: result.log,
+      gasWanted: result.gasWanted || result.gas_wanted,
+      gasUsed: result.gasUsed || result.gas_used,
+      events: convertEvents(result.events)
+    }
   }
 }
 
@@ -55,7 +61,12 @@ export const getters = {
   blocks: (state) => state.blocksByHeight,
   latestBlock: (state) =>
     Object.keys(state.blocksByHeight).sort((a, b) => b.localeCompare(a))[0],
-  txs: (state) => state.txsByHash
+  txs: (state) => state.txsByHash,
+  sortedTxs: (state) =>
+    Object.keys(state.txsByHash)
+      .map((x) => state.txsByHash[x])
+      .sort((a, b) => b.index - a.index) // Sort by index
+      .sort((a, b) => b.height.localeCompare(a.height)) // Sort by block
 }
 
 export const mutations = {
@@ -71,7 +82,7 @@ export const mutations = {
     }
   },
   addTx: (state, tx) => {
-    const convertedTx = convertTx(tx)
+    const convertedTx = normalizeTx(tx)
     state.txsByHash = {
       ...state.txsByHash,
       [convertedTx.hash]: convertedTx
@@ -81,19 +92,19 @@ export const mutations = {
 
 export const actions = {
   sync: async ({ commit }) => {
-    const status = await client.status()
+    const status = await wsClient.status()
     commit('updateStatus', status)
-    await client.subscribe({ query: "tm.event = 'NewBlock'" }, (event) =>
+    await wsClient.subscribe({ query: "tm.event = 'NewBlock'" }, (event) =>
       commit('addBlock', event.block)
     )
-    await client.subscribe({ query: "tm.event = 'Tx'" }, (event) =>
+    await wsClient.subscribe({ query: "tm.event = 'Tx'" }, (event) =>
       commit('addTx', event.TxResult)
     )
   },
   fetchBlock: async ({ commit }, height) => {
     const [{ block }, { results }] = await Promise.all([
-      client.block({ height }),
-      client.blockResults({ height })
+      wsClient.block({ height }),
+      wsClient.blockResults({ height })
     ])
     commit('addBlock', {
       ...block,
@@ -101,12 +112,9 @@ export const actions = {
     })
   },
   fetchTx: async ({ commit }, hash) => {
-    // TODO: this request doesn't work yet
+    // For some reasons the websocket client doesn't work with this parameters. HTTP clients works
     // > error converting json params to arguments: illegal base64 data at input byte 64
-    const tx = await client.tx({
-      hash: Buffer.from(hash, 'hex'),
-      prove: false
-    })
+    const tx = await httpClient.tx({ hash: `0x${hash}` })
     commit('addTx', tx)
   }
 }

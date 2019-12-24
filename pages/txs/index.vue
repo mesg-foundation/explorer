@@ -12,10 +12,10 @@
           {{ item.result.events.length }}
         </template>
         <template v-slot:item.gasWanted="{ item }">
-          {{ item.result.gas_wanted }}
+          {{ item.result.gasWanted }}
         </template>
         <template v-slot:item.gasUsed="{ item }">
-          {{ item.result.gas_used }}
+          {{ item.result.gasUsed }}
         </template>
       </v-data-table>
     </v-card>
@@ -27,13 +27,8 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      _txs: 'blockchain/txs'
+      txs: 'blockchain/sortedTxs'
     }),
-    txs() {
-      return Object.keys(this._txs)
-        .sort((a, b) => b.localeCompare(a))
-        .map((x) => this._txs[x])
-    },
     headers() {
       return [
         { text: 'Height', value: 'height' },

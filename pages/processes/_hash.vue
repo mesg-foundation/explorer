@@ -53,7 +53,6 @@ export default {
     },
     nodes() {
       const nodeTypes = ['event', 'result', 'filter', 'map', 'task']
-      debugger
       return this.process.nodes.map((x) => {
         const nodeType = nodeTypes.find((type) => !!x[type])
         return {
