@@ -22,35 +22,12 @@
 
             <v-card v-if="instances.length" class="mt-4">
               <v-card-title>Instances</v-card-title>
-              <v-list>
-                <v-list-item
-                  v-for="instance in instances"
-                  :key="instance.hash"
-                  :to="`/instances/${instance.hash}`"
-                  nuxt
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>{{ instance.hash }}</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+              <List :items="instances" />
             </v-card>
 
             <v-card v-if="service.repository" class="mt-4">
               <v-card-title>Source repository</v-card-title>
-              <v-list>
-                <v-list-item :href="service.repository">
-                  <v-list-item-avatar>
-                    <v-icon>mdi-github-circle</v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title>Github</v-list-item-title>
-                    <v-list-item-subtitle>{{
-                      service.repository
-                    }}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+              <List :items="items" />
             </v-card>
           </v-col>
         </v-row>
@@ -64,10 +41,12 @@ import { mapGetters } from 'vuex'
 import { encode } from '@mesg/api/lib/util/base58'
 import ServiceHeader from '~/components/service/Header'
 import CodeCopy from '~/components/CodeCopy'
+import List from '~/components/List'
 export default {
   components: {
     ServiceHeader,
-    CodeCopy
+    CodeCopy,
+    List
   },
   head() {
     return {
@@ -86,10 +65,25 @@ export default {
       return Object.keys(this._instances)
         .map((x) => this._instances[x])
         .filter((x) => encode(x.serviceHash) === this.$route.params.hash)
+        .map((x) => ({
+          key: 'Instance hash',
+          value: x.hash,
+          to: `/instances/${x.hash}`
+        }))
     },
     code() {
       const endpoint = `${process.env.HOST}/api/services/${this.service.hash}`
       return `mesg-cli service:create "$(curl -s ${endpoint})"`
+    },
+    items() {
+      return [
+        {
+          key: 'Repository',
+          value: this.service.repository,
+          href: this.service.repository,
+          icon: 'mdi-github-circle'
+        }
+      ]
     }
   },
   fetch: ({ store, params }) => {

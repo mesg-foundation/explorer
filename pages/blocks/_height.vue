@@ -2,14 +2,7 @@
   <v-container>
     <v-card>
       <v-card-title class="headline">Headers</v-card-title>
-      <v-list>
-        <v-list-item v-for="meta in metas" :key="meta.key">
-          <v-list-item-content>
-            <v-list-item-title>{{ meta.key }}</v-list-item-title>
-            <v-list-item-subtitle>{{ meta.value }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <List :items="metas" />
       <v-card-title class="headline">Begin block events</v-card-title>
       <v-divider />
       <v-data-table
@@ -42,7 +35,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import List from '~/components/List'
 export default {
+  components: {
+    List
+  },
   computed: {
     ...mapGetters({
       blocks: 'blockchain/blocks'

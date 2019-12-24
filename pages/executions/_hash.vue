@@ -9,36 +9,7 @@
         <v-row>
           <v-col sm="8">
             <v-card>
-              <v-list>
-                <v-list-item :to="`/services/${service.hash}`" nuxt>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ service.name }}</v-list-item-title>
-                    <v-list-item-subtitle>Service name</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item :to="`/instances/${instance.hash}`" nuxt>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ instance.hash }}</v-list-item-title>
-                    <v-list-item-subtitle>Instance hash</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>
-                    <v-list-item-title>{{
-                      (execution.tags || []).join(', ')
-                    }}</v-list-item-title>
-                    <v-list-item-subtitle>Tags</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>
-                    <v-list-item-title>{{
-                      execution.taskKey
-                    }}</v-list-item-title>
-                    <v-list-item-subtitle>Task</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+              <List :items="items" />
               <v-card-text>
                 <code style="width: 100%;">
                   {{ JSON.stringify(execution.inputs, null, 2) }}
@@ -67,8 +38,9 @@
 import { mapGetters } from 'vuex'
 import { encode } from '@mesg/api/lib/util/base58'
 import Header from '~/components/Header'
+import List from '~/components/List'
 export default {
-  components: { Header },
+  components: { Header, List },
   computed: {
     ...mapGetters({
       executions: 'execution/list',
@@ -83,6 +55,22 @@ export default {
     },
     service() {
       return this.services[encode(this.instance.serviceHash)]
+    },
+    items() {
+      return [
+        {
+          key: 'Service name',
+          value: this.service.name,
+          to: `/services/${this.service.hash}`
+        },
+        {
+          key: 'Instance hash',
+          value: this.instance.hash,
+          to: `/instances/${this.instance.hash}`
+        },
+        { key: 'Tags', value: (this.execution.tags || []).join(', ') },
+        { key: 'Task', value: this.execution.taskKey }
+      ]
     }
   },
   fetch: async ({ store, params }) => {

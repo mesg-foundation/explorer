@@ -9,44 +9,13 @@
         <v-row>
           <v-col sm="8">
             <v-card>
-              <v-list>
-                <v-list-item :to="`/services/${service.hash}`" nuxt>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ service.name }}</v-list-item-title>
-                    <v-list-item-subtitle>Service name</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>
-                    <v-list-item-title>{{
-                      encode(instance.envHash)
-                    }}</v-list-item-title>
-                    <v-list-item-subtitle
-                      >Environment Hash</v-list-item-subtitle
-                    >
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+              <List :items="items" />
             </v-card>
           </v-col>
           <v-col sm="4">
             <v-card v-if="runners.length">
               <v-card-title>Runners</v-card-title>
-              <v-list>
-                <v-list-item
-                  v-for="runner in runners"
-                  :key="runner.hash"
-                  :to="`/runners/${runner.hash}`"
-                  nuxt
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>{{ runner.address }}</v-list-item-title>
-                    <v-list-item-subtitle
-                      >Runner's address</v-list-item-subtitle
-                    >
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+              <List :items="runners" />
             </v-card>
           </v-col>
         </v-row>
@@ -59,8 +28,9 @@
 import { mapGetters } from 'vuex'
 import { encode } from '@mesg/api/lib/util/base58'
 import Header from '~/components/Header'
+import List from '~/components/List'
 export default {
-  components: { Header },
+  components: { Header, List },
   computed: {
     ...mapGetters({
       instances: 'instance/list',
@@ -74,9 +44,24 @@ export default {
       return Object.keys(this._runners)
         .map((x) => this._runners[x])
         .filter((x) => encode(x.instanceHash) === this.$route.params.hash)
+        .map((x) => ({
+          key: "Runner's address",
+          value: x.address,
+          to: `/runners/${x.hash}`
+        }))
     },
     service() {
       return this.services[encode(this.instance.serviceHash)]
+    },
+    items() {
+      return [
+        {
+          key: 'Service name',
+          value: this.service.name,
+          to: `/services/${this.service.hash}`
+        },
+        { key: 'Environment hash', value: this.encode(this.instance.envHash) }
+      ]
     }
   },
   fetch: async ({ store, params }) => {

@@ -9,20 +9,7 @@
         <v-row>
           <v-col sm="8">
             <v-card>
-              <v-list>
-                <v-list-item :to="`/services/${service.hash}`" nuxt>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ service.name }}</v-list-item-title>
-                    <v-list-item-subtitle>Service name</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item :to="`/instances/${instance.hash}`" nuxt>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ instance.hash }}</v-list-item-title>
-                    <v-list-item-subtitle>Instance Hash</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+              <List :items="items" />
             </v-card>
           </v-col>
         </v-row>
@@ -35,8 +22,9 @@
 import { mapGetters } from 'vuex'
 import { encode } from '@mesg/api/lib/util/base58'
 import Header from '~/components/Header'
+import List from '~/components/List'
 export default {
-  components: { Header },
+  components: { Header, List },
   computed: {
     ...mapGetters({
       runners: 'runner/list',
@@ -51,6 +39,20 @@ export default {
     },
     service() {
       return this.services[encode(this.instance.serviceHash)]
+    },
+    items() {
+      return [
+        {
+          key: 'Service name',
+          value: this.service.name,
+          to: `/services/${this.service.hash}`
+        },
+        {
+          key: 'Instance hash',
+          value: this.instance.hash,
+          to: `/instances/${this.instance.hash}`
+        }
+      ]
     }
   },
   fetch: async ({ store, params }) => {
