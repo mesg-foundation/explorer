@@ -12,7 +12,7 @@
       }}</v-chip>
     </Header>
     <div style="background-color:white;">
-      <v-container class="pa-0">
+      <v-container fluid class="pa-0">
         <v-tabs class="mt-0">
           <v-tab :to="`/services/${service.hash}`" nuxt exact>Readme</v-tab>
           <v-tab :to="`/services/${service.hash}/tasks`" nuxt exact

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card v-if="tx">
       <v-card-title class="headline">Transaction</v-card-title>
       <List :items="metas" />

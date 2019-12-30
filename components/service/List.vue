@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <nuxt-link
       v-for="service in services"
       :key="service.hash"

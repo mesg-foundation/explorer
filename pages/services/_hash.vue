@@ -2,7 +2,7 @@
   <div v-if="service">
     <ServiceHeader :service="service" />
     <v-divider />
-    <v-container>
+    <v-container fluid>
       <v-layout>
         <v-row>
           <v-col sm="8">

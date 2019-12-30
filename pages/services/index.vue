@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     Listing {{ 'service' | pluralize(services.length, true) }}
     <ServiceList :services="services" />
   </v-container>

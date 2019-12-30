@@ -4,7 +4,7 @@
       <h1 class="display-1">Execution {{ execution.hash }}</h1>
     </Header>
     <v-divider />
-    <v-container>
+    <v-container fluid>
       <v-layout>
         <v-row>
           <v-col sm="8">

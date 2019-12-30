@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-app-bar class="mb-4">
       <v-toolbar-title>Event debugger</v-toolbar-title>
       <v-spacer></v-spacer>

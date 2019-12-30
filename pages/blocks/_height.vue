@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <v-card-title class="headline">Headers</v-card-title>
       <List :items="metas" />

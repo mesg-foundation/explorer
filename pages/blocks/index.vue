@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <v-data-table :items="blocks" :headers="headers">
         <template v-slot:item.height="{ item }">
