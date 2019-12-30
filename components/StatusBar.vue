@@ -1,5 +1,5 @@
 <template>
-  <v-system-bar light>
+  <v-system-bar v-bind="$attrs">
     <v-icon v-if="!nodeInfo" class="error--text">mdi-close</v-icon>
     <v-icon v-else>mdi-check</v-icon>
     <span>{{ nodeInfo.network }}</span>
