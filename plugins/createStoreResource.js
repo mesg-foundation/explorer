@@ -21,13 +21,8 @@ export default (resourceName, actions) => {
       return data
     },
     stream: ({ commit }) => {
-      // console.info('Streams are not yet implemented')
-      // const ws = new WebSocket('ws://localhost:3001')
-      // ws.onmessage = (event) => {
-      //   const { resource, data } = JSON.parse(event.data)
-      //   if (resource !== resourceName) return
-      //   commit('add', data)
-      // }
+      const ws = new WebSocket(`${process.env.WS_HOST}/api/${resourceName}`)
+      ws.onmessage = (event) => commit('add', JSON.parse(event))
     }
   }
   return {

@@ -40,10 +40,10 @@ export const mutations = {
 
 export const actions = {
   sync: async ({ commit, dispatch }) => {
-    const blockWS = new WebSocket('ws://localhost:3002/api/block')
+    const blockWS = new WebSocket(`${process.env.WS_HOST}/api/block`)
     blockWS.onmessage = (event) => commit('addBlock', JSON.parse(event.data))
 
-    const txWS = new WebSocket('ws://localhost:3002/api/tx')
+    const txWS = new WebSocket(`${process.env.WS_HOST}/api/tx`)
     txWS.onmessage = (event) => commit('addTx', JSON.parse(event.data))
 
     await dispatch('updateStatus')

@@ -45,7 +45,8 @@ export default {
   ],
   env: {
     ENGINE_HOST: process.env.ENGINE_HOST || 'engine',
-    HOST: process.env.HOST || 'http://localhost:3000'
+    HOST: process.env.HOST || 'http://localhost:3000',
+    WS_HOST: process.env.WS_HOST || 'ws://localhost:3002'
   },
   /*
    ** Nuxt.js modules
