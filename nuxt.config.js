@@ -33,7 +33,8 @@ export default {
   plugins: ['~/plugins/pluralize', '~/plugins/clipboard'],
   serverMiddleware: [
     // API middleware
-    '~/api/index.js'
+    { path: '/api', handler: '~/api/engine.js' },
+    { path: '/api/readme/:hash', handler: '~/api/readme.js' }
   ],
   /*
    ** Nuxt.js dev-modules

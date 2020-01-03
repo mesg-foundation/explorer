@@ -47,7 +47,7 @@ const parseReadme = (path) => {
   return html
 }
 
-module.exports = async (hash) => {
+const getReadme = async (hash) => {
   if (readme.has(hash)) {
     return readme.get(hash)
   }
@@ -57,3 +57,5 @@ module.exports = async (hash) => {
   readme.set(hash, html)
   return html
 }
+
+export default async (req, res) => res.send(await getReadme(req.params.hash))
