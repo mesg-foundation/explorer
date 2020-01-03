@@ -5,7 +5,7 @@ Explorer to interact with the MESG Engine.
 To run it, you need to have your MESG Engine running that you can run with `mesg-cli daemon:start` then start the explorer with the following command:
 
 ```bash
-docker service create --network engine -p 5000:5000 --env ENGINE_ENDPOINT=engine:50052 mesg/explorer
+docker service create --network engine -p 5000:5000 mesg/explorer
 ```
 
 ## Build Setup

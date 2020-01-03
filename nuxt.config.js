@@ -33,8 +33,7 @@ export default {
   plugins: ['~/plugins/pluralize', '~/plugins/clipboard'],
   serverMiddleware: [
     // API middleware
-    { path: '/api', handler: '~/api/engine.js' },
-    { path: '/api/readme/:hash', handler: '~/api/readme.js' }
+    '~/api/index.js'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -45,6 +44,7 @@ export default {
     '@nuxtjs/vuetify'
   ],
   env: {
+    ENGINE_HOST: process.env.ENGINE_HOST || 'engine',
     HOST: process.env.HOST || 'http://localhost:3000'
   },
   /*

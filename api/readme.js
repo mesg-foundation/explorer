@@ -58,4 +58,10 @@ const getReadme = async (hash) => {
   return html
 }
 
-export default async (req, res) => res.send(await getReadme(req.params.hash))
+export default () => [
+  {
+    method: 'GET',
+    path: '/readme/:hash',
+    handler: async (req, res) => res.send(await getReadme(req.params.hash))
+  }
+]
