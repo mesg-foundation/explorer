@@ -1,53 +1,3 @@
-import RpcClient from 'tendermint/lib/rpc'
-import { getBlockHash, tmhash } from 'tendermint/lib/hash'
-const wsClient = new RpcClient('ws://localhost:26657')
-const httpClient = new RpcClient('http://localhost:26657')
-
-const decode = (str) => Buffer.from(str || '', 'base64').toString()
-
-const txHash = (tx) =>
-  tmhash(Buffer.from(tx.tx, 'base64'))
-    .toString('hex')
-    .toUpperCase()
-
-const convertEvents = (events) =>
-  (events || []).map((event) => ({
-    type: event.type,
-    attributes: event.attributes.map((attribute) => ({
-      key: decode(attribute.key),
-      value: decode(attribute.value)
-    }))
-  }))
-
-const convertBlock = (block) => {
-  const results = { ...block.results }
-  if (results.begin_block) {
-    results.begin_block.events = convertEvents(results.begin_block.events)
-  }
-  return {
-    ...block,
-    hash: getBlockHash(block.header),
-    results
-  }
-}
-
-const normalizeTx = (tx) => {
-  const result = { ...tx.result, ...tx.tx_result } // result are not the same if it comes from an event or a fetch
-  return {
-    hash: tx.hash || txHash(tx),
-    height: tx.height,
-    index: tx.index,
-    tx: Buffer.from(tx.tx, 'base64').toString(),
-    result: {
-      data: result.data,
-      log: result.log,
-      gasWanted: result.gasWanted || result.gas_wanted,
-      gasUsed: result.gasUsed || result.gas_used,
-      events: convertEvents(result.events)
-    }
-  }
-}
-
 export const state = () => ({
   nodeInfo: {},
   syncInfo: {},
@@ -75,46 +25,42 @@ export const mutations = {
     state.syncInfo = status.sync_info
   },
   addBlock: (state, block) => {
-    const convertedBlock = convertBlock(block)
     state.blocksByHeight = {
       ...state.blocksByHeight,
-      [convertedBlock.header.height]: convertedBlock
+      [block.header.height]: block
     }
   },
   addTx: (state, tx) => {
-    const convertedTx = normalizeTx(tx)
     state.txsByHash = {
       ...state.txsByHash,
-      [convertedTx.hash]: convertedTx
+      [tx.hash]: tx
     }
   }
 }
 
 export const actions = {
-  sync: async ({ commit }) => {
-    const status = await wsClient.status()
-    commit('updateStatus', status)
-    await wsClient.subscribe({ query: "tm.event = 'NewBlock'" }, (event) =>
-      commit('addBlock', event.block)
-    )
-    await wsClient.subscribe({ query: "tm.event = 'Tx'" }, (event) =>
-      commit('addTx', event.TxResult)
-    )
+  sync: async ({ commit, dispatch }) => {
+    const blockWS = new WebSocket('ws://localhost:3002/api/block')
+    blockWS.onmessage = (event) => commit('addBlock', JSON.parse(event.data))
+
+    const txWS = new WebSocket('ws://localhost:3002/api/tx')
+    txWS.onmessage = (event) => commit('addTx', JSON.parse(event.data))
+
+    await dispatch('updateStatus')
+  },
+  updateStatus: async ({ commit }) => {
+    const res = await fetch(`${process.env.HOST}/api/status`)
+    const data = await res.json()
+    commit('updateStatus', data)
   },
   fetchBlock: async ({ commit }, height) => {
-    const [{ block }, { results }] = await Promise.all([
-      wsClient.block({ height }),
-      wsClient.blockResults({ height })
-    ])
-    commit('addBlock', {
-      ...block,
-      results
-    })
+    const res = await fetch(`${process.env.HOST}/api/block/${height}`)
+    const data = await res.json()
+    commit('addBlock', data)
   },
   fetchTx: async ({ commit }, hash) => {
-    // For some reasons the websocket client doesn't work with this parameters. HTTP clients works
-    // > error converting json params to arguments: illegal base64 data at input byte 64
-    const tx = await httpClient.tx({ hash: `0x${hash}` })
-    commit('addTx', tx)
+    const res = await fetch(`${process.env.HOST}/api/tx/${hash}`)
+    const data = await res.json()
+    commit('addTx', data)
   }
 }
