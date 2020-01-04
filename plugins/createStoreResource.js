@@ -3,25 +3,25 @@ import { encode } from '@mesg/api/lib/util/base58'
 
 export default (resourceName, actions) => {
   const _actions = {
-    get: async ({ commit }, id) => {
+    async get({ commit }, id) {
       const res = await fetch(
-        `${process.env.HOST}/api/${pluralize(resourceName)}/${id}`
+        `${this.$env.API_HOST}/api/${pluralize(resourceName)}/${id}`
       )
       const data = await res.json()
       commit('add', data)
       return data
     },
-    list: async ({ commit }) => {
+    async list({ commit }) {
       const res = await fetch(
-        `${process.env.HOST}/api/${pluralize(resourceName)}`
+        `${this.$env.API_HOST}/api/${pluralize(resourceName)}`
       )
       const data = await res.json()
       const result = data[pluralize(resourceName)] || []
       result.forEach((d) => commit('add', d))
       return data
     },
-    stream: ({ commit }) => {
-      const ws = new WebSocket(`${process.env.WS_HOST}/api/${resourceName}`)
+    stream({ commit }) {
+      const ws = new WebSocket(`${this.$env.WS_HOST}/api/${resourceName}`)
       ws.onmessage = (event) => commit('add', JSON.parse(event))
     }
   }
@@ -34,7 +34,7 @@ export default (resourceName, actions) => {
       list: (state) => state.list
     },
     mutations: {
-      add: (state, resource) => {
+      add(state, resource) {
         const hash = encode(resource.hash)
         state.list = {
           ...state.list,

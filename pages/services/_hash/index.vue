@@ -21,7 +21,9 @@ export default {
     }
   },
   async mounted() {
-    const resp = await fetch(`/api/readme/${this.service.source}`)
+    const resp = await fetch(
+      `${this.$env.API_HOST}/api/readme/${this.service.source}`
+    )
     this.readme = await resp.text()
   }
 }

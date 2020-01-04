@@ -44,14 +44,23 @@ export default {
     '@nuxtjs/vuetify'
   ],
   env: {
-    ENGINE_HOST: process.env.ENGINE_HOST || 'engine',
-    HOST: process.env.HOST || 'http://localhost:3000',
-    WS_HOST: process.env.WS_HOST || 'ws://localhost:3002'
+    ENGINE_HOST: process.env.ENGINE_HOST || 'engine'
   },
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/pwa'],
+  modules: [
+    '@nuxtjs/pwa',
+    [
+      'nuxt-env',
+      {
+        keys: [
+          { key: 'API_HOST', default: 'http://localhost:3000' },
+          { key: 'WS_HOST', default: 'ws://localhost:3002' }
+        ]
+      }
+    ]
+  ],
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

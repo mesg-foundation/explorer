@@ -20,17 +20,17 @@ export const getters = {
 }
 
 export const mutations = {
-  updateStatus: (state, status) => {
+  updateStatus(state, status) {
     state.nodeInfo = status.node_info
     state.syncInfo = status.sync_info
   },
-  addBlock: (state, block) => {
+  addBlock(state, block) {
     state.blocksByHeight = {
       ...state.blocksByHeight,
       [block.header.height]: block
     }
   },
-  addTx: (state, tx) => {
+  addTx(state, tx) {
     state.txsByHash = {
       ...state.txsByHash,
       [tx.hash]: tx
@@ -39,27 +39,27 @@ export const mutations = {
 }
 
 export const actions = {
-  sync: async ({ commit, dispatch }) => {
-    const blockWS = new WebSocket(`${process.env.WS_HOST}/api/block`)
+  async sync({ commit, dispatch }) {
+    const blockWS = new WebSocket(`${this.$env.WS_HOST}/api/block`)
     blockWS.onmessage = (event) => commit('addBlock', JSON.parse(event.data))
 
-    const txWS = new WebSocket(`${process.env.WS_HOST}/api/tx`)
+    const txWS = new WebSocket(`${this.$env.WS_HOST}/api/tx`)
     txWS.onmessage = (event) => commit('addTx', JSON.parse(event.data))
 
     await dispatch('updateStatus')
   },
-  updateStatus: async ({ commit }) => {
-    const res = await fetch(`${process.env.HOST}/api/status`)
+  async updateStatus({ commit }) {
+    const res = await fetch(`${this.$env.API_HOST}/api/status`)
     const data = await res.json()
     commit('updateStatus', data)
   },
-  fetchBlock: async ({ commit }, height) => {
-    const res = await fetch(`${process.env.HOST}/api/block/${height}`)
+  async fetchBlock({ commit }, height) {
+    const res = await fetch(`${this.$env.API_HOST}/api/block/${height}`)
     const data = await res.json()
     commit('addBlock', data)
   },
-  fetchTx: async ({ commit }, hash) => {
-    const res = await fetch(`${process.env.HOST}/api/tx/${hash}`)
+  async fetchTx({ commit }, hash) {
+    const res = await fetch(`${this.$env.API_HOST}/api/tx/${hash}`)
     const data = await res.json()
     commit('addTx', data)
   }
