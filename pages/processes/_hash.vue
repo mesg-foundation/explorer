@@ -39,6 +39,11 @@ import Header from '~/components/Header'
 import Graph from '~/components/Graph'
 export default {
   components: { Header, Graph },
+  head() {
+    return {
+      title: `Process #${this.$route.params.hash}`
+    }
+  },
   data() {
     return {
       selectedNode: null

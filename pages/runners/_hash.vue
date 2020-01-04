@@ -25,6 +25,11 @@ import Header from '~/components/Header'
 import List from '~/components/List'
 export default {
   components: { Header, List },
+  head() {
+    return {
+      title: `Runner #${this.$route.params.hash}`
+    }
+  },
   computed: {
     ...mapGetters({
       runners: 'runner/list',

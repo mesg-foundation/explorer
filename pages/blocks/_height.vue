@@ -40,6 +40,11 @@ export default {
   components: {
     List
   },
+  head() {
+    return {
+      title: `Block #${this.$route.params.height}`
+    }
+  },
   computed: {
     ...mapGetters({
       blocks: 'blockchain/blocks'

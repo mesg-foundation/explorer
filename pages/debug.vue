@@ -38,6 +38,11 @@
 <script>
 import RpcClient from 'tendermint/lib/rpc'
 export default {
+  head() {
+    return {
+      title: 'Debug'
+    }
+  },
   data() {
     return {
       query: '',

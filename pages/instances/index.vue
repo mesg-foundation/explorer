@@ -19,6 +19,11 @@
 import { mapGetters } from 'vuex'
 import { encode } from '@mesg/api/lib/util/base58'
 export default {
+  head() {
+    return {
+      title: 'Instances'
+    }
+  },
   computed: {
     ...mapGetters({
       list: 'instance/list'

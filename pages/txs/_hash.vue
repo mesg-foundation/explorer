@@ -31,6 +31,11 @@ import pluralize from 'pluralize'
 import List from '~/components/List'
 export default {
   components: { List },
+  head() {
+    return {
+      title: `Transaction #${this.$route.params.hash}`
+    }
+  },
   computed: {
     ...mapGetters({
       txs: 'blockchain/txs'

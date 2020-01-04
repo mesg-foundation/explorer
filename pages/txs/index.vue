@@ -25,6 +25,11 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  head() {
+    return {
+      title: 'Transactions'
+    }
+  },
   computed: {
     ...mapGetters({
       txs: 'blockchain/sortedTxs'

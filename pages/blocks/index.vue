@@ -24,6 +24,11 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  head() {
+    return {
+      title: `Blocks`
+    }
+  },
   computed: {
     ...mapGetters({
       _blocks: 'blockchain/blocks'

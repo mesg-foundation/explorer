@@ -20,6 +20,11 @@
 import { mapGetters } from 'vuex'
 import { encode } from '@mesg/api/lib/util/base58'
 export default {
+  head() {
+    return {
+      title: 'Processes'
+    }
+  },
   computed: {
     ...mapGetters({
       list: 'process/list'

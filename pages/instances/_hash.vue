@@ -31,6 +31,11 @@ import Header from '~/components/Header'
 import List from '~/components/List'
 export default {
   components: { Header, List },
+  head() {
+    return {
+      title: `Instance #${this.$route.params.hash}`
+    }
+  },
   computed: {
     ...mapGetters({
       instances: 'instance/list',
