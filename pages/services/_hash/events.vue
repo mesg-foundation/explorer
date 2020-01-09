@@ -3,9 +3,7 @@
     <h2 class="headline mb-4">Events</h2>
     <v-expansion-panels v-if="events.length" multiple>
       <v-expansion-panel v-for="event in events" :key="event.key">
-        <v-expansion-panel-header>{{
-          event.name || event.key
-        }}</v-expansion-panel-header>
+        <v-expansion-panel-header>{{ event.key }}</v-expansion-panel-header>
         <v-expansion-panel-content>
           <p>{{ event.description }}</p>
           <h3 class="subtitle-1">Data</h3>
@@ -13,9 +11,7 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-    <div v-else>
-      No events
-    </div>
+    <div v-else>No events</div>
   </div>
 </template>
 
