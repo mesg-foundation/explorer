@@ -1,5 +1,6 @@
 import { createServer } from 'http'
 import express from 'express'
+import { json } from 'body-parser'
 import cors from 'cors'
 import { Server, OPEN } from 'ws'
 import engine from './engine'
@@ -8,6 +9,7 @@ import tendermint from './tendermint'
 
 const app = express()
 app.use(cors())
+app.use(json())
 
 const server = createServer(app)
 
