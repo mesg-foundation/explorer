@@ -21,7 +21,9 @@
   },
   "dependencies": {
     "@mesg/api": "^0.2.0",
+    "@nuxtjs/google-analytics": "^2.2.3",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "cytoscape": "^3.12.1",
     "cytoscape-dagre": "^2.2.2",

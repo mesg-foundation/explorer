@@ -41,10 +41,14 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/google-analytics'
   ],
   env: {
     ENGINE_HOST: process.env.ENGINE_HOST || 'engine'
+  },
+  googleAnalytics: {
+    asyncID: ({ nuxtState }) => nuxtState.env.GA_ID
   },
   /*
    ** Nuxt.js modules
@@ -56,7 +60,8 @@ export default {
       {
         keys: [
           { key: 'API_HOST', default: 'http://localhost:3000' },
-          { key: 'WS_HOST', default: 'ws://localhost:3002' }
+          { key: 'WS_HOST', default: 'ws://localhost:3002' },
+          { key: 'GA_ID', default: '' }
         ]
       }
     ]
