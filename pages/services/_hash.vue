@@ -72,7 +72,7 @@ export default {
         }))
     },
     code() {
-      const endpoint = `${process.env.HOST}/api/services/${this.service.hash}`
+      const endpoint = `${this.$env.HOST}/api/services/${this.service.hash}`
       return `mesg-cli service:create "$(curl -s ${endpoint})"`
     },
     items() {
