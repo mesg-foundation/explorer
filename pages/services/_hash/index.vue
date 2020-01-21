@@ -22,7 +22,7 @@ export default {
   },
   async mounted() {
     const resp = await fetch(
-      `${this.$env.API_HOST}/api/readme/${this.service.source}`
+      `${this.$env.HOST}/api/readme/${this.service.source}`
     )
     this.readme = await resp.text()
   }

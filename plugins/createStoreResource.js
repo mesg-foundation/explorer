@@ -5,7 +5,7 @@ export default (resourceName, actions) => {
   const _actions = {
     async get({ commit }, id) {
       const res = await fetch(
-        `${this.$env.API_HOST}/api/${pluralize(resourceName)}/${id}`
+        `${this.$env.HOST}/api/${pluralize(resourceName)}/${id}`
       )
       const data = await res.json()
       commit('add', data)
@@ -13,7 +13,7 @@ export default (resourceName, actions) => {
     },
     async list({ commit }) {
       const res = await fetch(
-        `${this.$env.API_HOST}/api/${pluralize(resourceName)}`
+        `${this.$env.HOST}/api/${pluralize(resourceName)}`
       )
       const data = await res.json()
       const result = data[pluralize(resourceName)] || []

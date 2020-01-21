@@ -49,17 +49,17 @@ export const actions = {
     await dispatch('updateStatus')
   },
   async updateStatus({ commit }) {
-    const res = await fetch(`${this.$env.API_HOST}/api/status`)
+    const res = await fetch(`${this.$env.HOST}/api/status`)
     const data = await res.json()
     commit('updateStatus', data)
   },
   async fetchBlock({ commit }, height) {
-    const res = await fetch(`${this.$env.API_HOST}/api/block/${height}`)
+    const res = await fetch(`${this.$env.HOST}/api/block/${height}`)
     const data = await res.json()
     commit('addBlock', data)
   },
   async fetchTx({ commit }, hash) {
-    const res = await fetch(`${this.$env.API_HOST}/api/tx/${hash}`)
+    const res = await fetch(`${this.$env.HOST}/api/tx/${hash}`)
     const data = await res.json()
     commit('addTx', data)
   }

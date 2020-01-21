@@ -59,7 +59,7 @@ export default {
       'nuxt-env',
       {
         keys: [
-          { key: 'API_HOST', default: 'http://localhost:3000' },
+          { key: 'HOST', default: 'http://localhost:3000' },
           { key: 'WS_HOST', default: 'ws://localhost:3002' },
           { key: 'GA_ID', default: '' }
         ]
