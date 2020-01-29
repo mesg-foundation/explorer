@@ -62,5 +62,13 @@ export const actions = {
     const res = await fetch(`${this.$env.HOST}/api/tx/${hash}`)
     const data = await res.json()
     commit('addTx', data)
+  },
+  async faucet(_, address) {
+    const res = await fetch(`${this.$env.HOST}/api/faucet`, {
+      method: 'POST',
+      body: JSON.stringify({ address }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    return res.json()
   }
 }
