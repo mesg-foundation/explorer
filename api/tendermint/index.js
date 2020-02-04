@@ -18,10 +18,10 @@ wsClient.subscribe({ query: "tm.event = 'Tx'" }, (event) =>
   txEmitter.emit('data', normalizer.tx(event.TxResult))
 )
 
-const status = async (req, res) => res.json(await httpClient.status())
+const status = (req, res) => httpClient.status()
 
 const tx = async (req, res) =>
-  res.json(normalizer.tx(await httpClient.tx({ hash: `0x${req.params.hash}` })))
+  normalizer.tx(await httpClient.tx({ hash: `0x${req.params.hash}` }))
 
 const block = async (req, res) => {
   const height = req.params.height
@@ -29,15 +29,13 @@ const block = async (req, res) => {
     httpClient.block({ height }),
     httpClient.blockResults({ height })
   ])
-  res.json(
-    normalizer.block({
-      ...block,
-      results
-    })
-  )
+  return normalizer.block({
+    ...block,
+    results
+  })
 }
 
-const faucetHandler = async (req, res) => {
+const faucetHandler = (req, res) => {
   const url = new URL(req.body.url)
   const paths = url.pathname.split('/')
   const tweetId = paths[paths.length - 1]
@@ -49,8 +47,7 @@ const faucetHandler = async (req, res) => {
   }
   const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]*).*$`)
   const address = text.match(addressRegexp)[1]
-  const tx = await faucet(address, 1_000_000_000_000_000_000) // 1 MESG = 1e18 atto
-  res.json(tx)
+  return faucet(address, 1_000_000_000_000_000_000) // 1 MESG = 1e18 atto
 }
 
 export default () => [
