@@ -20,6 +20,7 @@
     }
   },
   "dependencies": {
+    "@cosmostation/cosmosjs": "^0.5.2",
     "@lunie/cosmos-js": "0.0.22",
     "@lunie/cosmos-keys": "file:../cosmos-keys",
     "@mesg/api": "^0.2.0",
