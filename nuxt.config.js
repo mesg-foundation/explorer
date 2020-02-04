@@ -46,7 +46,8 @@ export default {
     '@nuxtjs/google-analytics'
   ],
   env: {
-    ENGINE_HOST: process.env.ENGINE_HOST || 'engine'
+    ENGINE_HOST: process.env.ENGINE_HOST || 'engine',
+    FAUCET_MNEMONIC: process.env.FAUCET_MNEMONIC
   },
   googleAnalytics: {
     asyncID: ({ nuxtState }) => nuxtState.env.GA_ID

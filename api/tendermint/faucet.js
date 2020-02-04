@@ -1,15 +1,10 @@
-const cosmosjs = require('@cosmostation/cosmosjs')
-const chainId = 'mesg-testnet-01'
-const cosmos = cosmosjs.network('http://localhost:1317', chainId)
-cosmos.setPath("m/44'/470'/0'/0/0")
-cosmos.setBech32MainPrefix('mesgtest')
-const mnemonic = 'TODO'
-const address = cosmos.getAddress(mnemonic)
-const ecpairPriv = cosmos.getECPairPriv(mnemonic)
+import Cosmos, { CHAIN_ID } from './cosmos'
 
-const createTransfer = async (from, to, amount) => {
+export default async (to, amount) => {
+  const cosmos = Cosmos()
+  const from = cosmos.getAddress(process.env.FAUCET_MNEMONIC)
   const account = (await cosmos.getAccounts(from)).result.value
-  return cosmos.newStdMsg({
+  const stdMsg = cosmos.newStdMsg({
     msgs: [
       {
         type: 'cosmos-sdk/MsgSend',
@@ -27,15 +22,13 @@ const createTransfer = async (from, to, amount) => {
     ],
     fee: { amount: [{ amount: '200000', denom: 'atto' }], gas: '200000' },
     memo: '',
-    chain_id: chainId,
+    chain_id: CHAIN_ID,
     account_number: account.account_number,
     sequence: account.sequence
   })
-}
-
-export default async (to, amount) => {
-  const stdMsg = await createTransfer(address, to, amount)
-  const stdTx = cosmos.sign(stdMsg, ecpairPriv)
-  const tx = await cosmos.broadcast(stdTx)
-  return tx
+  const stdTx = cosmos.sign(
+    stdMsg,
+    cosmos.getECPairPriv(process.env.FAUCET_MNEMONIC)
+  )
+  return cosmos.broadcast(stdTx)
 }
