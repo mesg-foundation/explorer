@@ -2,6 +2,7 @@ import { EventEmitter } from 'events'
 import RpcClient from 'tendermint/lib/rpc'
 import normalizer from './normalizer'
 import faucet from './faucet'
+import { BECH32_PREFIX } from './cosmos'
 
 const wsClient = new RpcClient(`ws://${process.env.ENGINE_HOST}:26657`)
 const httpClient = new RpcClient(`http://${process.env.ENGINE_HOST}:26657`)
@@ -37,7 +38,17 @@ const block = async (req, res) => {
 }
 
 const faucetHandler = async (req, res) => {
-  const { address } = req.body
+  const url = new URL(req.body.url)
+  const paths = url.pathname.split('/')
+  const tweetId = paths[paths.length - 1]
+  console.log(tweetId)
+  // TODO: replace this mock with the twitter query when they accept the account https://developer.twitter.com/en/apps
+  // https://api.twitter.com/1.1/statuses/show.json?id=${tweetId}
+  const { text } = {
+    text: `Requesting faucet funds into ${req.body.address} on the #MESG #testnet http://explorer.testnet.mesg.com via @mesgfoundation`
+  }
+  const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]*).*$`)
+  const address = text.match(addressRegexp)[1]
   const tx = await faucet(address, 1000)
   res.json(tx)
 }

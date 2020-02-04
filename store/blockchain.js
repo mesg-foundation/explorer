@@ -63,10 +63,10 @@ export const actions = {
     const data = await res.json()
     commit('addTx', data)
   },
-  async faucet(_, address) {
+  async faucet(_, { url, address }) {
     const res = await fetch(`${this.$env.HOST}/api/faucet`, {
       method: 'POST',
-      body: JSON.stringify({ address }),
+      body: JSON.stringify({ url, address }),
       headers: { 'Content-Type': 'application/json' }
     })
     return res.json()
