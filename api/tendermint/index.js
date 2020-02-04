@@ -49,7 +49,7 @@ const faucetHandler = async (req, res) => {
   }
   const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]*).*$`)
   const address = text.match(addressRegexp)[1]
-  const tx = await faucet(address, 1000)
+  const tx = await faucet(address, 1_000_000_000_000_000_000) // 1 MESG = 1e18 atto
   res.json(tx)
 }
 
