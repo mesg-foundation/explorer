@@ -14,7 +14,8 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Navigate through all the data available on the MESG Network'
+        content:
+          'Explore and interact with the data present on the MESG Network'
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]

@@ -1,7 +1,7 @@
 {
   "name": "explorer",
   "version": "1.0.0",
-  "description": "My spectacular Nuxt.js project",
+  "description": "Explore and interact with the data present on the MESG Network",
   "author": "Anthony ESTEBE",
   "private": true,
   "scripts": {
