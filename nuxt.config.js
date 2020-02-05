@@ -14,7 +14,8 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Navigate through all the data available on the MESG Network'
+        content:
+          'Explore and interact with the data present on the MESG Network'
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -45,7 +46,8 @@ export default {
     '@nuxtjs/google-analytics'
   ],
   env: {
-    ENGINE_HOST: process.env.ENGINE_HOST || 'engine'
+    ENGINE_HOST: process.env.ENGINE_HOST || 'engine',
+    FAUCET_MNEMONIC: process.env.FAUCET_MNEMONIC
   },
   googleAnalytics: {
     asyncID: ({ nuxtState }) => nuxtState.env.GA_ID

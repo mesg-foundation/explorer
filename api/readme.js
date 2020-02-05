@@ -62,6 +62,7 @@ export default () => [
   {
     method: 'GET',
     path: '/readme/:hash',
+    strict: true,
     handler: async (req, res) => res.send(await getReadme(req.params.hash))
   }
 ]

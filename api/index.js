@@ -20,7 +20,20 @@ const sockets = apis
 
 apis
   .filter((api) => api.method === 'GET' || api.method === 'POST')
-  .forEach((api) => app[api.method.toLowerCase()](api.path, api.handler))
+  .forEach((api) =>
+    app[api.method.toLowerCase()](api.path, async (req, res) => {
+      try {
+        if (api.strict) {
+          await api.handler(req, res)
+        } else {
+          const result = await api.handler(req, res)
+          res.json(result)
+        }
+      } catch (e) {
+        res.status(500).json(e)
+      }
+    })
+  )
 
 sockets.forEach((api) => {
   api.server.on('connection', (client) => {

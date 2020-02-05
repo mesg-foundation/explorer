@@ -19,10 +19,9 @@ const api = new API(`${process.env.ENGINE_HOST}:50052`)
 
 // resourcesStream.forEach(createStreamSocket(ws, api))
 
-const list = (resource) => async (req, res) =>
-  res.json(await api[resource].list({}))
-const get = (resource) => async (req, res) =>
-  res.json(await api[resource].get({ hash: decode(req.params.hash) }))
+const list = (resource) => () => api[resource].list({})
+const get = (resource) => (req) =>
+  api[resource].get({ hash: decode(req.params.hash) })
 
 export default () => [
   { method: 'GET', path: '/services', handler: list('service') },
