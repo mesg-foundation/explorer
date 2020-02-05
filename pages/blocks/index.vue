@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <v-alert type="info">These data are displayed in real time</v-alert>
     <v-card>
       <v-data-table :items="blocks" :headers="headers">
         <template v-slot:item.height="{ item }">
