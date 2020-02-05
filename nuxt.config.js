@@ -47,7 +47,11 @@ export default {
   ],
   env: {
     ENGINE_HOST: process.env.ENGINE_HOST || 'engine',
-    FAUCET_MNEMONIC: process.env.FAUCET_MNEMONIC
+    FAUCET_MNEMONIC: process.env.FAUCET_MNEMONIC,
+    TWITTER_CONSUMER_KEY: process.env.TWITTER_CONSUMER_KEY,
+    TWITTER_CONSUMER_SECRET: process.env.TWITTER_CONSUMER_SECRET,
+    TWITTER_ACCESS_TOKEN_KEY: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    TWITTER_ACCESS_TOKEN_SECRET: process.env.TWITTER_ACCESS_TOKEN_SECRET
   },
   googleAnalytics: {
     asyncID: ({ nuxtState }) => nuxtState.env.GA_ID

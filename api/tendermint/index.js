@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events'
 import RpcClient from 'tendermint/lib/rpc'
+import Twitter from 'twitter'
 import normalizer from './normalizer'
 import faucet from './faucet'
 import { BECH32_PREFIX } from './cosmos'
@@ -9,6 +10,16 @@ const httpClient = new RpcClient(`http://${process.env.ENGINE_HOST}:26657`)
 
 const txEmitter = new EventEmitter()
 const blockEmitter = new EventEmitter()
+
+const MESG = 1_000_000_000_000_000_000 // 1 MESG = 1e18 atto
+const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]*).*$`)
+
+const twitter = new Twitter({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+})
 
 wsClient.subscribe({ query: "tm.event = 'NewBlock'" }, (event) =>
   blockEmitter.emit('data', normalizer.block(event.block))
@@ -35,19 +46,13 @@ const block = async (req, res) => {
   })
 }
 
-const faucetHandler = (req, res) => {
+const faucetHandler = async (req, res) => {
   const url = new URL(req.body.url)
   const paths = url.pathname.split('/')
   const tweetId = paths[paths.length - 1]
-  console.log(tweetId)
-  // TODO: replace this mock with the twitter query when they accept the account https://developer.twitter.com/en/apps
-  // https://api.twitter.com/1.1/statuses/show.json?id=${tweetId}
-  const { text } = {
-    text: `Requesting faucet funds into ${req.body.address} on the #MESG #testnet http://explorer.testnet.mesg.com via @mesgfoundation`
-  }
-  const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]*).*$`)
+  const { text } = await twitter.get('statuses/show', { id: tweetId })
   const address = text.match(addressRegexp)[1]
-  return faucet(address, 1_000_000_000_000_000_000) // 1 MESG = 1e18 atto
+  return faucet(address, 1 * MESG)
 }
 
 export default () =>
