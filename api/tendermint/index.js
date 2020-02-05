@@ -50,11 +50,14 @@ const faucetHandler = (req, res) => {
   return faucet(address, 1_000_000_000_000_000_000) // 1 MESG = 1e18 atto
 }
 
-export default () => [
-  { method: 'WS', path: '/tx', event: 'tx', emitter: txEmitter },
-  { method: 'WS', path: '/block', event: 'block', emitter: blockEmitter },
-  { method: 'GET', path: '/status', handler: status },
-  { method: 'GET', path: '/tx/:hash', handler: tx },
-  { method: 'GET', path: '/block/:height', handler: block },
-  { method: 'POST', path: '/faucet', handler: faucetHandler }
-]
+export default () =>
+  [
+    { method: 'WS', path: '/tx', event: 'tx', emitter: txEmitter },
+    { method: 'WS', path: '/block', event: 'block', emitter: blockEmitter },
+    { method: 'GET', path: '/status', handler: status },
+    { method: 'GET', path: '/tx/:hash', handler: tx },
+    { method: 'GET', path: '/block/:height', handler: block },
+    process.env.FAUCET_MNEMONIC
+      ? { method: 'POST', path: '/faucet', handler: faucetHandler }
+      : null
+  ].filter((x) => x)
