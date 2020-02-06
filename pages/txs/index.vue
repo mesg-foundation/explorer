@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-alert type="info">These data are displayed in real time</v-alert>
+    <v-alert type="info">Transactions are displayed in real time</v-alert>
     <v-card>
       <v-data-table :items="txs" :headers="headers">
         <template v-slot:item.height="{ value }">
