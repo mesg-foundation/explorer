@@ -55,13 +55,12 @@ export default {
       return Object.keys(this.list).map((x) => this.list[x])
     }
   },
-  fetch: ({ store }) =>
-    Promise.all([
-      store.dispatch('execution/list'),
-      store.dispatch('execution/stream')
-    ]),
+  fetch: ({ store }) => store.dispatch('execution/list'),
   methods: {
     encode
+  },
+  mounted() {
+    this.$store.dispatch('execution/stream')
   }
 }
 </script>
