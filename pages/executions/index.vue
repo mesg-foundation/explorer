@@ -60,7 +60,7 @@ export default {
     encode
   },
   mounted() {
-    this.$store.dispatch('execution/stream')
+    // this.$store.dispatch('execution/stream')
   }
 }
 </script>
