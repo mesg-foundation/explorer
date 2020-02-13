@@ -8,7 +8,13 @@
           >Add your MESG Address</v-stepper-step
         >
         <v-stepper-content :step="1">
-          <v-text-field v-model="address" label="MESG Address" required />
+          <v-text-field
+            v-model="address"
+            label="MESG Address"
+            hint="example: mesgtest1yztk7h0la9e2wdhed3h37sd50szq8hsvrvgump"
+            required
+            class="mb-2"
+          />
           <v-btn @click="step++" color="primary">Continue</v-btn>
         </v-stepper-content>
 
