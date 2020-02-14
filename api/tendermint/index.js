@@ -5,7 +5,6 @@ import normalizer from './normalizer'
 import faucet from './faucet'
 import { BECH32_PREFIX } from './cosmos'
 
-const wsClient = new RpcClient(`ws://${process.env.ENGINE_HOST}:26657`)
 const httpClient = new RpcClient(`http://${process.env.ENGINE_HOST}:26657`)
 
 const txEmitter = new EventEmitter()
@@ -21,13 +20,23 @@ const twitter = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 })
 
-wsClient.subscribe({ query: "tm.event = 'NewBlock'" }, (event) =>
+const blocks = new RpcClient(`ws://${process.env.ENGINE_HOST}:26657`)
+blocks.on('error', (e) => {
+  throw e
+})
+blocks.subscribe({ query: "tm.event = 'NewBlock'" }, (event) => {
+  if (!event.block) return
   blockEmitter.emit('data', normalizer.block(event.block))
-)
+})
 
-wsClient.subscribe({ query: "tm.event = 'Tx'" }, (event) =>
+const txs = new RpcClient(`ws://${process.env.ENGINE_HOST}:26657`)
+txs.on('error', (e) => {
+  throw e
+})
+txs.subscribe({ query: "tm.event = 'Tx'" }, (event) => {
+  if (!event.TxResult) return
   txEmitter.emit('data', normalizer.tx(event.TxResult))
-)
+})
 
 const status = (req, res) => httpClient.status()
 
