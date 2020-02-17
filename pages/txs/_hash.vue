@@ -14,7 +14,7 @@
         hide-default-footer
       >
         <template v-slot:item.attributes="{ value }">
-          {{ value }}
+          <Attribute v-for="(attr, i) in value" :key="i" :attribute="attr" />
         </template>
       </v-data-table>
       <v-card-title class="headline">Raw transaction</v-card-title>
@@ -28,9 +28,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import pluralize from 'pluralize'
+import Attribute from '~/components/Attribute'
 import List from '~/components/List'
 export default {
-  components: { List },
+  components: { Attribute, List },
   head() {
     return {
       title: `Transaction #${this.$route.params.hash}`
@@ -65,12 +66,12 @@ export default {
             }
           : null,
         { key: 'Index', value: this.tx.index },
-        { key: 'Gas Wanted', value: this.tx.result.gasWanted },
-        { key: 'Gas Used', value: this.tx.result.gasUsed },
+        { key: 'Gas Wanted', value: this.tx.result.gas_wanted },
+        { key: 'Gas Used', value: this.tx.result.gas_used },
         {
           key: 'Percent Gas Used',
           value: `${(
-            (this.tx.result.gasUsed / this.tx.result.gasWanted) *
+            (this.tx.result.gas_used / this.tx.result.gas_wanted) *
             100
           ).toFixed(2)}%`
         }
@@ -82,9 +83,22 @@ export default {
         .reduce((prev, current) => [...prev, ...current.attributes], [])
     },
     resource() {
-      const hash = (this.messages.find((x) => x.key === 'hash') || {}).value
-      const name = (this.messages.find((x) => x.key === 'module') || {}).value
-      return hash && name ? { hash, name } : null
+      const hash = (
+        this.messages.find(
+          (x) => x.key === Buffer.from('hash').toString('base64')
+        ) || {}
+      ).value
+      const name = (
+        this.messages.find(
+          (x) => x.key === Buffer.from('module').toString('base64')
+        ) || {}
+      ).value
+      return hash && name
+        ? {
+            hash: Buffer.from(hash, 'base64').toString(),
+            name: Buffer.from(name, 'base64').toString()
+          }
+        : null
     }
   },
   fetch: ({ store, params }) =>
