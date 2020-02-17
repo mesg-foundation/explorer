@@ -4,19 +4,17 @@
     <v-card>
       <v-data-table :items="blocks" :headers="headers">
         <template v-slot:item.height="{ item }">
-          <nuxt-link :to="`/blocks/${item.header.height}`">{{
-            item.header.height
-          }}</nuxt-link>
+          <nuxt-link :to="`/blocks/${item.header.height}`">
+            {{ item.header.height }}
+          </nuxt-link>
         </template>
-        <template v-slot:item.txs="{ item }">
-          {{ item.header.num_txs }}
-        </template>
-        <template v-slot:item.validator="{ item }">
-          {{ item.header.validators_hash }}
-        </template>
-        <template v-slot:item.time="{ item }">
-          {{ item.header.time }}
-        </template>
+        <template v-slot:item.txs="{ item }">{{
+          (item.data.txs || []).length
+        }}</template>
+        <template v-slot:item.validator="{ item }">{{
+          item.header.validators_hash
+        }}</template>
+        <template v-slot:item.time="{ item }">{{ item.header.time }}</template>
       </v-data-table>
     </v-card>
   </v-container>

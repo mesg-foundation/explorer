@@ -1,7 +1,6 @@
 import { EventEmitter } from 'events'
 import RpcClient from 'tendermint/lib/rpc'
 import Twitter from 'twitter'
-import normalizer from './normalizer'
 import faucet from './faucet'
 import { BECH32_PREFIX } from './cosmos'
 
@@ -24,38 +23,38 @@ const blocks = new RpcClient(`ws://${process.env.ENGINE_HOST}:26657`)
 blocks.on('error', (e) => {
   throw e
 })
-blocks.subscribe({ query: "tm.event = 'NewBlock'" }, (event) => {
-  if (!event.block) return
-  blockEmitter.emit('data', normalizer.block(event.block))
-})
+blocks.subscribe({ query: "tm.event = 'NewBlock'" }, (event) =>
+  blockEmitter.emit('data', event)
+)
 
 const txs = new RpcClient(`ws://${process.env.ENGINE_HOST}:26657`)
 txs.on('error', (e) => {
   throw e
 })
-txs.subscribe({ query: "tm.event = 'Tx'" }, (event) => {
-  if (!event.TxResult) return
-  txEmitter.emit('data', normalizer.tx(event.TxResult))
-})
+txs.subscribe({ query: "tm.event = 'Tx'" }, (event) =>
+  txEmitter.emit('data', event)
+)
 
-const status = (req, res) => httpClient.status()
+const status = () => httpClient.status()
 
-const tx = async (req, res) =>
-  normalizer.tx(await httpClient.tx({ hash: `0x${req.params.hash}` }))
+const tx = (req) => httpClient.tx({ hash: `0x${req.params.hash}` })
 
-const block = async (req, res) => {
-  const height = req.params.height
-  const [{ block }, { results }] = await Promise.all([
-    httpClient.block({ height }),
-    httpClient.blockResults({ height })
-  ])
-  return normalizer.block({
-    ...block,
-    results
-  })
-}
+const block = (req) =>
+  Promise.all([
+    httpClient.block({ height: req.params.height }),
+    httpClient.blockResults({ height: req.params.height })
+  ]).then(([block, result]) => ({
+    block: block.block,
+    result_begin_block: {
+      events: result.begin_block_events
+    },
+    result_end_block: {
+      validator_updates: result.validator_updates || []
+    },
+    txs_results: result.txs_results || []
+  }))
 
-const faucetHandler = async (req, res) => {
+const faucetHandler = async (req) => {
   const url = new URL(req.body.url)
   const paths = url.pathname.split('/')
   const tweetId = paths[paths.length - 1]
