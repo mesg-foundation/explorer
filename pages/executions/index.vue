@@ -56,11 +56,11 @@ export default {
     }
   },
   fetch: ({ store }) => store.dispatch('execution/list'),
-  methods: {
-    encode
-  },
   mounted() {
     // this.$store.dispatch('execution/stream')
+  },
+  methods: {
+    encode
   }
 }
 </script>
