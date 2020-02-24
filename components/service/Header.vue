@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header>
-      <h1 v-text="service.name" class="display-1" />
+      <h1 v-text="service.name" class="headline-service-name" />
       <!-- <span class="caption">By {{author}}</span> -->
       <p v-text="service.description" />
       <v-chip label small class="mr-1">{{
