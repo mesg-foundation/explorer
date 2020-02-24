@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="headline mb-4">Configuration</h2>
+    <h2>Configuration</h2>
     <DependencyInfo :dependency="service.configuration" />
   </div>
 </template>

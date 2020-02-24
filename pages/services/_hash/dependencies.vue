@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="headline mb-4">Dependencies</h2>
+    <h2>Dependencies</h2>
     <v-expansion-panels v-if="dependencies.length" multiple>
       <v-expansion-panel
         v-for="dependency in dependencies"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="headline mb-4">Tasks</h2>
+    <h2>Tasks</h2>
     <v-expansion-panels v-if="tasks.length" multiple>
       <v-expansion-panel v-for="task in tasks" :key="task.key">
         <v-expansion-panel-header>{{ task.key }}</v-expansion-panel-header>
