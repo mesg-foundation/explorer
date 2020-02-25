@@ -8,7 +8,7 @@
     >
       <v-card>
         <v-card-text>
-          <h2 v-text="service.name" class="headline" />
+          <h3 v-text="service.name" class="service-name" />
           <p v-text="service.description" />
           <v-chip label small class="mr-1">{{
             'task' | pluralize((service.tasks || []).length, true)

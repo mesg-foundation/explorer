@@ -63,9 +63,34 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .root-table td {
   vertical-align: top;
   padding-top: 12px;
+}
+
+th {
+  color: #3c3940 !important;
+  font-size: 12px;
+  strong {
+    font-weight: 600;
+  }
+}
+
+tbody {
+  tr:hover {
+    background: rgba(231, 210, 249, 0.15) !important;
+  }
+  td {
+    color: #3c3940;
+    font-size: 14px;
+    strong {
+      font-weight: 600;
+      color: #0e061c;
+    }
+    code {
+      margin-right: 10px;
+    }
+  }
 }
 </style>

@@ -15,7 +15,9 @@
             required
             class="mb-2"
           />
-          <v-btn @click="step++" color="primary">Continue</v-btn>
+          <v-btn @click="step++" depressed color="primary mt-4 mb-4"
+            >Continue</v-btn
+          >
         </v-stepper-content>
 
         <v-stepper-step :complete="step > 2" :step="2" editable
@@ -42,7 +44,9 @@
               </em>
             </p>
           </v-layout>
-          <v-btn @click="step++" color="primary">Continue</v-btn>
+          <v-btn @click="step++" depressed color="primary mt-4 mb-4"
+            >Continue</v-btn
+          >
         </v-stepper-content>
 
         <v-stepper-step :complete="step > 3" :step="3" editable
@@ -54,7 +58,11 @@
             "continue".
           </p>
           <v-text-field v-model="url" label="Post URL" required />
-          <v-btn @click="send" :loading="loading" color="primary"
+          <v-btn
+            @click="send"
+            :loading="loading"
+            depressed
+            color="primary mt-4 mb-4"
             >Continue</v-btn
           >
         </v-stepper-content>

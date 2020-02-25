@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
   // mode: 'spa',
   /*
@@ -82,12 +80,12 @@ export default {
       themes: {
         light: {
           primary: '#491E8C',
-          accent: '#FFA744',
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          accent: '#8350DB',
+          secondary: '#388DF5',
+          info: '#144DD1',
+          warning: '#E08C04',
+          error: '#9E2316',
+          success: '#238218'
         }
       }
     }

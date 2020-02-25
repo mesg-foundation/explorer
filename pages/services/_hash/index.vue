@@ -53,6 +53,7 @@ export default {
     }
   }
 
+  /*
   h1 {
     @extend .display-1, .mb-4, .mt-4;
   }
@@ -68,6 +69,7 @@ export default {
   h4 {
     @extend .subtitle-2, .mb-1, .mb-1;
   }
+*/
 
   code {
     padding-right: 0.5em;
