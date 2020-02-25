@@ -105,3 +105,13 @@ code {
 .v-btn__content {
     font-weight: 600;
 }
+
+/* Faucet */
+.v-stepper {
+    .v-stepper__step {
+        padding: 24px!important;
+    }
+    .v-stepper__step--editable:hover {
+        background: rgba(231, 210, 249, 0.15)!important;
+    }
+}
