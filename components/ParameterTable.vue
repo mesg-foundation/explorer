@@ -70,23 +70,23 @@ export default {
 }
 
 th {
-  color: #3C3940!important;
+  color: #3c3940 !important;
   font-size: 12px;
   strong {
-      font-weight: 600;
+    font-weight: 600;
   }
 }
 
 tbody {
   tr:hover {
-    background: rgba(231,210,249,.15)!important;
+    background: rgba(231, 210, 249, 0.15) !important;
   }
   td {
-    color: #3C3940;
+    color: #3c3940;
     font-size: 14px;
     strong {
       font-weight: 600;
-      color: #0E061C;
+      color: #0e061c;
     }
     code {
       margin-right: 10px;
