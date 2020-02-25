@@ -85,8 +85,14 @@ p {
     font-weight: bold;
 }
 
+/* Code */
 code {
     background-color: #2e3148!important;
     box-shadow: none!important;
     color: hsla(0,0%,100%,.8)!important;
+}
+
+/* BTN */
+.v-btn__content {
+    font-weight: 600;
 }
