@@ -50,19 +50,17 @@ p {
     margin-top: 0;
     margin-bottom: 0;
 }
-
 .service-name {
     margin-top: 0;
     margin-bottom: .5em;
 }
-
 .theme--light.v-chip:not(.v-chip--active) {
     background-color: #D7F0FE;
     color: #388DF5;
     font-weight: bold;
 }
 
-/* List */
+/* List menu */
 .v-list-item__title {
     color: #0E061C;
 }
@@ -85,4 +83,10 @@ p {
 .v-tab--active {
     color: #491E8C!important;
     font-weight: bold;
+}
+
+code {
+    background-color: #2e3148!important;
+    box-shadow: none!important;
+    color: hsla(0,0%,100%,.8)!important;
 }

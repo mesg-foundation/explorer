@@ -38,3 +38,16 @@ export default {
   }
 }
 </script>
+
+
+<style lang="scss">
+
+.code-copy {
+  border-radius: 6px;
+  .v-input__slot {
+    background-color: #2e3148!important;
+    color: hsla(0,0%,100%,.8)!important;
+  }
+}
+
+</style>
