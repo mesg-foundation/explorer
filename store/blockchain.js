@@ -101,5 +101,10 @@ export const actions = {
       headers: { 'Content-Type': 'application/json' }
     })
     return res.json()
+  },
+  async account(_, { address }) {
+    const res = await fetch(`${this.$env.HOST}/api/auth/accounts/${address}`)
+    const data = await res.json()
+    return data.result
   }
 }
