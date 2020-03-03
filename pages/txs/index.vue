@@ -12,11 +12,11 @@
         <template v-slot:item.events="{ item }">
           {{ item.result.events.length }}
         </template>
-        <template v-slot:item.gasWanted="{ item }">
-          {{ item.result.gasWanted }}
+        <template v-slot:item.gas_wanted="{ item }">
+          {{ item.result.gas_wanted }}
         </template>
-        <template v-slot:item.gasUsed="{ item }">
-          {{ item.result.gasUsed }}
+        <template v-slot:item.gas_used="{ item }">
+          {{ item.result.gas_used }}
         </template>
       </v-data-table>
     </v-card>
@@ -40,8 +40,8 @@ export default {
         { text: 'Height', value: 'height' },
         { text: 'Hash', value: 'hash' },
         { text: 'Index', value: 'index' },
-        { text: 'Gas wanted', value: 'gasWanted' },
-        { text: 'Gas used', value: 'gasUsed' },
+        { text: 'Gas wanted', value: 'gas_wanted' },
+        { text: 'Gas used', value: 'gas_used' },
         { text: 'Events', value: 'events' }
       ]
     }

@@ -1,3 +1,5 @@
+import { tmhash } from 'tendermint/lib/hash'
+
 export const state = () => ({
   nodeInfo: {},
   syncInfo: {},
@@ -24,16 +26,45 @@ export const mutations = {
     state.nodeInfo = status.node_info
     state.syncInfo = status.sync_info
   },
-  addBlock(state, block) {
+  addBlock(state, data) {
+    if (!data) return
     state.blocksByHeight = {
       ...state.blocksByHeight,
-      [block.header.height]: block
+      [data.block.header.height]: {
+        ...data.block,
+        result_begin_block: data.result_begin_block,
+        result_end_block: data.result_end_block,
+        txs_results: data.txs_results
+      }
     }
   },
   addTx(state, tx) {
+    if (!tx) return
+    if (tx.TxResult) tx = tx.TxResult
+    const hash =
+      tx.hash ||
+      tmhash(Buffer.from(tx.tx, 'base64'))
+        .toString('hex')
+        .toUpperCase()
+    const result = tx.result || tx.tx_result || {}
     state.txsByHash = {
       ...state.txsByHash,
-      [tx.hash]: tx
+      [hash]: {
+        hash,
+        height: tx.height,
+        index: tx.index,
+        tx: tx.tx,
+        result: {
+          code: result.code,
+          codespace: result.codespace,
+          data: result.data,
+          log: result.log,
+          info: result.info,
+          gas_wanted: result.gas_wanted || result.gasWanted,
+          gas_used: result.gas_used || result.gasUsed,
+          events: result.events || []
+        }
+      }
     }
   }
 }

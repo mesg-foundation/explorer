@@ -6,7 +6,7 @@
       <v-card-title class="headline">Begin block events</v-card-title>
       <v-divider />
       <v-data-table
-        :items="block.results.begin_block.events || []"
+        :items="block.result_begin_block.events || []"
         :headers="headersEvent"
         disable-filtering
         disable-pagination
@@ -14,20 +14,15 @@
         hide-default-footer
       >
         <template v-slot:item.attributes="{ value }">
-          {{ value }}
+          <Attribute v-for="(attr, i) in value" :key="i" :attribute="attr" />
         </template>
       </v-data-table>
     </v-card>
     <v-card class="mt-2">
       <v-card-title class="headline">Transactions</v-card-title>
       <v-divider />
-      <v-data-table
-        :items="block.results.deliver_tx || []"
-        :headers="headersTx"
-      >
-        <template v-slot:item.events="{ value }">
-          {{ value.length }}
-        </template>
+      <v-data-table :items="block.txs_results || []" :headers="headersTx">
+        <template v-slot:item.events="{ value }">{{ value.length }}</template>
       </v-data-table>
     </v-card>
   </v-container>
@@ -35,9 +30,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Attribute from '~/components/Attribute'
 import List from '~/components/List'
 export default {
   components: {
+    Attribute,
     List
   },
   head() {
@@ -71,9 +68,7 @@ export default {
         { key: 'height', value: this.block.header.height },
         { key: 'chain id', value: this.block.header.chain_id },
         { key: 'time', value: this.block.header.time },
-        { key: 'hash', value: this.block.hash },
-        { key: 'transactions', value: this.block.header.num_txs },
-        { key: 'total tx', value: this.block.header.total_txs },
+        { key: 'transactions', value: (this.block.data.txs || []).length },
         { key: 'validator', value: this.block.header.validators_hash },
         { key: 'app hash', value: this.block.header.app_hash }
       ]
