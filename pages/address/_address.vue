@@ -16,6 +16,9 @@
               :items-per-page="parseInt(transactions.limit, 10)"
               :page="parseInt(transactions.page_number, 10)"
               :server-items-length="parseInt(transactions.total_count, 10)"
+              :footer-props="{
+                'items-per-page-options': [5, 10, 30, 50]
+              }"
               @pagination="loadTx"
               disable-sort
             >
@@ -76,12 +79,22 @@ export default {
       }),
       transactions: await store.dispatch('blockchain/search', {
         'message.sender': route.params.address,
-        limit: 10
+        page: route.query.page || 1,
+        limit: route.query.limit || 30
       })
     }
   },
   methods: {
     async loadTx(pagination) {
+      this.$router.push({
+        name: this.$route.name,
+        params: this.$route.params,
+        query: {
+          ...this.$route.query,
+          limit: pagination.itemsPerPage,
+          page: pagination.page
+        }
+      })
       this.transactions = await this.$store.dispatch('blockchain/search', {
         'message.sender': this.address,
         limit: pagination.itemsPerPage,
