@@ -28,7 +28,8 @@ export default async (to, amount) => {
   })
   const stdTx = cosmos.sign(
     stdMsg,
-    cosmos.getECPairPriv(process.env.FAUCET_MNEMONIC)
+    cosmos.getECPairPriv(process.env.FAUCET_MNEMONIC),
+    'block'
   )
   return cosmos.broadcast(stdTx)
 }
