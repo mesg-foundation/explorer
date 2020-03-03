@@ -71,7 +71,7 @@
           >Get started with MESG</v-stepper-step
         >
         <v-stepper-content :step="4">
-          <template v-if="result && result.raw_log">
+          <template v-if="result && result.raw_log && result.raw_log !== '[]'">
             <v-alert type="error">{{ result.raw_log }}</v-alert>
           </template>
           <template v-else>

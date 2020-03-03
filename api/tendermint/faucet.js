@@ -23,8 +23,8 @@ export default async (to, amount) => {
     fee: { amount: [{ amount: '200000', denom: 'atto' }], gas: '200000' },
     memo: '',
     chain_id: CHAIN_ID,
-    account_number: account.account_number,
-    sequence: account.sequence
+    account_number: account.account_number.toString(),
+    sequence: account.sequence.toString()
   })
   const stdTx = cosmos.sign(
     stdMsg,
