@@ -5,6 +5,11 @@ import fetch from 'node-fetch'
 import faucet from './faucet'
 import { BECH32_PREFIX, COSMOS_LCD } from './cosmos'
 
+const toParams = (obj = {}) =>
+  Object.keys(obj)
+    .map((x) => `${x}=${obj[x]}`)
+    .join('&')
+
 const httpClient = new RpcClient(`http://${process.env.ENGINE_HOST}:26657`)
 
 const txEmitter = new EventEmitter()
@@ -65,7 +70,9 @@ const faucetHandler = async (req) => {
 }
 
 const lcdCall = async (req) => {
-  const res = await fetch(COSMOS_LCD + `/` + req.params[0])
+  const res = await fetch(
+    COSMOS_LCD + `/` + req.params[0] + '?' + toParams(req.query || {})
+  )
   return res.json()
 }
 

@@ -1,12 +1,39 @@
 <template>
   <v-container fluid>
-    <v-card>
-      <v-card-title class="headline">{{ address }}</v-card-title>
-      <v-divider />
-      <List :items="coins" />
-      <v-divider />
-      <List :items="meta" />
-    </v-card>
+    <v-layout>
+      <v-row>
+        <v-col sm="8">
+          <v-card>
+            <v-card-title class="headline">{{ address }}</v-card-title>
+            <v-divider />
+            <List :items="meta" />
+          </v-card>
+
+          <v-card class="mt-4">
+            <v-data-table
+              :items="transactions.txs"
+              :headers="headers"
+              :items-per-page="parseInt(transactions.limit, 10)"
+              :page="parseInt(transactions.page_number, 10)"
+              :server-items-length="parseInt(transactions.total_count, 10)"
+              @pagination="loadTx"
+              disable-sort
+            >
+              <template v-slot:item.txhash="{ value }">
+                <nuxt-link :to="`/txs/${value}`">{{ value }}</nuxt-link>
+              </template>
+            </v-data-table>
+          </v-card>
+        </v-col>
+        <v-col sm="4">
+          <v-card>
+            <v-card-title class="headline">Balances</v-card-title>
+            <v-divider />
+            <List :items="coins" />
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-layout>
   </v-container>
 </template>
 
@@ -33,12 +60,32 @@ export default {
         { key: 'Account Number', value: accValue.account_number },
         { key: 'Sequence', value: accValue.sequence }
       ]
+    },
+    headers() {
+      return [
+        { text: 'Date', value: 'timestamp', sortable: false },
+        { text: 'Hash', value: 'txhash', sortable: false },
+        { text: 'Gas used', value: 'gas_used', sortable: false }
+      ]
     }
   },
   async asyncData({ store, route }) {
     return {
       account: await store.dispatch('blockchain/account', {
         address: route.params.address
+      }),
+      transactions: await store.dispatch('blockchain/search', {
+        'message.sender': route.params.address,
+        limit: 10
+      })
+    }
+  },
+  methods: {
+    async loadTx(pagination) {
+      this.transactions = await this.$store.dispatch('blockchain/search', {
+        'message.sender': this.address,
+        limit: pagination.itemsPerPage,
+        page: pagination.page
       })
     }
   }

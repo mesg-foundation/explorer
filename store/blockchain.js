@@ -1,5 +1,10 @@
 import { tmhash } from 'tendermint/lib/hash'
 
+const toParams = (obj = {}) =>
+  Object.keys(obj)
+    .map((x) => `${x}=${obj[x]}`)
+    .join('&')
+
 export const state = () => ({
   nodeInfo: {},
   syncInfo: {},
@@ -106,5 +111,9 @@ export const actions = {
     const res = await fetch(`${this.$env.HOST}/api/auth/accounts/${address}`)
     const data = await res.json()
     return data.result
+  },
+  async search(_, params) {
+    const res = await fetch(`${this.$env.HOST}/api/txs?${toParams(params)}`)
+    return res.json()
   }
 }
