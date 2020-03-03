@@ -71,20 +71,25 @@
           >Get started with MESG</v-stepper-step
         >
         <v-stepper-content :step="4">
-          <v-alert v-if="result" type="success">
-            Your transaction has been processed.
-            <v-spacer />
-            <nuxt-link :to="`/txs/${result.txhash}`"
-              >See my transaction</nuxt-link
+          <template v-if="result && result.raw_log">
+            <v-alert type="error">{{ result.raw_log }}</v-alert>
+          </template>
+          <template v-else>
+            <v-alert v-if="result" type="success">
+              Your transaction has been processed.
+              <v-spacer />
+              <nuxt-link :to="`/txs/${result.txhash}`"
+                >See my transaction</nuxt-link
+              >
+            </v-alert>
+            <p>
+              Now that you have your address with some tokens you can start to
+              use MESG on the test network
+            </p>
+            <a href="https://docs.mesg.com" target="_blank"
+              >Learn how to use MESG</a
             >
-          </v-alert>
-          <p>
-            Now that you have your address with some tokens you can start to use
-            MESG on the test network
-          </p>
-          <a href="https://docs.mesg.com" target="_blank"
-            >Learn how to use MESG</a
-          >
+          </template>
         </v-stepper-content>
       </v-stepper>
     </v-card>
