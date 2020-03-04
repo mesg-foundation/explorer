@@ -12,7 +12,7 @@ docker service create --network engine -p 3000:3000 -p 3002:3002 mesg/explorer
 
 ``` bash
 # install dependencies
-$ npm run install
+$ npm install
 
 # serve with hot reload at localhost:3000
 $ npm run dev
