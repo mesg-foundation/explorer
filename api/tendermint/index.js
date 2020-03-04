@@ -1,8 +1,14 @@
 import { EventEmitter } from 'events'
 import RpcClient from 'tendermint/lib/rpc'
 import Twitter from 'twitter'
+import fetch from 'node-fetch'
 import faucet from './faucet'
-import { BECH32_PREFIX } from './cosmos'
+import { BECH32_PREFIX, COSMOS_LCD } from './cosmos'
+
+const toParams = (obj = {}) =>
+  Object.keys(obj)
+    .map((x) => `${x}=${obj[x]}`)
+    .join('&')
 
 const httpClient = new RpcClient(`http://${process.env.ENGINE_HOST}:26657`)
 
@@ -10,7 +16,7 @@ const txEmitter = new EventEmitter()
 const blockEmitter = new EventEmitter()
 
 const MESG = 1_000_000_000_000_000_000 // 1 MESG = 1e18 atto
-const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]*).*$`)
+const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]{39}).*$`)
 
 const twitter = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -63,6 +69,13 @@ const faucetHandler = async (req) => {
   return faucet(address, 1 * MESG)
 }
 
+const lcdCall = async (req) => {
+  const res = await fetch(
+    COSMOS_LCD + `/` + req.params[0] + '?' + toParams(req.query || {})
+  )
+  return res.json()
+}
+
 export default () =>
   [
     { method: 'WS', path: '/tx', event: 'tx', emitter: txEmitter },
@@ -72,5 +85,6 @@ export default () =>
     { method: 'GET', path: '/block/:height', handler: block },
     process.env.FAUCET_MNEMONIC
       ? { method: 'POST', path: '/faucet', handler: faucetHandler }
-      : null
+      : null,
+    { method: 'GET', path: '/*', handler: lcdCall }
   ].filter((x) => x)
