@@ -16,7 +16,7 @@ const txEmitter = new EventEmitter()
 const blockEmitter = new EventEmitter()
 
 const MESG = 1_000_000_000_000_000_000 // 1 MESG = 1e18 atto
-const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]*).*$`)
+const addressRegexp = new RegExp(`^.*(${BECH32_PREFIX}[a-z0-9]{39}).*$`)
 
 const twitter = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,

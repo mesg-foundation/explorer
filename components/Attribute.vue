@@ -21,7 +21,7 @@ export default {
       return this.decode(this.attribute.value)
     },
     to() {
-      const addressRegexp = new RegExp(`^${BECH32_PREFIX}[a-z0-9]*$`)
+      const addressRegexp = new RegExp(`^${BECH32_PREFIX}[a-z0-9]{39}$`)
       if (this.value.match(addressRegexp)) {
         return `/address/${this.value}`
       }
