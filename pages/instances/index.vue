@@ -6,9 +6,7 @@
           <nuxt-link :to="`/instances/${value}`">{{ value }}</nuxt-link>
         </template>
         <template v-slot:item.serviceHash="{ value }">
-          <nuxt-link :to="`/services/${encode(value)}`">{{
-            encode(value)
-          }}</nuxt-link>
+          <nuxt-link :to="`/services/${value}`">{{ value }}</nuxt-link>
         </template>
       </v-data-table>
     </v-card>
@@ -17,7 +15,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { encode } from '@mesg/api/lib/util/base58'
 export default {
   head() {
     return {
@@ -38,9 +35,6 @@ export default {
       return Object.keys(this.list).map((x) => this.list[x])
     }
   },
-  fetch: ({ store }) => store.dispatch('instance/list'),
-  methods: {
-    encode
-  }
+  fetch: ({ store }) => store.dispatch('instance/list')
 }
 </script>

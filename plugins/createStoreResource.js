@@ -1,5 +1,4 @@
 import pluralize from 'pluralize'
-import { encode } from '@mesg/api/lib/util/base58'
 
 export default (resourceName, actions) => {
   const _actions = {
@@ -15,10 +14,9 @@ export default (resourceName, actions) => {
       const res = await fetch(
         `${this.$env.HOST}/api/${pluralize(resourceName)}`
       )
-      const data = await res.json()
-      const result = data[pluralize(resourceName)] || []
+      const result = await res.json()
       result.forEach((d) => commit('add', d))
-      return data
+      return result
     },
     stream({ commit }) {
       const ws = new WebSocket(`${this.$env.WS_HOST}/api/${resourceName}`)
@@ -35,13 +33,9 @@ export default (resourceName, actions) => {
     },
     mutations: {
       add(state, resource) {
-        const hash = encode(resource.hash)
         state.list = {
           ...state.list,
-          [hash]: {
-            ...resource,
-            hash
-          }
+          [resource.hash]: resource
         }
       }
     },

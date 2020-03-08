@@ -21,9 +21,7 @@
           <v-col sm="4">
             <v-card>
               <v-card-title>Selected node</v-card-title>
-              <v-card-text>
-                {{ selectedNode }}
-              </v-card-text>
+              <v-card-text>{{ selectedNode }}</v-card-text>
             </v-card>
           </v-col>
         </v-row>
@@ -34,7 +32,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { encode } from '@mesg/api/lib/util/base58'
 import Header from '~/components/Header'
 import Graph from '~/components/Graph'
 export default {
@@ -71,9 +68,6 @@ export default {
       return this.process.edges
     }
   },
-  fetch: ({ store, params }) => store.dispatch('process/get', params.hash),
-  methods: {
-    encode
-  }
+  fetch: ({ store, params }) => store.dispatch('process/get', params.hash)
 }
 </script>

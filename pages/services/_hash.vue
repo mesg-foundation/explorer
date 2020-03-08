@@ -38,7 +38,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { encode } from '@mesg/api/lib/util/base58'
 import ServiceHeader from '~/components/service/Header'
 import CodeCopy from '~/components/CodeCopy'
 import List from '~/components/List'
@@ -64,7 +63,7 @@ export default {
     instances() {
       return Object.keys(this._instances)
         .map((x) => this._instances[x])
-        .filter((x) => encode(x.serviceHash) === this.$route.params.hash)
+        .filter((x) => x.serviceHash === this.$route.params.hash)
         .map((x) => ({
           key: 'Instance hash',
           value: x.hash,

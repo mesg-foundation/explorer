@@ -20,7 +20,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { encode } from '@mesg/api/lib/util/base58'
 import Header from '~/components/Header'
 import List from '~/components/List'
 export default {
@@ -40,10 +39,10 @@ export default {
       return this.runners[this.$route.params.hash]
     },
     instance() {
-      return this.instances[encode(this.runner.instanceHash)]
+      return this.instances[this.runner.instanceHash]
     },
     service() {
-      return this.services[encode(this.instance.serviceHash)]
+      return this.services[this.instance.serviceHash]
     },
     items() {
       return [
@@ -62,12 +61,8 @@ export default {
   },
   fetch: async ({ store, params }) => {
     const runner = await store.dispatch('runner/get', params.hash)
-    const instance = await store.dispatch(
-      'instance/get',
-      encode(runner.instanceHash)
-    )
-    return store.dispatch('service/get', encode(instance.serviceHash))
-  },
-  methods: { encode }
+    const instance = await store.dispatch('instance/get', runner.instanceHash)
+    return store.dispatch('service/get', instance.serviceHash)
+  }
 }
 </script>

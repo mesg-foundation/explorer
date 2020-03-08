@@ -18,7 +18,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { encode } from '@mesg/api/lib/util/base58'
 export default {
   head() {
     return {
@@ -43,7 +42,6 @@ export default {
   },
   fetch: ({ store }) => store.dispatch('process/list'),
   methods: {
-    encode,
     trigger(process) {
       const eventTrigger = process.nodes.find((x) => x.event)
       const resultTrigger = process.nodes.find((x) => x.result)

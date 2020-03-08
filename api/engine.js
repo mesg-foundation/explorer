@@ -1,41 +1,56 @@
-// const { createServer } = require('http')
-// const { Server } = require('ws')
-const API = require('@mesg/api')
-const { decode } = require('@mesg/api/lib/util/base58')
+const LCD = require('@mesg/api/lib/lcd')
 
-// const server = createServer(app)
-// const ws = new Server({ server, port: process.env.NUXT_PORT })
-// server.listen(process.env.NUXT_PORT)
-const api = new API(`${process.env.ENGINE_HOST}:50052`)
-
-// const createStreamSocket = (ws, api) => (resource) =>
-//   api[resource].stream({}).on('data', (data) =>
-//     ws.clients.forEach((client) => {
-//       client.send(JSON.stringify({ resource, data }))
-//     })
-//   )
-
-// const resourcesStream = ['execution', 'event']
-
-// resourcesStream.forEach(createStreamSocket(ws, api))
-
-const list = (resource) => () => api[resource].list({})
-const get = (resource) => (req) =>
-  api[resource].get({ hash: decode(req.params.hash) })
+const lcd = new LCD(`http://${process.env.ENGINE_HOST}:1317`)
 
 export default () => [
-  { method: 'GET', path: '/services', handler: list('service') },
-  { method: 'GET', path: '/services/:hash', handler: get('service') },
-
-  { method: 'GET', path: '/instances', handler: list('instance') },
-  { method: 'GET', path: '/instances/:hash', handler: get('instance') },
-
-  { method: 'GET', path: '/executions', handler: list('execution') },
-  { method: 'GET', path: '/executions/:hash', handler: get('execution') },
-
-  { method: 'GET', path: '/processes', handler: list('process') },
-  { method: 'GET', path: '/processes/:hash', handler: get('process') },
-
-  { method: 'GET', path: '/runners', handler: list('runner') },
-  { method: 'GET', path: '/runners/:hash', handler: get('runner') }
+  {
+    method: 'GET',
+    path: '/services',
+    handler: () => lcd.service.list()
+  },
+  {
+    method: 'GET',
+    path: '/services/:hash',
+    handler: (req) => lcd.service.get(req.params.hash)
+  },
+  {
+    method: 'GET',
+    path: '/instances',
+    handler: () => lcd.instance.list()
+  },
+  {
+    method: 'GET',
+    path: '/instances/:hash',
+    handler: (req) => lcd.instance.get(req.params.hash)
+  },
+  {
+    method: 'GET',
+    path: '/executions',
+    handler: () => lcd.execution.list()
+  },
+  {
+    method: 'GET',
+    path: '/executions/:hash',
+    handler: (req) => lcd.execution.get(req.params.hash)
+  },
+  {
+    method: 'GET',
+    path: '/processes',
+    handler: () => lcd.process.list()
+  },
+  {
+    method: 'GET',
+    path: '/processes/:hash',
+    handler: (req) => lcd.process.get(req.params.hash)
+  },
+  {
+    method: 'GET',
+    path: '/runners',
+    handler: () => lcd.runner.list()
+  },
+  {
+    method: 'GET',
+    path: '/runners/:hash',
+    handler: (req) => lcd.runner.get(req.params.hash)
+  }
 ]

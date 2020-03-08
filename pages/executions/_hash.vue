@@ -11,23 +11,23 @@
             <v-card>
               <List :items="items" />
               <v-card-text>
-                <code style="width: 100%;">
-                  {{ JSON.stringify(execution.inputs, null, 2) }}
-                </code>
+                <code style="width: 100%;">{{
+                  JSON.stringify(execution.inputs, null, 2)
+                }}</code>
               </v-card-text>
             </v-card>
             <v-card class="mt-3">
               <v-card-text>
-                <span v-if="execution.error" class="error--text">{{
-                  execution.error
-                }}</span>
-                <code v-else style="width: 100%;">
-                  {{ JSON.stringify(execution.outputs, null, 2) }}
-                </code>
+                <span v-if="execution.error" class="error--text">
+                  {{ execution.error }}
+                </span>
+                <code v-else style="width: 100%;">{{
+                  JSON.stringify(execution.outputs, null, 2)
+                }}</code>
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col sm="4"> </v-col>
+          <v-col sm="4"></v-col>
         </v-row>
       </v-layout>
     </v-container>
@@ -36,7 +36,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { encode } from '@mesg/api/lib/util/base58'
 import Header from '~/components/Header'
 import List from '~/components/List'
 export default {
@@ -56,10 +55,10 @@ export default {
       return this.executions[this.$route.params.hash]
     },
     instance() {
-      return this.instances[encode(this.execution.instanceHash)]
+      return this.instances[this.execution.instanceHash]
     },
     service() {
-      return this.services[encode(this.instance.serviceHash)]
+      return this.services[this.instance.serviceHash]
     },
     items() {
       return [
@@ -82,10 +81,9 @@ export default {
     const execution = await store.dispatch('execution/get', params.hash)
     const instance = await store.dispatch(
       'instance/get',
-      encode(execution.instanceHash)
+      execution.instanceHash
     )
-    await store.dispatch('service/get', encode(instance.serviceHash))
-  },
-  methods: { encode }
+    await store.dispatch('service/get', instance.serviceHash)
+  }
 }
 </script>

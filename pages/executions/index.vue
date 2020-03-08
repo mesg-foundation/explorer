@@ -6,9 +6,7 @@
           <nuxt-link :to="`/executions/${value}`">{{ value }}</nuxt-link>
         </template>
         <template v-slot:item.instanceHash="{ value }">
-          <nuxt-link :to="`/instances/${encode(value)}`">{{
-            encode(value)
-          }}</nuxt-link>
+          <nuxt-link :to="`/instances/${value}`">{{ value }}</nuxt-link>
         </template>
         <template v-slot:item.taskKey="{ value }">
           <pre><code>{{ value }}</code></pre>
@@ -30,7 +28,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { encode } from '@mesg/api/lib/util/base58'
 export default {
   head() {
     return {
@@ -55,12 +52,6 @@ export default {
       return Object.keys(this.list).map((x) => this.list[x])
     }
   },
-  fetch: ({ store }) => store.dispatch('execution/list'),
-  mounted() {
-    // this.$store.dispatch('execution/stream')
-  },
-  methods: {
-    encode
-  }
+  fetch: ({ store }) => store.dispatch('execution/list')
 }
 </script>

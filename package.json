@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@cosmostation/cosmosjs": "^0.5.2",
-    "@mesg/api": "^0.2.0",
+    "@mesg/api": "file:../js-sdk/packages/api",
     "@nuxtjs/google-analytics": "^2.2.3",
     "@nuxtjs/pwa": "^3.0.0-0",
     "body-parser": "^1.19.0",

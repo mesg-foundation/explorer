@@ -26,7 +26,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { encode } from '@mesg/api/lib/util/base58'
 import Header from '~/components/Header'
 import List from '~/components/List'
 export default {
@@ -48,7 +47,7 @@ export default {
     runners() {
       return Object.keys(this._runners)
         .map((x) => this._runners[x])
-        .filter((x) => encode(x.instanceHash) === this.$route.params.hash)
+        .filter((x) => x.instanceHash === this.$route.params.hash)
         .map((x) => ({
           key: "Runner's address",
           value: x.address,
@@ -56,7 +55,7 @@ export default {
         }))
     },
     service() {
-      return this.services[encode(this.instance.serviceHash)]
+      return this.services[this.instance.serviceHash]
     },
     items() {
       return [
@@ -65,17 +64,16 @@ export default {
           value: this.service.name,
           to: `/services/${this.service.hash}`
         },
-        { key: 'Environment hash', value: this.encode(this.instance.envHash) }
+        { key: 'Environment hash', value: this.instance.envHash }
       ]
     }
   },
   fetch: async ({ store, params }) => {
     const instance = await store.dispatch('instance/get', params.hash)
     return Promise.all([
-      store.dispatch('service/get', encode(instance.serviceHash)),
+      store.dispatch('service/get', instance.serviceHash),
       store.dispatch('runner/list')
     ])
-  },
-  methods: { encode }
+  }
 }
 </script>
