@@ -43,12 +43,20 @@ export default {
   fetch: ({ store }) => store.dispatch('process/list'),
   methods: {
     trigger(process) {
-      const eventTrigger = process.nodes.find((x) => x.event)
-      const resultTrigger = process.nodes.find((x) => x.result)
-      return eventTrigger ? eventTrigger.event : resultTrigger.result
+      const eventTrigger = process.nodes.find(
+        (x) => x.Type.type === 'mesg.types.Process_Node_Event_'
+      )
+      const resultTrigger = process.nodes.find(
+        (x) => x.Type.type === 'mesg.types.Process_Node_Result_'
+      )
+      return eventTrigger
+        ? eventTrigger.Type.value.event
+        : resultTrigger.Type.value.result
     },
     tasks(process) {
-      return process.nodes.filter((x) => x.task)
+      return process.nodes
+        .filter((x) => x.Type.type === 'mesg.types.Process_Node_Task_')
+        .map((x) => x.Type.value.task)
     }
   }
 }
